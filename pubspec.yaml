@@ -1,0 +1,54 @@
+name: lastmile_mobile
+description: A new Flutter project.
+
+# The following line prevents the package from being accidentally published to
+# pub.dev using `flutter pub publish`. This is preferred for private packages.
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+version: 1.0.0+1
+
+environment:
+  sdk: '>=2.18.2 <3.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # hive for local storage
+  hive: ^2.2.3
+
+  # equitable for comparing objects
+  equatable: ^2.0.5
+
+  # Get it for dependency issue
+  get_it: ^7.2.0
+
+  # flutter bloc for state management
+  flutter_bloc: ^8.1.1
+
+  # dio for http calls
+  dio: ^4.0.6
+
+  # dartz for managing data state
+  dartz: ^0.10.1
+
+  # colors, ui, icons, utils, fonts and more...
+  cupertino_icons: ^1.0.2
+  shimmer:
+  infinite_scroll_pagination:
+  internet_connection_checker:
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^2.0.0
+  mockito: ^5.3.2
+  network_image_mock:
+  build_runner:
+  bdd_widget_test:
+
+# The following section is specific to Flutter packages.
+flutter:
+
+  uses-material-design: true
