@@ -55,6 +55,7 @@ class _MapViewState extends State<MapView> {
             scrollGesturesEnabled: false,
             tiltGesturesEnabled: false,
             zoomControlsEnabled: false,
+            zoomGesturesEnabled: false,
             markers: {
               Marker(
                 markerId: const MarkerId('driver_marker'),
