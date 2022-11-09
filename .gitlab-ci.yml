@@ -1,0 +1,34 @@
+variables:
+  IOS_XCODE_PROJECT_NAME: "Runner"
+  FLAVOR: "production"
+
+stages:
+  - build
+  - test
+  - deploy
+
+dev_test:
+  stage: test
+  tags:
+    - 2f-flutter-ssh
+  before_script:
+    - flutter clean
+  script:
+    - flutter pub get
+    - flutter doctor --android-licenses
+    - flutter test
+  artifacts:
+    expire_in: 1 day
+
+android:debug:
+  stage: build
+  tags:
+    - 2f-flutter-ssh
+  script:
+    - flutter doctor --android-licenses
+    - flutter build apk --flavor ${FLAVOR} --debug
+  artifacts:
+    paths:
+      - "**/**/**/**/**/**/*.apk"
+    expire_in: 1 day
+
