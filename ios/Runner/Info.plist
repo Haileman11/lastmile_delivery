@@ -47,5 +47,9 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<key>NSLocationWhenInUseUsageDescription</key>
+    <string>LastMile Driver requires your location to give orders near you.</string>
+    <key>NSLocationAlwaysUsageDescription</key>
+    <string>LastMile Driver requires your location when app is running in background</string>
 </dict>
 </plist>

@@ -4,13 +4,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import './step/injection_is_setup.dart';
 import './step/the_app_is_on_page.dart';
 import './step/i_see.dart';
 
 void main() {
   group('''Google maps integration''', () {
     testWidgets('''Google maps is rendered successfully''', (tester) async {
-      await theAppIsOnPage(tester, '/home-page');
+      await injectionIsSetup(tester);
+      await theAppIsOnPage(tester, '/');
       await iSee(tester, 'GOOGLE_MAPS_WIDGET');
     });
   });

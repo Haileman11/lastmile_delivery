@@ -1,4 +1,5 @@
 Feature: Google maps integration
   Scenario: Google maps is rendered successfully
-    Given the app is on page {'/home-page'}
+    Given injection is setup
+    And the app is on page {'/'}
     Then I see {'GOOGLE_MAPS_WIDGET'}
