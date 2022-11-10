@@ -56,6 +56,8 @@ class _MapViewState extends State<MapView> {
             tiltGesturesEnabled: false,
             zoomControlsEnabled: false,
             zoomGesturesEnabled: false,
+            compassEnabled: false,
+            myLocationButtonEnabled: false,
             markers: {
               Marker(
                 markerId: const MarkerId('driver_marker'),
@@ -70,7 +72,9 @@ class _MapViewState extends State<MapView> {
               zoom: 15,
             ),
             onMapCreated: (GoogleMapController controller) {
-              AppValues.mapController.complete(controller);
+              if (!AppValues.mapController.isCompleted) {
+                AppValues.mapController.complete(controller);
+              }
             },
           );
         }

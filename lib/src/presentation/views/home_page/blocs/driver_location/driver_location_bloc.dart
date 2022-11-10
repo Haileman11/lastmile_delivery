@@ -21,6 +21,9 @@ class DriverLocationBloc
         emit(const DriverLocationError('Please enable location'));
       } else if (!await Permission.locationWhenInUse.serviceStatus.isEnabled) {
         emit(const DriverLocationError('Please approve location permission'));
+      } else if (!await Permission.locationAlways.serviceStatus.isEnabled) {
+        emit(const DriverLocationError(
+            'Please approve location permission to always'));
       } else {
         _locationStreamSubscription =
             _geoLocationRepository.getCurrentLocation().listen((event) {
