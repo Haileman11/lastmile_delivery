@@ -13,7 +13,7 @@ class MapView extends StatefulWidget {
 }
 
 class _MapViewState extends State<MapView> {
-  late BitmapDescriptor icon;
+  BitmapDescriptor? icon;
 
   @override
   void initState() {
@@ -61,7 +61,7 @@ class _MapViewState extends State<MapView> {
             markers: {
               Marker(
                 markerId: const MarkerId('driver_marker'),
-                icon: icon,
+                icon: icon ?? BitmapDescriptor.defaultMarker,
                 position:
                     LatLng(state.position.latitude, state.position.longitude),
                 rotation: state.position.heading,

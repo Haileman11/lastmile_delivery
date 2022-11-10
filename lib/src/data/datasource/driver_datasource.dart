@@ -6,14 +6,30 @@ abstract class IDriverDatasource {
   Stream<DriverModel> updateDriverProfile();
 }
 
+const driverProfileEventKey = "driver_profile";
+
 class DriverDatasource implements IDriverDatasource {
-  Socket socket;
+  final Socket socket;
 
   DriverDatasource({required this.socket});
   @override
-  Stream<DriverModel> getDriverProfile() {
+  Stream<DriverModel> getDriverProfile() async* {
     // TODO: implement getDriverProfile
-    throw UnimplementedError();
+    DriverModel driverProfile;
+    print(socket.id);
+    print("Datasource socket ${socket.connected}");
+    socket.emit(driverProfileEventKey, "Hello from CLient"
+        // (data) async* {
+        //   print("data $data");
+        //   driverProfile = DriverModel.fromJson(data);
+        //   yield driverProfile;
+        // }
+        );
+    socket.on(driverProfileEventKey, (data) async* {
+      print("data $data");
+      driverProfile = DriverModel.fromJson(data);
+      yield driverProfile;
+    });
   }
 
   @override

@@ -6,6 +6,8 @@ import 'package:lastmile_mobile/src/config/themes/app_themes.dart';
 import 'package:lastmile_mobile/src/core/utils/constants.dart';
 import 'package:lastmile_mobile/src/injector.dart';
 import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/driver_location/driver_location_bloc.dart';
+import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/driver_profile/driver_profile_bloc.dart';
+import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/socket/socket_bloc.dart';
 import 'package:lastmile_mobile/src/presentation/views/home_page/home_page_view.dart';
 import 'package:lastmile_mobile/src/presentation/views/splash_page/splash_page_view.dart';
 
@@ -30,29 +32,43 @@ class LastMile extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
+        BlocProvider<SocketBloc>(
+          create: (context) => injector()..add(SocketConnect()),
+        ),
+        BlocProvider<DriverProfileBloc>(create: (context) => injector()),
         BlocProvider<DriverLocationBloc>(
           create: (context) => injector()..add(GetDriverLocation()),
         ),
       ],
-      child: MaterialApp(
-        title: kMaterialAppTitle,
-        theme: AppTheme.light,
-        debugShowCheckedModeBanner: false,
-        builder: (BuildContext context, Widget? child) {
-          final MediaQueryData data = MediaQuery.of(context);
-          return ScrollConfiguration(
-            behavior: MyBehavior(),
-            child: MediaQuery(
-              data: data.copyWith(textScaleFactor: 1),
-              child: child!,
-            ),
-          );
+      child: BlocListener<SocketBloc, SocketState>(
+        listener: (context, state) {
+          switch (state.runtimeType) {
+            case SocketConnected:
+              context.read<DriverProfileBloc>().add(GetDriverProfileEvent());
+              break;
+            default:
+          }
         },
-        initialRoute: AppRoutes.splashScreenRoute,
-        routes: {
-          AppRoutes.homePageRoute: (context) => const HomePageView(),
-          AppRoutes.splashScreenRoute: (context) => const SplashPageView(),
-        },
+        child: MaterialApp(
+          title: kMaterialAppTitle,
+          theme: AppTheme.light,
+          debugShowCheckedModeBanner: false,
+          builder: (BuildContext context, Widget? child) {
+            final MediaQueryData data = MediaQuery.of(context);
+            return ScrollConfiguration(
+              behavior: MyBehavior(),
+              child: MediaQuery(
+                data: data.copyWith(textScaleFactor: 1),
+                child: child!,
+              ),
+            );
+          },
+          initialRoute: AppRoutes.splashScreenRoute,
+          routes: {
+            AppRoutes.homePageRoute: (context) => const HomePageView(),
+            AppRoutes.splashScreenRoute: (context) => const SplashPageView(),
+          },
+        ),
       ),
     );
   }

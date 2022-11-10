@@ -1,5 +1,10 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
+import 'package:lastmile_mobile/src/data/datasource/driver_datasource.dart';
+import 'package:lastmile_mobile/src/data/repositories/driver_repository.dart';
+import 'package:lastmile_mobile/src/domain/repositories/driver_repository.dart';
+import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/driver_profile/driver_profile_bloc.dart';
+import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/socket/socket_bloc.dart';
 import 'package:socket_io_client/socket_io_client.dart';
 
 import 'package:lastmile_mobile/src/data/repositories/base_location_repo_impl.dart';
@@ -14,25 +19,33 @@ Future<void> initializeDependencies() async {
     ..registerFactory<Dio>(Dio.new)
 
     /// API DEPENDENCIES
+    ..registerSingleton<Socket>(io(
+      'http://192.168.0.140:3000',
+      // 'wss://demo.piesocket.com/v3/channel_123?api_key=VCXCEuvhGcBDP7XhiJJUDvR1e1D3eiVjgZ9VRiaV&notify_self',
+      // 'http://192.168.0.118:3211',
+      OptionBuilder()
+          // .setQuery({"EIO": 3, "transport": "websocket"})
+          // .setExtraHeaders(
+          //     {"Connection": "Upgrade", "Upgrade": "websocket"})
+          .setTransports(["websocket"])
+          // .setTransports(['websocket'])
+          .setTimeout(3000)
+          .setReconnectionDelay(5000)
+          .disableAutoConnect()
+          .build(),
+    ).connect())
+
+    /// DATASOURCE
+    ..registerSingleton<IDriverDatasource>(DriverDatasource(socket: injector()))
 
     /// REPOSITORIES
     ..registerSingleton<GeoLocationRepository>(GeoLocationRepositoryImpl())
+    ..registerSingleton<IDriverRepository>(
+        DriverRepository(datasource: injector()))
 
     /// BLOCS
-    ..registerFactory<DriverLocationBloc>(() => DriverLocationBloc(injector()))
-    ..registerSingleton(() => io(
-          // 'http://192.168.0.111:3211/socket.io/?EIO=3&transport=websocket',
-          // 'wss://demo.piesocket.com/v3/channel_123?api_key=VCXCEuvhGcBDP7XhiJJUDvR1e1D3eiVjgZ9VRiaV&notify_self',
-          'http://192.168.0.140:3000',
-          OptionBuilder()
-              .setQuery({"EIO": 3, "transport": "websocket"})
-              .setExtraHeaders(
-                  {"Connection": "Upgrade", "Upgrade": "websocket"})
-              .setTransports(["websocket"])
-              // .setTransports(['websocket'])
-              .setTimeout(3000)
-              .setReconnectionDelay(5000)
-              .disableAutoConnect()
-              .build(),
-        ));
+    ..registerFactory<DriverProfileBloc>(
+        () => DriverProfileBloc(driverRepository: injector()))
+    ..registerFactory<SocketBloc>(() => SocketBloc(socket: injector()))
+    ..registerFactory<DriverLocationBloc>(() => DriverLocationBloc(injector()));
 }

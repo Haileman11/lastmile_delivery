@@ -8,7 +8,7 @@ part 'socket_state.dart';
 class SocketBloc extends Bloc<SocketEvent, SocketState> {
   late final Socket _socket;
 
-  SocketBloc({required socket}) : super(SocketInitial()) {
+  SocketBloc({required Socket socket}) : super(SocketInitial()) {
     _socket = socket;
     _socket.onConnecting((data) => add(SocketConnectingEvent()));
     _socket.onConnect((_) => add(SocketOnConnect()));
@@ -19,8 +19,9 @@ class SocketBloc extends Bloc<SocketEvent, SocketState> {
     // _socket.on('message', (data) => add(SocketJoinedEvent(data)));
     // User events
     on<SocketConnect>((event, emit) {
-      print(event);
+      print(_socket.id);
       _socket.connect();
+      print("Bloc socket ${_socket.connected}");
     });
 
     on<SocketDisconnect>((event, emit) {
@@ -33,12 +34,12 @@ class SocketBloc extends Bloc<SocketEvent, SocketState> {
       emit(const SocketConnected("Connecting"));
     });
     on<SocketOnConnect>((event, emit) {
-      print(event);
+      print("Socket connected state  ${_socket.connected}");
       emit(SocketConnected(_socket.id!));
     });
     on<SocketConnectErrorEvent>((event, emit) {
-      print(event);
-      emit(const SocketConnected("Connection Error"));
+      print(event.error);
+      emit(const SocketError("Connection Error"));
     });
     on<SocketConnectTimeoutEvent>((event, emit) {
       print(event);
@@ -48,11 +49,16 @@ class SocketBloc extends Bloc<SocketEvent, SocketState> {
       emit(SocketDisconnected());
     });
     on<SocketErrorEvent>((event, emit) {
-      emit(const SocketConnected("ErrorEvent"));
+      emit(const SocketError("ErrorEvent"));
     });
     on<SocketJoinedEvent>((event, emit) {
       emit(SocketConnected(event.data));
       print(event.data);
     });
+  }
+  @override
+  Future<void> close() {
+    _socket.dispose();
+    return super.close();
   }
 }

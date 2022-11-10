@@ -13,6 +13,19 @@ class DriverProfileBloc extends Bloc<DriverProfileEvent, DriverProfileState> {
       : super(DriverProfileLoading()) {
     on<GetDriverProfileEvent>((event, emit) {
       //TODO
+      print("Get profile called");
+      driverRepository.getDriverProfile().listen((event) {
+        print(event);
+        event.fold(
+          (l) => emit(const DriverProfileError(
+              message: "Error loading driver profile")),
+          (r) {
+            emit(DriverProfileLoaded(driverProfile: r));
+          },
+        );
+      }, onError: (err) {
+        print(err);
+      });
     });
     on<UpdateDriverProfileEvent>((event, emit) {
       //TODO

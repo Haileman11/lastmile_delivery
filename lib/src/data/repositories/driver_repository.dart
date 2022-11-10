@@ -9,16 +9,20 @@ class DriverRepository implements IDriverRepository {
   DriverRepository({required this.datasource});
   @override
   Stream<Either<Failure, DriverModel>> getDriverProfile() async* {
-    final source = datasource.getDriverProfile();
+    print("in repo");
+    var temp;
+    final source = datasource.getDriverProfile().listen((event) {
+      temp = event;
+    });
     DriverModel driverModel;
-    await for (final model in source) {
-      try {
-        driverModel = model;
-        yield Right(driverModel);
-      } catch (err) {
-        yield Left(ServerFailure());
-      }
+
+    print(temp.toString());
+    try {
+      driverModel = temp;
+      yield Right(driverModel);
+    } catch (err) {
+      print(err);
+      yield Left(ServerFailure());
     }
-    // Add final partial line to output stream, if any.
   }
 }

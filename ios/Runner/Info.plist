@@ -26,12 +26,12 @@
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>LastMile Driver always requires your location to give orders near you.</string>
 	<key>NSLocationAlwaysUsageDescription</key>
 	<string>LastMile Driver requires your location when app is running in background</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>LastMile Driver requires your location to give orders near you.</string>
-	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>LastMile Driver always requires your location to give orders near you.</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 	<key>UIBackgroundModes</key>

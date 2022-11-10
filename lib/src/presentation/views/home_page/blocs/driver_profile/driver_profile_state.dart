@@ -9,6 +9,13 @@ abstract class DriverProfileState extends Equatable {
 
 class DriverProfileLoading extends DriverProfileState {}
 
-class DriverProfileLoaded extends DriverProfileState {}
+class DriverProfileLoaded extends DriverProfileState {
+  final DriverModel driverProfile;
 
-class DriverProfileError extends DriverProfileState {}
+  const DriverProfileLoaded({required this.driverProfile});
+}
+
+class DriverProfileError extends DriverProfileState {
+  final String message;
+  const DriverProfileError({required this.message});
+}
