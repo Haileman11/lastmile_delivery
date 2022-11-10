@@ -1,10 +1,14 @@
 part of 'driver_profile_bloc.dart';
 
-abstract class DriverProfileBlocState extends Equatable {
-  const DriverProfileBlocState();
+abstract class DriverProfileState extends Equatable {
+  const DriverProfileState();
 
   @override
   List<Object> get props => [];
 }
 
-class DriverProfileBlocInitial extends DriverProfileBlocState {}
+class DriverProfileLoading extends DriverProfileState {}
+
+class DriverProfileLoaded extends DriverProfileState {}
+
+class DriverProfileError extends DriverProfileState {}
