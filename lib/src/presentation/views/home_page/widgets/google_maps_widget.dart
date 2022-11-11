@@ -24,7 +24,7 @@ class _MapViewState extends State<MapView> {
   Future getDriverIcon() async {
     icon = await BitmapDescriptor.fromAssetImage(
       const ImageConfiguration(),
-      "assets/images/map_icon_driver.png",
+      "assets/images/map_icon_driver_ios_70_45.png",
     );
   }
 
