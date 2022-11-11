@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -24,7 +26,9 @@ class _MapViewState extends State<MapView> {
   Future getDriverIcon() async {
     icon = await BitmapDescriptor.fromAssetImage(
       const ImageConfiguration(),
-      "assets/images/map_icon_driver_ios_70_45.png",
+      Platform.isAndroid
+          ? "assets/images/map_icon_driver.png"
+          : "assets/images/map_icon_driver_ios_70_45.png",
     );
   }
 
