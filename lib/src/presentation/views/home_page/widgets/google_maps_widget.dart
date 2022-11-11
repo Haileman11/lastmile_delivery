@@ -69,11 +69,12 @@ class _MapViewState extends State<MapView> {
             },
             initialCameraPosition: CameraPosition(
               target: LatLng(state.position.latitude, state.position.longitude),
-              zoom: 15,
+              zoom: 16,
             ),
             onMapCreated: (GoogleMapController controller) {
               if (!AppValues.mapController.isCompleted) {
                 AppValues.mapController.complete(controller);
+                AppValues.controller = controller;
               }
             },
           );
