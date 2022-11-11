@@ -14,6 +14,14 @@ class SocketConnected extends SocketState {
   const SocketConnected(this.message);
 }
 
+class SocketConnecting extends SocketState {
+  const SocketConnecting();
+}
+
+class SocketConnectionTimedOut extends SocketState {
+  const SocketConnectionTimedOut();
+}
+
 class SocketError extends SocketState {
   final String message;
   const SocketError(this.message);

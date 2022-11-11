@@ -27,7 +27,6 @@ class DriverModel {
   }
 
   factory DriverModel.fromMap(Map<String, dynamic> map) {
-    print("map $map");
     return DriverModel(
       id: map['id'] as String,
       name: map['name'] as String,

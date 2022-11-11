@@ -36,7 +36,6 @@ Future<void> iSee(WidgetTester tester, dynamic param1) async {
         speedAccuracy: 0.0,
       ),
     ]).listen((event) {
-      print(event);
       MockDriverLocationBloc().add(UpdateDriverLocation(
         event,
       ));

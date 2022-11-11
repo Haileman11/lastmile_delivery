@@ -1,5 +1,5 @@
-import 'package:socket_io_client/socket_io_client.dart';
 import 'package:lastmile_mobile/src/data/models/driver.dart';
+import 'package:socket_io_client/socket_io_client.dart';
 
 abstract class IDriverDatasource {
   Stream<DriverModel> getDriverProfile();
@@ -15,9 +15,7 @@ class DriverDatasource implements IDriverDatasource {
   @override
   Stream<DriverModel> getDriverProfile() async* {
     // TODO: implement getDriverProfile
-    DriverModel driverProfile;
-    print(socket.id);
-    print("Datasource socket ${socket.connected}");
+    DriverModel? driverProfile;
     socket.emit(driverProfileEventKey, "Hello from CLient"
         // (data) async* {
         //   print("data $data");
@@ -25,11 +23,17 @@ class DriverDatasource implements IDriverDatasource {
         //   yield driverProfile;
         // }
         );
-    socket.on(driverProfileEventKey, (data) async* {
-      print("data $data");
-      driverProfile = DriverModel.fromJson(data);
-      yield driverProfile;
-    });
+    socket.on(
+      driverProfileEventKey,
+      (data) {
+        print("data >>>>>>>>>>>>>>>>>>>>> $data");
+        driverProfile = DriverModel.fromMap(data);
+      },
+    );
+
+    if (driverProfile != null) {
+      yield driverProfile!;
+    }
   }
 
   @override

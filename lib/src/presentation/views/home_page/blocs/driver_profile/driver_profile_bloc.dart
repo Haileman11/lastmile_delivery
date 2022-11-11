@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:lastmile_mobile/src/data/models/driver.dart';
+
 import '../../../../../domain/repositories/driver_repository.dart';
 
 part 'driver_profile_event.dart';
@@ -12,8 +13,6 @@ class DriverProfileBloc extends Bloc<DriverProfileEvent, DriverProfileState> {
   DriverProfileBloc({required this.driverRepository})
       : super(DriverProfileLoading()) {
     on<GetDriverProfileEvent>((event, emit) {
-      //TODO
-      print("Get profile called");
       driverRepository.getDriverProfile().listen((event) {
         print(event);
         event.fold(
@@ -27,8 +26,6 @@ class DriverProfileBloc extends Bloc<DriverProfileEvent, DriverProfileState> {
         print(err);
       });
     });
-    on<UpdateDriverProfileEvent>((event, emit) {
-      //TODO
-    });
+    on<UpdateDriverProfileEvent>((event, emit) {});
   }
 }

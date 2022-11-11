@@ -19,31 +19,24 @@ class SocketBloc extends Bloc<SocketEvent, SocketState> {
     // _socket.on('message', (data) => add(SocketJoinedEvent(data)));
     // User events
     on<SocketConnect>((event, emit) {
-      print(_socket.id);
       _socket.connect();
-      print("Bloc socket ${_socket.connected}");
     });
 
     on<SocketDisconnect>((event, emit) {
-      print(event);
       _socket.disconnect();
     });
     // Socket events
     on<SocketConnectingEvent>((event, emit) {
-      print(event);
-      emit(const SocketConnected("Connecting"));
+      emit(const SocketConnecting());
     });
     on<SocketOnConnect>((event, emit) {
-      print("Socket connected state  ${_socket.connected}");
       emit(SocketConnected(_socket.id!));
     });
     on<SocketConnectErrorEvent>((event, emit) {
-      print(event.error);
       emit(const SocketError("Connection Error"));
     });
     on<SocketConnectTimeoutEvent>((event, emit) {
-      print(event);
-      emit(const SocketConnected("Connection timeout"));
+      emit(const SocketConnectionTimedOut());
     });
     on<SocketOnDisconnect>((event, emit) {
       emit(SocketDisconnected());
@@ -53,7 +46,6 @@ class SocketBloc extends Bloc<SocketEvent, SocketState> {
     });
     on<SocketJoinedEvent>((event, emit) {
       emit(SocketConnected(event.data));
-      print(event.data);
     });
   }
   @override
