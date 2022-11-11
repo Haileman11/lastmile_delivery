@@ -30,10 +30,6 @@ class DriverDatasource implements IDriverDatasource {
             driverProfile); // Ask stream to send driverProfile values as event.
       },
     );
-
-    // if (driverProfile != null) {
-    //   yield driverProfile!;
-    // }
     return controller.stream;
   }
 
