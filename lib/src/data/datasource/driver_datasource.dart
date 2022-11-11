@@ -4,8 +4,10 @@ import 'package:lastmile_mobile/src/data/models/driver.dart';
 import 'package:socket_io_client/socket_io_client.dart';
 
 abstract class IDriverDatasource {
-  Stream<DriverModel> getDriverProfile();
+  Stream<DriverModel> setupDriverProfileListner();
   Stream<DriverModel> updateDriverProfile();
+
+  void updateDriverAvailability(isAvailable) {}
 }
 
 const driverProfileEventKey = "driver_profile";
@@ -13,16 +15,14 @@ const driverProfileEventKey = "driver_profile";
 class DriverDatasource implements IDriverDatasource {
   final Socket socket;
 
+  var controller = StreamController<DriverModel>();
   DriverDatasource({required this.socket});
   @override
-  Stream<DriverModel> getDriverProfile() {
-    // TODO: implement getDriverProfile
-    var controller = StreamController<DriverModel>();
-
+  Stream<DriverModel> setupDriverProfileListner() {
     DriverModel driverProfile;
-    socket.emit(driverProfileEventKey, "Hello from CLient");
+    // socket.emit(driverProfileEventKey, "Hello from CLient");
     socket.on(
-      driverProfileEventKey,
+      "driver_availability",
       (data) {
         print("data >>>>>>>>>>>>>>>>>>>>> $data");
         driverProfile = DriverModel.fromMap(data);
@@ -37,5 +37,10 @@ class DriverDatasource implements IDriverDatasource {
   Stream<DriverModel> updateDriverProfile() {
     // TODO: implement updateDriverProfile
     throw UnimplementedError();
+  }
+
+  @override
+  void updateDriverAvailability(isAvailable) {
+    socket.emit('driver_availability', isAvailable);
   }
 }

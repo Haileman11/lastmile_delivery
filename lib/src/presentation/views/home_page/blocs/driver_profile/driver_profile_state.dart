@@ -13,6 +13,8 @@ class DriverProfileLoaded extends DriverProfileState {
   final DriverModel driverProfile;
 
   const DriverProfileLoaded({required this.driverProfile});
+  @override
+  List<Object> get props => [driverProfile.isAvailable];
 }
 
 class DriverProfileError extends DriverProfileState {

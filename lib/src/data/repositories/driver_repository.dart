@@ -10,10 +10,10 @@ class DriverRepository implements IDriverRepository {
   IDriverDatasource datasource;
   DriverRepository({required this.datasource});
   @override
-  Stream<Either<Failure, DriverModel>> getDriverProfile() {
+  Stream<Either<Failure, DriverModel>> setupDriverProfileListener() {
     var controller = StreamController<Either<Failure, DriverModel>>();
     DriverModel driverModel;
-    datasource.getDriverProfile().listen((event) {
+    datasource.setupDriverProfileListner().listen((event) {
       print(event.toJson());
       try {
         driverModel = event;
@@ -23,11 +23,15 @@ class DriverRepository implements IDriverRepository {
       }
     });
     return controller.stream;
-    // try {
-    //   driverModel = temp;
-    //   yield Right(driverModel);
-    // } catch (err) {
-    //   yield Left(ServerFailure());
-    // }
+  }
+
+  @override
+  Stream<Either<Failure, DriverModel>> updateDriverProfile() {
+    throw UnimplementedError();
+  }
+
+  @override
+  void updateDriverAvailability(isAvailable) {
+    datasource.updateDriverAvailability(isAvailable);
   }
 }

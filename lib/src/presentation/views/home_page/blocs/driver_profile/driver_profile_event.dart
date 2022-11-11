@@ -7,10 +7,20 @@ abstract class DriverProfileEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class GetDriverProfileEvent extends DriverProfileEvent {}
+class SetupDriverProfileListenerEvent extends DriverProfileEvent {}
+
+class UpdateDriverAvailabilityEvent extends DriverProfileEvent {
+  final bool isAvailable;
+
+  const UpdateDriverAvailabilityEvent({required this.isAvailable});
+
+  @override
+  List<Object> get props => [isAvailable];
+}
 
 class UpdateDriverProfileEvent extends DriverProfileEvent {
   final DriverModel driverModel;
+
   const UpdateDriverProfileEvent({required this.driverModel});
 
   @override

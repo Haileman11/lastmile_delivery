@@ -25,9 +25,26 @@ class StatusSwitchWidget extends StatelessWidget {
               return Text(state.toString());
             },
           ),
-          Switch(
-            value: false,
-            onChanged: (value) {},
+          BlocConsumer<DriverProfileBloc, DriverProfileState>(
+            listener: (context, state) {
+              ScaffoldMessenger.of(context)
+                  .showSnackBar(SnackBar(content: Text(state.toString())));
+            },
+            builder: (context, state) {
+              return Switch(
+                value: state is DriverProfileLoaded &&
+                    state.driverProfile.isAvailable,
+                onChanged: (value) {
+                  if (value) {
+                    context.read<SocketBloc>().add(SocketConnect());
+                  } else {
+                    context.read<DriverProfileBloc>().add(
+                        const UpdateDriverAvailabilityEvent(
+                            isAvailable: false));
+                  }
+                },
+              );
+            },
           ),
         ],
       ),

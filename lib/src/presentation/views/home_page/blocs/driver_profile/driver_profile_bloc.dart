@@ -15,10 +15,10 @@ class DriverProfileBloc extends Bloc<DriverProfileEvent, DriverProfileState> {
   IDriverRepository driverRepository;
   DriverProfileBloc({required this.driverRepository})
       : super(DriverProfileLoading()) {
-    on<GetDriverProfileEvent>(
+    on<SetupDriverProfileListenerEvent>(
       (event, emit) async {
         await emit.forEach<Either<Failure, DriverModel>>(
-            driverRepository.getDriverProfile(),
+            driverRepository.setupDriverProfileListener(),
             onData: (Either<Failure, DriverModel> streamData) {
           return streamData.fold(
             (l) {
@@ -33,8 +33,8 @@ class DriverProfileBloc extends Bloc<DriverProfileEvent, DriverProfileState> {
         });
       },
     );
-    on<UpdateDriverProfileEvent>((event, emit) {
-      emit(DriverProfileLoaded(driverProfile: event.driverModel));
+    on<UpdateDriverAvailabilityEvent>((event, emit) async {
+      driverRepository.updateDriverAvailability(event.isAvailable);
     });
   }
 }

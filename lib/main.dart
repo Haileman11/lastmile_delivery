@@ -32,10 +32,10 @@ class LastMile extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider<SocketBloc>(
-          create: (context) => injector()..add(SocketConnect()),
-        ),
-        BlocProvider<DriverProfileBloc>(create: (context) => injector()),
+        BlocProvider<SocketBloc>(create: (context) => injector()),
+        BlocProvider<DriverProfileBloc>(
+            create: (context) =>
+                injector()..add(SetupDriverProfileListenerEvent())),
         BlocProvider<DriverLocationBloc>(
           create: (context) => injector()..add(GetDriverLocation()),
         ),
@@ -44,7 +44,9 @@ class LastMile extends StatelessWidget {
         listener: (context, state) {
           switch (state.runtimeType) {
             case SocketConnected:
-              context.read<DriverProfileBloc>().add(GetDriverProfileEvent());
+              context
+                  .read<DriverProfileBloc>()
+                  .add(const UpdateDriverAvailabilityEvent(isAvailable: true));
               break;
             default:
           }
