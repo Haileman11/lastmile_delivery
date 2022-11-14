@@ -22,6 +22,7 @@ class AppColors {
   static Color backgroundGrey = const Color(0xfffafafa);
   static Color lightGrey = const Color(0Xffdfe0e5);
   static Color transparent = Colors.transparent;
+  static Color errorRed = Colors.redAccent;
 }
 
 class AppFontSizes {

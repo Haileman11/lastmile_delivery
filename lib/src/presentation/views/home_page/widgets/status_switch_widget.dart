@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lastmile_mobile/src/config/themes/app_themes.dart';
+import 'package:lastmile_mobile/src/presentation/common/app_dialog.dart';
 
 import '../blocs/driver_profile/driver_profile_bloc.dart';
 import '../blocs/socket/socket_bloc.dart';
@@ -17,33 +18,64 @@ class StatusSwitchWidget extends StatelessWidget {
         children: [
           BlocBuilder<SocketBloc, SocketState>(
             builder: (context, state) {
-              return Text(state.toString());
+              if (state is SocketConnecting) {
+                return const Text('connecting...');
+              }
+
+              if (state is SocketDisconnected || state is SocketInitial) {
+                return const Text('Tap to become online');
+              }
+
+              if (state is DriverProfileError) {
+                return Text(
+                  'Connection failed, try again.',
+                  style: TextStyle(color: AppColors.errorRed),
+                );
+              }
+              return const SizedBox();
             },
           ),
           BlocBuilder<DriverProfileBloc, DriverProfileState>(
             builder: (context, state) {
-              return Text(state.toString());
+              if (state is DriverProfileLoaded) {
+                if (state.driverProfile.isAvailable) {
+                  return Text(
+                    'Available',
+                    style: TextStyle(color: AppColors.appGreen),
+                  );
+                }
+              }
+
+              return const SizedBox();
             },
           ),
-          BlocConsumer<DriverProfileBloc, DriverProfileState>(
-            listener: (context, state) {
-              ScaffoldMessenger.of(context)
-                  .showSnackBar(SnackBar(content: Text(state.toString())));
-            },
+          BlocBuilder<DriverProfileBloc, DriverProfileState>(
             builder: (context, state) {
               return Switch(
                 key: const Key("AVAILABILITY_SWITCH"),
                 value: state is DriverProfileLoaded &&
                     state.driverProfile.isAvailable,
+                activeColor: AppColors.appGreen,
                 onChanged: (value) {
                   if (value) {
-                    // print("$value");
                     context.read<SocketBloc>().add(SocketConnect());
                   } else {
-                    // print(value);
-                    context.read<DriverProfileBloc>().add(
-                        const UpdateDriverAvailabilityEvent(
-                            isAvailable: false));
+                    final globalContext = context;
+                    showDialog(
+                        context: context,
+                        builder: (context) {
+                          return AppDialog(
+                            optionTitle: 'Go offline',
+                            message:
+                                'You won\'t receive any orders while offline.',
+                            onTap: () {
+                              globalContext.read<DriverProfileBloc>().add(
+                                  const UpdateDriverAvailabilityEvent(
+                                      isAvailable: false));
+                              Navigator.pop(context);
+                            },
+                          );
+                        });
                   }
                 },
               );
