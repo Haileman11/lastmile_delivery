@@ -8,6 +8,7 @@ import 'package:lastmile_mobile/src/domain/repositories/driver_repository.dart';
 import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/driver_location/driver_location_bloc.dart';
 import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/driver_profile/driver_profile_bloc.dart';
 import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/socket/socket_bloc.dart';
+import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/update_location/update_location_bloc.dart';
 import 'package:socket_io_client/socket_io_client.dart';
 
 final injector = GetIt.instance;
@@ -48,5 +49,6 @@ Future<void> initializeDependencies() async {
     ..registerFactory<DriverProfileBloc>(
         () => DriverProfileBloc(driverRepository: injector()))
     ..registerFactory<SocketBloc>(() => SocketBloc(socket: injector()))
-    ..registerFactory<DriverLocationBloc>(() => DriverLocationBloc(injector()));
+    ..registerFactory<DriverLocationBloc>(() => DriverLocationBloc(injector()))
+    ..registerFactory<UpdateLocationBloc>(() => UpdateLocationBloc(injector()));
 }

@@ -6,6 +6,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:lastmile_mobile/src/config/themes/app_themes.dart';
 import 'package:lastmile_mobile/src/core/utils/constants.dart';
 import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/driver_location/driver_location_bloc.dart';
+import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/update_location/update_location_bloc.dart';
 
 class MapView extends StatefulWidget {
   const MapView({Key? key}) : super(key: key);
@@ -51,6 +52,11 @@ class _MapViewState extends State<MapView> {
         }
 
         if (state is DriverLocationDone) {
+          /// UPDATE DRIVER LOCATION
+          BlocProvider.of<UpdateLocationBloc>(context).add(UpdateLocation(
+              'fake_id',
+              LatLng(state.position.latitude, state.position.longitude)));
+
           return GoogleMap(
             key: const Key('GOOGLE_MAPS_WIDGET'),
             mapType: MapType.normal,
