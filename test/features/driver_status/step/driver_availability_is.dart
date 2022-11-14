@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -9,6 +10,7 @@ import 'package:lastmile_mobile/src/domain/repositories/driver_repository.dart';
 import 'package:lastmile_mobile/src/injector.dart';
 import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/driver_location/driver_location_bloc.dart';
 import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/driver_profile/driver_profile_bloc.dart';
+import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/socket/socket_bloc.dart';
 import 'package:mockito/mockito.dart';
 
 import '../../../utils/test_injector.mocks.dart';
@@ -16,6 +18,7 @@ import '../../../utils/test_injector.mocks.dart';
 Future<void> driverAvailabilityIs(WidgetTester tester, bool isAvailable) async {
   var driverRepository =
       injector<DriverRepository>() as MockDriverRepositoryImpl;
+  // driverRepository.updateDriverAvailability(isAvailable);
   var controller = StreamController<Either<Failure, DriverModel>>();
   when(driverRepository.setupDriverProfileListener())
       .thenAnswer((Invocation invocation) {
@@ -34,8 +37,10 @@ Future<void> driverAvailabilityIs(WidgetTester tester, bool isAvailable) async {
       isAvailable: false,
       status: "status");
   when(driverRepository.updateDriverAvailability(model.isAvailable))
-      .thenReturn(() {
-    // print("stub");
+      .thenAnswer((_) {
+    log("stub");
     controller.add(Right(model));
+    injector<DriverProfileBloc>()
+        .emit(DriverProfileLoaded(driverProfile: model));
   });
 }
