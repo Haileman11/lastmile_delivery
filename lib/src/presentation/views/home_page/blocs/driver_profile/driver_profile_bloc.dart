@@ -12,7 +12,7 @@ part 'driver_profile_event.dart';
 part 'driver_profile_state.dart';
 
 class DriverProfileBloc extends Bloc<DriverProfileEvent, DriverProfileState> {
-  IDriverRepository driverRepository;
+  DriverRepository driverRepository;
   DriverProfileBloc({required this.driverRepository})
       : super(DriverProfileLoading()) {
     on<SetupDriverProfileListenerEvent>(

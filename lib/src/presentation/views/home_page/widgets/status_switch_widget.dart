@@ -32,12 +32,15 @@ class StatusSwitchWidget extends StatelessWidget {
             },
             builder: (context, state) {
               return Switch(
+                key: const Key("AVAILABILITY_SWITCH"),
                 value: state is DriverProfileLoaded &&
                     state.driverProfile.isAvailable,
                 onChanged: (value) {
                   if (value) {
+                    // print("$value");
                     context.read<SocketBloc>().add(SocketConnect());
                   } else {
+                    // print(value);
                     context.read<DriverProfileBloc>().add(
                         const UpdateDriverAvailabilityEvent(
                             isAvailable: false));

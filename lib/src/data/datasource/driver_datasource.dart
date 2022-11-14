@@ -3,20 +3,20 @@ import 'dart:async';
 import 'package:lastmile_mobile/src/data/models/driver.dart';
 import 'package:socket_io_client/socket_io_client.dart';
 
-abstract class IDriverDatasource {
+abstract class DriverDatasource {
   Stream<DriverModel> setupDriverProfileListner();
   Stream<DriverModel> updateDriverProfile();
 
-  void updateDriverAvailability(isAvailable) {}
+  void updateDriverAvailability(bool isAvailable) {}
 }
 
 const driverProfileEventKey = "driver_profile";
 
-class DriverDatasource implements IDriverDatasource {
+class DriverDatasourceImpl implements DriverDatasource {
   final Socket socket;
 
   var controller = StreamController<DriverModel>();
-  DriverDatasource({required this.socket});
+  DriverDatasourceImpl({required this.socket});
   @override
   Stream<DriverModel> setupDriverProfileListner() {
     DriverModel driverProfile;
@@ -40,7 +40,7 @@ class DriverDatasource implements IDriverDatasource {
   }
 
   @override
-  void updateDriverAvailability(isAvailable) {
+  void updateDriverAvailability(bool isAvailable) {
     socket.emit('driver_availability', isAvailable);
   }
 }

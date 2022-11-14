@@ -19,6 +19,7 @@ Future<void> initializeDependencies() async {
 
     /// API DEPENDENCIES
     ..registerSingleton<Socket>(io(
+      // 'http://192.168.1.101:3000',
       'http://192.168.0.140:3000',
       // 'wss://demo.piesocket.com/v3/channel_123?api_key=VCXCEuvhGcBDP7XhiJJUDvR1e1D3eiVjgZ9VRiaV&notify_self',
       // 'http://192.168.0.118:3211',
@@ -35,12 +36,13 @@ Future<void> initializeDependencies() async {
     ))
 
     /// DATASOURCE
-    ..registerSingleton<IDriverDatasource>(DriverDatasource(socket: injector()))
+    ..registerSingleton<DriverDatasource>(
+        DriverDatasourceImpl(socket: injector()))
 
     /// REPOSITORIES
     ..registerSingleton<GeoLocationRepository>(GeoLocationRepositoryImpl())
-    ..registerSingleton<IDriverRepository>(
-        DriverRepository(datasource: injector()))
+    ..registerSingleton<DriverRepository>(
+        DriverRepositoryImpl(datasource: injector()))
 
     /// BLOCS
     ..registerFactory<DriverProfileBloc>(

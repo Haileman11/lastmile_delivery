@@ -15,8 +15,8 @@ Feature: Driver becomes online
     
     @success
     Scenario: Switch is toggled to the availability status when app is opened
-        Given driver availability is {true}        
-        And the app is on {'/'}
+        Given the app is on {'/'}
+        And driver availability is {true}        
         Then I see {"AVAILABILITY_SWITCH"}
         And Switch {"AVAILABILITY_SWITCH"} value is {true}    
     @success

@@ -32,8 +32,8 @@ void main() {
     testWidgets('''Switch is toggled to the availability status when app is opened''', (tester) async {
       try {
         await bddSetUp(tester);
-        await driverAvailabilityIs(tester, true);
         await theAppIsOn(tester, '/');
+        await driverAvailabilityIs(tester, true);
         await iSee(tester, "AVAILABILITY_SWITCH");
         await switchValueIs(tester, "AVAILABILITY_SWITCH", true);
       } finally {

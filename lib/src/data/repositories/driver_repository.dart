@@ -6,12 +6,12 @@ import 'package:lastmile_mobile/src/data/datasource/driver_datasource.dart';
 import 'package:lastmile_mobile/src/data/models/driver.dart';
 import 'package:lastmile_mobile/src/domain/repositories/driver_repository.dart';
 
-class DriverRepository implements IDriverRepository {
-  IDriverDatasource datasource;
-  DriverRepository({required this.datasource});
+class DriverRepositoryImpl implements DriverRepository {
+  DriverDatasource datasource;
+  DriverRepositoryImpl({required this.datasource});
+  var controller = StreamController<Either<Failure, DriverModel>>();
   @override
   Stream<Either<Failure, DriverModel>> setupDriverProfileListener() {
-    var controller = StreamController<Either<Failure, DriverModel>>();
     DriverModel driverModel;
     datasource.setupDriverProfileListner().listen((event) {
       print(event.toJson());
@@ -31,7 +31,8 @@ class DriverRepository implements IDriverRepository {
   }
 
   @override
-  void updateDriverAvailability(isAvailable) {
+  void updateDriverAvailability(bool isAvailable) {
+    print(isAvailable);
     datasource.updateDriverAvailability(isAvailable);
   }
 }
