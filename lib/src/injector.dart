@@ -11,6 +11,8 @@ import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/socket/so
 import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/update_location/update_location_bloc.dart';
 import 'package:socket_io_client/socket_io_client.dart';
 
+import 'presentation/views/home_page/blocs/polylines/polyline_bloc.dart';
+
 final injector = GetIt.instance;
 
 Future<void> initializeDependencies() async {
@@ -50,5 +52,6 @@ Future<void> initializeDependencies() async {
         () => DriverProfileBloc(driverRepository: injector()))
     ..registerFactory<SocketBloc>(() => SocketBloc(socket: injector()))
     ..registerFactory<DriverLocationBloc>(() => DriverLocationBloc(injector()))
-    ..registerFactory<UpdateLocationBloc>(() => UpdateLocationBloc(injector()));
+    ..registerFactory<UpdateLocationBloc>(() => UpdateLocationBloc(injector()))
+    ..registerFactory<PolyLineBloc>(() => PolyLineBloc());
 }

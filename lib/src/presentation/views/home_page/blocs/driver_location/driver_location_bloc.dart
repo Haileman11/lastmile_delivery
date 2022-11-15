@@ -3,8 +3,6 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:lastmile_mobile/src/core/utils/constants.dart';
 import 'package:lastmile_mobile/src/domain/repositories/base_geolocation_repo.dart';
 import 'package:permission_handler/permission_handler.dart';
 
@@ -37,12 +35,14 @@ class DriverLocationBloc
     });
 
     on<UpdateDriverLocation>((event, emit) {
-      if (AppValues.mapController.isCompleted) {
-        AppValues.controller!.moveCamera(
-          CameraUpdate.newLatLng(
-              LatLng(event.position.latitude, event.position.longitude)),
-        );
-      }
+      // if (AppValues.mapController.isCompleted) {
+      //   AppValues.controller!.animateCamera(CameraUpdate.newCameraPosition(
+      //     CameraPosition(
+      //       zoom: 16.0,
+      //       target: LatLng(event.position.latitude, event.position.longitude),
+      //     ),
+      //   ));
+      // }
       emit(DriverLocationDone(event.position));
     });
   }

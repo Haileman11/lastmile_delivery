@@ -7,6 +7,7 @@ import 'package:lastmile_mobile/src/core/utils/constants.dart';
 import 'package:lastmile_mobile/src/injector.dart';
 import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/driver_location/driver_location_bloc.dart';
 import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/driver_profile/driver_profile_bloc.dart';
+import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/polylines/polyline_bloc.dart';
 import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/socket/socket_bloc.dart';
 import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/update_location/update_location_bloc.dart';
 import 'package:lastmile_mobile/src/presentation/views/home_page/home_page_view.dart';
@@ -42,6 +43,9 @@ class LastMile extends StatelessWidget {
         ),
         BlocProvider<UpdateLocationBloc>(
           create: (context) => UpdateLocationBloc(injector()),
+        ),
+        BlocProvider<PolyLineBloc>(
+          create: (context) => PolyLineBloc(),
         ),
       ],
       child: BlocListener<SocketBloc, SocketState>(
