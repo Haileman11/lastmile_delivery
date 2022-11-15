@@ -21,8 +21,9 @@ class DecodingFailure extends PolyLineState {
 class DecodingSuccess extends PolyLineState {
   final Set<Polyline> polyLines;
   final LatLngBounds latLngBounds;
+  final Set<Marker> markers;
 
-  const DecodingSuccess(this.polyLines, this.latLngBounds);
+  const DecodingSuccess(this.polyLines, this.latLngBounds, this.markers);
   @override
   List<Object> get props => [polyLines, latLngBounds];
 }

@@ -35,14 +35,6 @@ class DriverLocationBloc
     });
 
     on<UpdateDriverLocation>((event, emit) {
-      // if (AppValues.mapController.isCompleted) {
-      //   AppValues.controller!.animateCamera(CameraUpdate.newCameraPosition(
-      //     CameraPosition(
-      //       zoom: 16.0,
-      //       target: LatLng(event.position.latitude, event.position.longitude),
-      //     ),
-      //   ));
-      // }
       emit(DriverLocationDone(event.position));
     });
   }

@@ -26,7 +26,7 @@ class PolyLineBloc extends Bloc<PolyLineEvent, PolyLineState> {
           color: AppColors.appGreen,
         ));
 
-        emit(DecodingSuccess(polyLines, event.latLngBounds));
+        emit(DecodingSuccess(polyLines, event.latLngBounds, event.markers));
       } catch (e) {
         emit(DecodingFailure(e.toString()));
       }

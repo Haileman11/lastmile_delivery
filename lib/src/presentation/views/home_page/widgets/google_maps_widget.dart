@@ -20,6 +20,8 @@ class MapView extends StatefulWidget {
 class _MapViewState extends State<MapView> {
   BitmapDescriptor? icon;
   Set<Polyline> polyLines = {};
+  Set<Marker> polyLineMarkers = {};
+
   @override
   void initState() {
     getDriverIcon();
@@ -39,9 +41,9 @@ class _MapViewState extends State<MapView> {
   Widget build(BuildContext context) {
     return BlocBuilder<PolyLineBloc, PolyLineState>(
       builder: (context, state) {
-        print("POLYLINE STATE >>>>>>>>>>>>>> $state");
         if (state is DecodingSuccess) {
           polyLines = state.polyLines;
+          polyLineMarkers = state.markers;
           if (AppValues.mapController.isCompleted) {
             AppValues.controller!.animateCamera(
               CameraUpdate.newLatLngBounds(
@@ -84,6 +86,19 @@ class _MapViewState extends State<MapView> {
                     'fake_id',
                     LatLng(state.position.latitude, state.position.longitude)));
               }
+              if (AppValues.mapController.isCompleted && polyLines.isEmpty) {
+                AppValues.controller!.animateCamera(
+                  CameraUpdate.newCameraPosition(
+                    CameraPosition(
+                      zoom: 16.0,
+                      target: LatLng(
+                          state.position.latitude, state.position.longitude),
+                    ),
+                  ),
+                );
+              }
+
+              /// RENDER GOOGLE MAP
               return GoogleMap(
                 key: const Key('GOOGLE_MAPS_WIDGET'),
                 mapType: MapType.normal,
@@ -103,7 +118,8 @@ class _MapViewState extends State<MapView> {
                     position: LatLng(
                         state.position.latitude, state.position.longitude),
                     rotation: state.position.heading,
-                  ),
+                    anchor: const Offset(0.5, 0.5),
+                  )
                 },
                 initialCameraPosition: CameraPosition(
                   target:
@@ -114,17 +130,6 @@ class _MapViewState extends State<MapView> {
                   if (!AppValues.mapController.isCompleted) {
                     AppValues.mapController.complete(controller);
                     AppValues.controller = controller;
-
-                    /// DELETE THIS
-                    BlocProvider.of<PolyLineBloc>(context).add(
-                      DecodePolyLineEvent(
-                        'olpaGj{upLwAdAi@l@m@bASd@Qd@QKW]GIo@}A{DcK{AaGi@q@UGYd@mBtBoAbAa@f@o@DKFkAH}DHaDJYN}@x@sA`Ak@jAi@`AqBlAyFzCgAPm@\\k@b@]FaALuJmOmCaDyEgGoCqEu@y@w@{@KX]r@yA|Cc@dCaEnPsFjT{Nr^gI~S{@tB}AhAMJq@Nm@Go@@OJUXMv@B`@`@t@|@ZLd@Cr@iBbFs@dBoJtL}O`UmAjB{A|A_@n@yAnAaAt@mEvDcAhAuCpEkAhBu@bBuExG{FpIgMlQaFnFoE|DwRpPsN`M_EjDY?sAr@eCv@cAJ{CKoF_@wA?m@LmBbA}@hAy@tB}BhLsAtD}JfPwA`Ew@rDg@rBq@zAuAfCs@pDm@jB_@t@_ArCSrCSzM]|UJ`HArGHlB`@vCf@bBn@hAp@v@PDVF^ZPx@b@fBnAxC~AhCvAjBlBdB`D~Cd@~@TVPAFIZUt@OdCD|@I|Bk@dCOfCHhAGvBa@|Ba@|@B~@^t@l@pAnBnBrE`B`C~ClCtAl@|BZxJKvBHp@Vt@l@fCfCfCxBpBxBt@rA^vA^~EZzEb@dBjBvC~BrB~@tCFb@]jC}@hEqEfTkJjc@yGjQgG`MwAvCy@`CmE`UkDdQ{GxVoFrTsDpSoAvLyBbTaAvFeBjH{C~LgDvLyGjT}BpK{Ft\\cAhKg@lIi@rZ_@|Pg@lJq@~HaBxLyArH{CbLuCjJsApGs@dGUzDSbJCdDMZ?BYjE[|DWbDM\\o@l@uAFo@EgAAo@GuCUaE[sGe@{BO_BAyBh@kFtBeJpFyDzBkDdA{MhC{Jv@aAOmAaAwCyCcAq@o@UsA_@uA{@iA{@iAyAcDkEoEmEqDuCqAy@gG}A{@c@uCgC{AsA][g@nA}@rBwAdD_AtBg@jAAh@yBzIQbEZpQ`D|W~@zHfArFXlCAbFLnCbBrJFrAIjCXrFAtG^lJQ~EUnFj@`IbAxDxAnEVpBE|D_@tHHhB~@xB\\h@wAtBu@dAoDdFa@`Ag@jC_AzI}AvSi@pG[tIi@lTPhD`@fEN`NFvT@fCQhBeBvGgFzKkBdG_@vBWdDg@vGsAjRiDpf@eBxd@}AhGmEdJyBzG_BfDmFlJiBjFYdBOtDOfBs@hD{D`Nu@~C[hEZbGU~JB`FVvGr@nIf@`IHpEV`Cl@fDPnCVbJj@zKCzBu@tKc@zD{@fE{BnD_A~Am@hBmAvCk@Zk@h@kBtAi@`@Tx@jBmAx@m@RW',
-                        LatLngBounds(
-                          northeast: const LatLng(42.4614275, -71.0552091),
-                          southwest: const LatLng(42.3599162, -71.3496743),
-                        ),
-                      ),
-                    );
                   }
                 },
               );

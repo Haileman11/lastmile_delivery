@@ -5,6 +5,6 @@ class ScreenArguments {
 }
 
 class AppRoutes {
-  static const homePageRoute = '/';
+  static const homePageRoute = '/home-page';
   static const splashScreenRoute = '/splash-page';
 }
