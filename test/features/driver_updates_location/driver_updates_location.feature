@@ -6,10 +6,9 @@ Feature: Driver updates location
 
   Scenario: Driver fails to update location
     Given injection is setup
-    And socket connection is {'INACTIVE'}
+    And driver availability is {false}
     Then user location data is not updated
 
   Scenario: Driver successfully updates location
-    Given injection is setup
-    And socket connection is {'ACTIVE'}
+    Given driver availability is {true}
     Then user location data is updated

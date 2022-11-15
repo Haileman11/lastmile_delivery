@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lastmile_mobile/src/config/themes/app_themes.dart';
 import 'package:lastmile_mobile/src/presentation/common/app_dialog.dart';
+import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/update_location/update_location_bloc.dart';
 
 import '../blocs/driver_profile/driver_profile_bloc.dart';
 import '../blocs/socket/socket_bloc.dart';
@@ -26,7 +27,7 @@ class StatusSwitchWidget extends StatelessWidget {
                 return const Text('Tap to become online');
               }
 
-              if (state is DriverProfileError) {
+              if (state is SocketError || state is SocketConnectionTimedOut) {
                 return Text(
                   'Connection failed, try again.',
                   style: TextStyle(color: AppColors.errorRed),
@@ -64,6 +65,9 @@ class StatusSwitchWidget extends StatelessWidget {
                     showDialog(
                         context: context,
                         builder: (context) {
+                          /// STOP UPDATING DRIVER LOCATION
+                          BlocProvider.of<UpdateLocationBloc>(context)
+                              .add(const StopUpdatingLocation());
                           return AppDialog(
                             optionTitle: 'Go offline',
                             message:

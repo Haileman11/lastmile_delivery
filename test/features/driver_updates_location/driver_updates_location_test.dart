@@ -1,25 +1,27 @@
-// GENERATED CODE - DO NOT MODIFY BY HAND
-// ignore_for_file: unused_import, directives_ordering
-
-import 'package:flutter/material.dart';
+import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:lastmile_mobile/src/injector.dart';
+import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/update_location/update_location_bloc.dart';
 
-import './step/injection_is_setup.dart';
-import './step/socket_connection_is.dart';
-import './step/user_location_data_is_not_updated.dart';
-import './step/user_location_data_is_updated.dart';
+import '../../utils/test_injector.dart';
 
 void main() {
   group('''Driver updates location''', () {
-    testWidgets('''Driver fails to update location''', (tester) async {
-      await injectionIsSetup(tester);
-      await socketConnectionIs(tester, 'INACTIVE');
-      await userLocationDataIsNotUpdated(tester);
-    });
-    testWidgets('''Driver successfully updates location''', (tester) async {
-      await injectionIsSetup(tester);
-      await socketConnectionIs(tester, 'ACTIVE');
-      await userLocationDataIsUpdated(tester);
-    });
+    initializeTestDependencies();
+    blocTest(
+      'Driver doesn\'t update location',
+      build: () => UpdateLocationBloc(injector()),
+      act: (bloc) => bloc.add(const StopUpdatingLocation()),
+      expect: () => [const UpdatingLocationStopped()],
+    );
+
+    blocTest(
+      'Driver updates location successfully',
+      build: () => UpdateLocationBloc(injector()),
+      act: (bloc) =>
+          bloc.add(const UpdateLocation('fake_id', LatLng(0.0, 0.0))),
+      expect: () => [const UpdatingLocation()],
+    );
   });
 }
