@@ -24,7 +24,7 @@ class OrderRequest extends StatelessWidget {
             Card(
                 margin: const EdgeInsets.all(0),
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Container(
                       padding: const EdgeInsets.all(16),

@@ -27,7 +27,7 @@ void main() {
       try {
         await bddSetUp(tester);
         // await driverAvailabilityIs(tester, true);
-        await theAppIsOn(tester, '/');
+        await theAppIsOn(tester, '/home-page');
         await driverIsAssignedAnOrder(tester);
         await iSee(tester, "ORDER_ASSIGNMENT_PAGE");
       } finally {

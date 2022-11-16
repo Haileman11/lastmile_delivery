@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/services.dart';
 import 'package:lastmile_mobile/src/core/utils/enums.dart';
 import 'package:socket_io_client/socket_io_client.dart';
 
@@ -16,6 +17,7 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
       add(OrderAssignedEvent(Order.fromMap(data)));
     });
     on<OrderAssignedEvent>((event, emit) {
+      HapticFeedback.vibrate();
       emit(OrderAssigned(event.order));
     });
     on<OrderAcceptedEvent>((event, emit) {

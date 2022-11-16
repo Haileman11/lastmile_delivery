@@ -4,9 +4,8 @@ import 'package:lastmile_mobile/src/injector.dart';
 import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/order/order_bloc.dart';
 
 Future<void> driverIsAssignedAnOrder(WidgetTester tester) async {
-  await tester.pumpAndSettle();
   var orderBloc = injector<OrderBloc>();
-  orderBloc.emit(OrderAssigned(Order.fromMap({
+  orderBloc.add(OrderAssignedEvent(Order.fromMap({
     'id': 'id',
     'businessCustomerName': "Boss burger",
     'orderCategory': 'singleToSingle',
@@ -45,4 +44,5 @@ Future<void> driverIsAssignedAnOrder(WidgetTester tester) async {
   })));
   print(orderBloc.state);
   await tester.pumpAndSettle();
+  print(orderBloc.state);
 }
