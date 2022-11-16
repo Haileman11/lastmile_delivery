@@ -1,7 +1,13 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:lastmile_mobile/src/config/themes/app_themes.dart';
 import 'package:lastmile_mobile/src/data/models/order.dart';
+import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/order/order_bloc.dart';
+import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/polylines/polyline_bloc.dart';
+import 'package:lastmile_mobile/src/presentation/views/home_page/widgets/swiping_button.dart';
 
 class OrderRequest extends StatelessWidget {
   final Order order;
@@ -29,6 +35,7 @@ class OrderRequest extends StatelessWidget {
                         style: Theme.of(context).textTheme.titleLarge,
                       ),
                     ),
+                    TimerWidget(),
                   ],
                 )),
             Column(
@@ -90,56 +97,140 @@ class OrderRequest extends StatelessWidget {
                 ),
               ],
             ),
-            Slidable(
-              // Specify a key if the Slidable is dismissible.
-              key: const ValueKey(0),
-
-              // The start action pane is the one at the left or the top side.
-              startActionPane: ActionPane(
-                dragDismissible: true,
-                motion: const ScrollMotion(),
-                extentRatio: 1,
-                children: [
-                  // A SlidableAction can have an icon and/or a label.
-                  SlidableAction(
-                    onPressed: (_) {},
-                    backgroundColor: AppColors.appGreen,
-                    foregroundColor: Colors.white,
-                    icon: Icons.check,
-                    label: 'Accept',
-                  ),
-                ],
-              ),
-
-              // The end action pane is the one at the right or the bottom side.
-              endActionPane: ActionPane(
-                motion: ScrollMotion(),
-                extentRatio: 1,
-                children: [
-                  SlidableAction(
-                    // An action can be bigger than the others.
-                    flex: 2,
-                    onPressed: (_) {},
-                    backgroundColor: AppColors.errorRed,
-                    foregroundColor: Colors.white,
-                    icon: Icons.delete,
-                    label: 'Reject',
-                  ),
-                ],
-              ),
-
-              // The child of the Slidable is what the user sees when the
-              // component is not dragged.
-              child: ListTile(
-                  tileColor: AppColors.appBlack,
-                  title: Text(
-                    'Slide to respond to request',
-                    style: TextStyle(
-                      color: AppColors.white,
-                    ),
-                  )),
+            SwipingButton(
+                text: 'Slide to accept',
+                color: AppColors.appGreen,
+                onSwipeCallback: () {
+                  BlocProvider.of<PolyLineBloc>(context)
+                      .add(const ClearPolyLinesEvent());
+                  BlocProvider.of<OrderBloc>(context)
+                      .add(OrderAcceptedEvent(order));
+                }),
+            SizedBox(
+              height: 4,
             ),
+            SwipingButton(
+                text: 'Slide to reject',
+                color: AppColors.errorRed,
+                onSwipeCallback: () {
+                  BlocProvider.of<PolyLineBloc>(context)
+                      .add(const ClearPolyLinesEvent());
+                  BlocProvider.of<OrderBloc>(context)
+                      .add(OrderRejectedEvent(order));
+                }),
+            // Slidable(
+            //   // Specify a key if the Slidable is dismissible.
+            //   key: const ValueKey(0),
+
+            //   startActionPane: ActionPane(
+            //     dismissible: DismissiblePane(onDismissed: () {}),
+            //     dragDismissible: true,
+            //     motion: const ScrollMotion(),
+            //     extentRatio: 0.7,
+            //     children: [
+            //       // A SlidableAction can have an icon and/or a label.
+            //       SlidableAction(
+            //         onPressed: (_) {},
+            //         backgroundColor: AppColors.appGreen,
+            //         foregroundColor: Colors.white,
+            //         icon: Icons.check,
+            //         label: 'Accept',
+            //       ),
+            //     ],
+            //   ),
+
+            //   // The end action pane is the one at the right or the bottom side.
+            //   endActionPane: ActionPane(
+            //     closeThreshold: 0.6,
+            //     motion: ScrollMotion(),
+            //     dismissible: DismissiblePane(onDismissed: () {
+            //       BlocProvider.of<PolyLineBloc>(context)
+            //           .add(const ClearPolyLinesEvent());
+            //       BlocProvider.of<OrderBloc>(context)
+            //           .add(OrderRejectedEvent(order));
+            //     }),
+            //     extentRatio: 1,
+            //     children: [
+            //       SlidableAction(
+            //         flex: 2,
+            //         onPressed: (_) {},
+            //         backgroundColor: AppColors.errorRed,
+            //         foregroundColor: Colors.white,
+            //         icon: Icons.delete,
+            //         label: 'Reject',
+            //       ),
+            //     ],
+            //   ),
+
+            //   // The child of the Slidable is what the user sees when the
+            //   // component is not dragged.
+            //   child: ListTile(
+            //       tileColor: AppColors.appBlack,
+            //       title: Text(
+            //         'Slide to respond to request',
+            //         style: TextStyle(
+            //           color: AppColors.white,
+            //         ),
+            //       )),
+            // ),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class TimerWidget extends StatefulWidget {
+  const TimerWidget({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  State<TimerWidget> createState() => _TimerWidgetState();
+}
+
+class _TimerWidgetState extends State<TimerWidget> {
+  late Timer _timer;
+  int _start = 30;
+  @override
+  void initState() {
+    startTimer();
+    super.initState();
+  }
+
+  void startTimer() {
+    const oneSec = Duration(seconds: 1);
+    _timer = Timer.periodic(
+      oneSec,
+      (Timer timer) {
+        if (_start == 0) {
+          setState(() {
+            timer.cancel();
+          });
+        } else {
+          setState(() {
+            _start--;
+          });
+        }
+      },
+    );
+  }
+
+  @override
+  void dispose() {
+    _timer.cancel();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(16),
+      alignment: Alignment.center,
+      child: Container(
+        child: Text(
+          "$_start",
+          style: Theme.of(context).textTheme.titleLarge,
         ),
       ),
     );

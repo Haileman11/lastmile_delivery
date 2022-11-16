@@ -33,8 +33,10 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
       // });
     });
     on<OrderRejectedEvent>((event, emit) {
-      socket.emit(
-          'order_assignment', {"orderId": event.order.id, "accepted": false});
+      print(state);
+      // socket.emit(
+      //     'order_assignment', {"orderId": event.order.id, "accepted": false});
+      emit(OrderUnassigned());
     });
     on<OrderHeadingForPickupEvent>((event, emit) {
       emit(OrderHeadingForPickup(event.order));
