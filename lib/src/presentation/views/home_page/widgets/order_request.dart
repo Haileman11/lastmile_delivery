@@ -2,12 +2,11 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:lastmile_mobile/src/config/themes/app_themes.dart';
 import 'package:lastmile_mobile/src/data/models/order.dart';
+import 'package:lastmile_mobile/src/presentation/common/swiping_button.dart';
 import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/order/order_bloc.dart';
 import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/polylines/polyline_bloc.dart';
-import 'package:lastmile_mobile/src/presentation/views/home_page/widgets/swiping_button.dart';
 
 class OrderRequest extends StatelessWidget {
   final Order order;
@@ -35,7 +34,7 @@ class OrderRequest extends StatelessWidget {
                         style: Theme.of(context).textTheme.titleLarge,
                       ),
                     ),
-                    TimerWidget(),
+                    TimerWidget(order: order),
                   ],
                 )),
             Column(
@@ -183,7 +182,10 @@ class OrderRequest extends StatelessWidget {
 class TimerWidget extends StatefulWidget {
   const TimerWidget({
     Key? key,
+    required this.order,
   }) : super(key: key);
+
+  final Order order;
 
   @override
   State<TimerWidget> createState() => _TimerWidgetState();
@@ -206,6 +208,21 @@ class _TimerWidgetState extends State<TimerWidget> {
         if (_start == 0) {
           setState(() {
             timer.cancel();
+            BlocProvider.of<PolyLineBloc>(context)
+                .add(const ClearPolyLinesEvent());
+            BlocProvider.of<OrderBloc>(context)
+                .add(OrderRejectedEvent(widget.order));
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                backgroundColor: AppColors.black,
+                content: Text(
+                  'Order timed out',
+                  style: TextStyle(
+                    color: AppColors.white,
+                  ),
+                ),
+              ),
+            );
           });
         } else {
           setState(() {

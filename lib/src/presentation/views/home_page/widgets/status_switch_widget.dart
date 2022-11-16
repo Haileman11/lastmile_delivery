@@ -38,7 +38,9 @@ class StatusSwitchWidget extends StatelessWidget {
           ),
           BlocBuilder<DriverProfileBloc, DriverProfileState>(
             builder: (context, state) {
-              if (state is DriverProfileLoaded) {
+              final socketState = BlocProvider.of<SocketBloc>(context).state;
+              if (state is DriverProfileLoaded &&
+                  socketState is SocketConnected) {
                 if (state.driverProfile.isAvailable) {
                   return Text(
                     'Available',

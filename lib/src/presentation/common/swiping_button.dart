@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import 'swipable_widget.dart';
+import 'package:lastmile_mobile/src/presentation/common/swipable_widget.dart';
 
 class SwipingButton extends StatelessWidget {
   /// The text that the button will display.
@@ -49,7 +48,7 @@ class SwipingButton extends StatelessWidget {
 
   Widget _buildText() {
     final textStyle = TextStyle(
-        fontSize: 18.0, fontWeight: FontWeight.w500, color: Colors.white);
+        fontSize: 17.0, fontWeight: FontWeight.w400, color: Colors.white);
     return Flexible(
       flex: 2,
       child: Text(
@@ -75,7 +74,7 @@ class SwipingButton extends StatelessWidget {
         ),
         Flexible(
           child: SizedBox(
-            width: 80,
+            width: 30,
           ),
         ),
         _buildText(),
