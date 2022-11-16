@@ -5,6 +5,7 @@ import 'package:lastmile_mobile/src/domain/repositories/driver_repository.dart';
 import 'package:lastmile_mobile/src/injector.dart';
 import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/driver_location/driver_location_bloc.dart';
 import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/driver_profile/driver_profile_bloc.dart';
+import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/order/order_bloc.dart';
 import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/polylines/polyline_bloc.dart';
 import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/socket/socket_bloc.dart';
 import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/update_location/update_location_bloc.dart';
@@ -39,6 +40,7 @@ Future<void> initializeTestDependencies() async {
     ..registerFactory<SocketBloc>(() => SocketBloc(socket: injector()))
     ..registerFactory<PolyLineBloc>(() => PolyLineBloc())
     //..registerFactory<SocketBloc>(() => MockSocketBloc())
+    ..registerFactory<OrderBloc>(() => OrderBloc(injector()))
     ..registerFactory<UpdateLocationBloc>(() => MockUpdateLocationBloc())
     ..registerFactory<DriverProfileBloc>(
         () => DriverProfileBloc(driverRepository: injector()))

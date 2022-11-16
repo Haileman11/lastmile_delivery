@@ -1,5 +1,5 @@
 
-Feature: Driver becomes online
+Feature: View order request details
     As a delivery driver
     I want to view details of an order when it comes
     So that I can decide whether to accept it or reject it
@@ -9,7 +9,7 @@ Feature: Driver becomes online
     After: 
         Then clean up after the test    
     
-    Scenario: Switch is toggled to the availability status when app is opened
+    Scenario: Driver can see the order request modal when assigned an order
         Given driver availability is {true}        
         And the app is on {'/'}
         Then driver is assigned an order

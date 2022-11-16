@@ -1,42 +1,67 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:lastmile_mobile/src/config/themes/app_themes.dart';
 import 'package:lastmile_mobile/src/presentation/views/home_page/widgets/google_maps_widget.dart';
+import 'package:lastmile_mobile/src/presentation/views/home_page/widgets/order_request.dart';
 import 'package:lastmile_mobile/src/presentation/views/home_page/widgets/status_switch_widget.dart';
+
+import 'blocs/order/order_bloc.dart';
 
 class HomePageView extends StatelessWidget {
   const HomePageView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        leading: Icon(
-          PhosphorIcons.list_light,
-          color: AppColors.white,
-        ),
-        elevation: 0.0,
-        backgroundColor: AppColors.appBlack,
-        title: Text(
-          'Delivery',
-          style: TextStyle(
+    print(">>BUILLDER ");
+    return BlocListener<OrderBloc, OrderState>(
+      listener: (context, state) {
+        print(">>LISTENER $state");
+        switch (state.runtimeType) {
+          case OrderAssigned:
+            showModalBottomSheet(
+                isDismissible: false,
+                // enableDrag: false,
+                context: context,
+                shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.vertical(
+                    top: Radius.circular(8.0),
+                  ),
+                ),
+                builder: ((context) => OrderRequest(order: state.order!)));
+            break;
+          default:
+        }
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          leading: Icon(
+            PhosphorIcons.list_light,
             color: AppColors.white,
           ),
-        ),
-        actions: [
-          Icon(
-            PhosphorIcons.bell_fill,
-            color: AppColors.white,
+          elevation: 0.0,
+          backgroundColor: AppColors.appBlack,
+          title: Text(
+            'Delivery',
+            style: TextStyle(
+              color: AppColors.white,
+            ),
           ),
-          const SizedBox(width: 15),
-        ],
-      ),
-      body: Stack(
-        alignment: Alignment.topCenter,
-        children: const [
-          MapView(),
-          StatusSwitchWidget(),
-        ],
+          actions: [
+            Icon(
+              PhosphorIcons.bell_fill,
+              color: AppColors.white,
+            ),
+            const SizedBox(width: 15),
+          ],
+        ),
+        body: Stack(
+          alignment: Alignment.topCenter,
+          children: const [
+            MapView(),
+            StatusSwitchWidget(),
+          ],
+        ),
       ),
     );
   }

@@ -4,7 +4,9 @@ import 'package:lastmile_mobile/src/config/routes/app_routes.dart';
 import 'package:lastmile_mobile/src/injector.dart';
 import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/driver_location/driver_location_bloc.dart';
 import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/driver_profile/driver_profile_bloc.dart';
+import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/order/order_bloc.dart';
 import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/socket/socket_bloc.dart';
+import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/update_location/update_location_bloc.dart';
 import 'package:lastmile_mobile/src/presentation/views/home_page/home_page_view.dart';
 import 'package:lastmile_mobile/src/presentation/views/splash_page/splash_page_view.dart';
 
@@ -24,6 +26,12 @@ class TestApp extends StatelessWidget {
         BlocProvider<DriverProfileBloc>(
             create: (context) =>
                 injector()..add(SetupDriverProfileListenerEvent())),
+        BlocProvider<UpdateLocationBloc>(
+          create: (context) => UpdateLocationBloc(injector()),
+        ),
+        BlocProvider<OrderBloc>(
+          create: (context) => OrderBloc(injector()),
+        ),
       ],
       child: BlocListener<SocketBloc, SocketState>(
         listener: (context, state) {

@@ -5,103 +5,109 @@ import 'package:flutter/foundation.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import 'package:lastmile_mobile/src/core/utils/enums.dart';
-import 'package:lastmile_mobile/src/data/models/business_customer.dart';
-import 'package:lastmile_mobile/src/data/models/service_type.dart';
+import 'package:lastmile_mobile/src/data/models/route.dart';
+import 'package:lastmile_mobile/src/data/models/task.dart';
+
+import '../../core/utils/helpers.dart';
 
 class Order {
   final String id;
-  final BusinessCustomer businessCustomer;
+  final String businessCustomerName;
   final OrderCategory orderCategory;
   final OrderStatus orderStatus;
   final OrderType orderType;
-  final ServiceType serviceType;
+  final String serviceTypeName;
   final double estimatedTripDistance;
   final double estimatedPrice;
-  final List<LatLng> pickupPoints;
-  final List<LatLng> dropoffPoints;
-  final String encodedRoute;
+  final double estimatedTime;
+  final List<Task> pickupTasks;
+  final List<Task> dropoffTasks;
+  final Route route;
   Order({
     required this.id,
-    required this.businessCustomer,
+    required this.businessCustomerName,
     required this.orderCategory,
     required this.orderStatus,
     required this.orderType,
-    required this.serviceType,
+    required this.serviceTypeName,
     required this.estimatedTripDistance,
     required this.estimatedPrice,
-    required this.pickupPoints,
-    required this.dropoffPoints,
-    required this.encodedRoute,
+    required this.estimatedTime,
+    required this.pickupTasks,
+    required this.dropoffTasks,
+    required this.route,
   });
 
   Order copyWith({
     String? id,
-    BusinessCustomer? businessCustomer,
+    String? businessCustomerName,
     OrderCategory? orderCategory,
     OrderStatus? orderStatus,
     OrderType? orderType,
-    ServiceType? serviceType,
+    String? serviceTypeName,
     double? estimatedTripDistance,
     double? estimatedPrice,
-    List<LatLng>? pickupPoints,
-    List<LatLng>? dropoffPoints,
-    String? encodedRoute,
+    double? estimatedTime,
+    List<Task>? pickupTasks,
+    List<Task>? dropoffTasks,
+    Route? route,
   }) {
     return Order(
       id: id ?? this.id,
-      businessCustomer: businessCustomer ?? this.businessCustomer,
+      businessCustomerName: businessCustomerName ?? this.businessCustomerName,
       orderCategory: orderCategory ?? this.orderCategory,
       orderStatus: orderStatus ?? this.orderStatus,
       orderType: orderType ?? this.orderType,
-      serviceType: serviceType ?? this.serviceType,
+      serviceTypeName: serviceTypeName ?? this.serviceTypeName,
       estimatedTripDistance:
           estimatedTripDistance ?? this.estimatedTripDistance,
       estimatedPrice: estimatedPrice ?? this.estimatedPrice,
-      pickupPoints: pickupPoints ?? this.pickupPoints,
-      dropoffPoints: dropoffPoints ?? this.dropoffPoints,
-      encodedRoute: encodedRoute ?? this.encodedRoute,
+      estimatedTime: estimatedTime ?? this.estimatedTime,
+      pickupTasks: pickupTasks ?? this.pickupTasks,
+      dropoffTasks: dropoffTasks ?? this.dropoffTasks,
+      route: route ?? this.route,
     );
   }
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'id': id,
-      'businessCustomer': businessCustomer.toMap(),
+      'businessCustomerName': businessCustomerName,
       'orderCategory': orderCategory.toMap(),
       'orderStatus': orderStatus.toMap(),
       'orderType': orderType.toMap(),
-      'serviceType': serviceType.toMap(),
+      'serviceTypeName': serviceTypeName,
       'estimatedTripDistance': estimatedTripDistance,
       'estimatedPrice': estimatedPrice,
-      'pickupPoints': pickupPoints.map((x) => x.toJson()).toList(),
-      'dropoffPoints': dropoffPoints.map((x) => x.toJson()).toList(),
-      'encodedRoute': encodedRoute,
+      'estimatedTime': estimatedTime,
+      'pickupTasks': pickupTasks.map((x) => x.toMap()).toList(),
+      'dropoffTasks': dropoffTasks.map((x) => x.toMap()).toList(),
+      'route': route.toMap(),
     };
   }
 
   factory Order.fromMap(Map<String, dynamic> map) {
     return Order(
       id: map['id'] as String,
-      businessCustomer: BusinessCustomer.fromMap(
-          map['businessCustomer'] as Map<String, dynamic>),
+      businessCustomerName: map['businessCustomerName'] as String,
       orderCategory: OrderCategory.fromMap(map['orderCategory'] as String),
       orderStatus: OrderStatus.fromMap(map['orderStatus'] as String),
       orderType: OrderType.fromMap(map['orderType'] as String),
-      serviceType:
-          ServiceType.fromMap(map['serviceType'] as Map<String, dynamic>),
+      serviceTypeName: map['serviceTypeName'] as String,
       estimatedTripDistance: map['estimatedTripDistance'] as double,
       estimatedPrice: map['estimatedPrice'] as double,
-      pickupPoints: List<LatLng>.from(
-        (map['pickupPoints'] as List<int>).map<LatLng>(
-          (x) => LatLng.fromJson(x as Map<String, dynamic>)!,
+      estimatedTime: map['estimatedTime'] as double,
+      pickupTasks: List<Task>.from(
+        (map['pickupTasks'] as List<dynamic>).map<Task>(
+          (x) => Task.fromMap(x as Map<String, dynamic>),
         ),
       ),
-      dropoffPoints: List<LatLng>.from(
-        (map['dropoffPoints'] as List<int>).map<LatLng>(
-          (x) => LatLng.fromJson(x as Map<String, dynamic>)!,
+      dropoffTasks: List<Task>.from(
+        (map['dropoffTasks'] as List<dynamic>).map<Task>(
+          (x) => Task.fromMap(x as Map<String, dynamic>),
         ),
       ),
-      encodedRoute: map['encodedRoute'] as String,
+      route: Route.fromMap(map['route'] as Map<String, dynamic>),
     );
   }
 
@@ -112,7 +118,7 @@ class Order {
 
   @override
   String toString() {
-    return 'Order(id: $id, businessCustomer: $businessCustomer, orderCategory: $orderCategory, orderStatus: $orderStatus, orderType: $orderType, serviceType: $serviceType, estimatedTripDistance: $estimatedTripDistance, estimatedPrice: $estimatedPrice, pickupPoints: $pickupPoints, dropoffPoints: $dropoffPoints, encodedRoute: $encodedRoute)';
+    return 'Order(id: $id, businessCustomerName: $businessCustomerName, orderCategory: $orderCategory, orderStatus: $orderStatus, orderType: $orderType, serviceTypeName: $serviceTypeName, estimatedTripDistance: $estimatedTripDistance, estimatedPrice: $estimatedPrice, estimatedTime:$estimatedTime, pickupTasks: $pickupTasks, dropoffTasks: $dropoffTasks, route: $route)';
   }
 
   @override
@@ -120,30 +126,32 @@ class Order {
     if (identical(this, other)) return true;
 
     return other.id == id &&
-        other.businessCustomer == businessCustomer &&
+        other.businessCustomerName == businessCustomerName &&
         other.orderCategory == orderCategory &&
         other.orderStatus == orderStatus &&
         other.orderType == orderType &&
-        other.serviceType == serviceType &&
+        other.serviceTypeName == serviceTypeName &&
         other.estimatedTripDistance == estimatedTripDistance &&
         other.estimatedPrice == estimatedPrice &&
-        listEquals(other.pickupPoints, pickupPoints) &&
-        listEquals(other.dropoffPoints, dropoffPoints) &&
-        other.encodedRoute == encodedRoute;
+        other.estimatedTime == estimatedTime &&
+        listEquals(other.pickupTasks, pickupTasks) &&
+        listEquals(other.dropoffTasks, dropoffTasks) &&
+        other.route == route;
   }
 
   @override
   int get hashCode {
     return id.hashCode ^
-        businessCustomer.hashCode ^
+        businessCustomerName.hashCode ^
         orderCategory.hashCode ^
         orderStatus.hashCode ^
         orderType.hashCode ^
-        serviceType.hashCode ^
+        serviceTypeName.hashCode ^
         estimatedTripDistance.hashCode ^
         estimatedPrice.hashCode ^
-        pickupPoints.hashCode ^
-        dropoffPoints.hashCode ^
-        encodedRoute.hashCode;
+        estimatedTime.hashCode ^
+        pickupTasks.hashCode ^
+        dropoffTasks.hashCode ^
+        route.hashCode;
   }
 }
