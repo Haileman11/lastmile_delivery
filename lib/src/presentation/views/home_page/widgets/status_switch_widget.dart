@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lastmile_mobile/src/config/themes/app_themes.dart';
 import 'package:lastmile_mobile/src/presentation/common/app_dialog.dart';
+import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/order/order_bloc.dart';
 import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/update_location/update_location_bloc.dart';
 
 import '../blocs/driver_profile/driver_profile_bloc.dart';
@@ -66,25 +67,42 @@ class StatusSwitchWidget extends StatelessWidget {
                     context.read<SocketBloc>().add(SocketConnect());
                   } else {
                     final globalContext = context;
-                    showDialog(
-                        context: context,
-                        builder: (context) {
-                          /// STOP UPDATING DRIVER LOCATION
-                          BlocProvider.of<UpdateLocationBloc>(context)
-                              .add(const StopUpdatingLocation());
-                          return AppDialog(
-                            optionTitle: 'Go offline',
-                            message:
-                                'You won\'t receive any orders while offline.',
-                            onTap: () {
-                              globalContext.read<DriverProfileBloc>().add(
-                                  const UpdateDriverAvailabilityEvent(
-                                      isAvailable: false));
-
-                              Navigator.pop(context);
-                            },
-                          );
-                        });
+                    final orderState =
+                        BlocProvider.of<OrderBloc>(context).state;
+                    if (orderState is! OrderUnassigned) {
+                      showDialog(
+                          context: context,
+                          builder: (context) {
+                            return AppDialog(
+                              optionTitle: 'Okay',
+                              message:
+                                  'Please finish orders assigned to you first',
+                              isConfirm: true,
+                              onTap: () {
+                                Navigator.pop(context);
+                              },
+                            );
+                          });
+                    } else {
+                      showDialog(
+                          context: context,
+                          builder: (context) {
+                            /// STOP UPDATING DRIVER LOCATION
+                            BlocProvider.of<UpdateLocationBloc>(context)
+                                .add(const StopUpdatingLocation());
+                            return AppDialog(
+                              optionTitle: 'Go offline',
+                              message:
+                                  'You won\'t receive any orders while offline.',
+                              onTap: () {
+                                globalContext.read<DriverProfileBloc>().add(
+                                    const UpdateDriverAvailabilityEvent(
+                                        isAvailable: false));
+                                Navigator.pop(context);
+                              },
+                            );
+                          });
+                    }
                   }
                 },
               );

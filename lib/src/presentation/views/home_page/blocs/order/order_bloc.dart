@@ -1,7 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/services.dart';
-import 'package:lastmile_mobile/src/core/utils/enums.dart';
 import 'package:socket_io_client/socket_io_client.dart';
 
 import '../../../../../data/models/order.dart';
@@ -13,7 +12,8 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
   Socket socket;
 
   OrderBloc(this.socket) : super(const OrderUnassigned()) {
-    socket.on('order_assignment', (data) {
+    socket.on('order_assignment:a32e7c24-e19e-469c-9476-4339dba18651', (data) {
+      print(data);
       add(OrderAssignedEvent(Order.fromMap(data)));
     });
     on<OrderAssignedEvent>((event, emit) {

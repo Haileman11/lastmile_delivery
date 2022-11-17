@@ -1,12 +1,7 @@
-import 'dart:async';
-
 import 'package:bloc/bloc.dart';
-import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:lastmile_mobile/src/data/models/driver.dart';
 import 'package:socket_io_client/socket_io_client.dart';
-
-import '../../../../../core/resources/failure.dart';
 
 part 'driver_profile_event.dart';
 part 'driver_profile_state.dart';
@@ -16,7 +11,7 @@ class DriverProfileBloc extends Bloc<DriverProfileEvent, DriverProfileState> {
   DriverProfileBloc({required this.socket})
       : super(DriverProfileLoaded(
             driverProfile: DriverModel(
-                id: "3114c256-6cea-4582-9fe1-f51bb96554d6",
+                id: "a32e7c24-e19e-469c-9476-4339dba18651",
                 name: "name",
                 phoneNumber: "phoneNumber",
                 isAvailable: false,
@@ -33,7 +28,7 @@ class DriverProfileBloc extends Bloc<DriverProfileEvent, DriverProfileState> {
     );
     on<UpdateDriverAvailabilityEvent>((event, emit) async {
       socket.emit('driver_availability', {
-        "driver_id": "3114c256-6cea-4582-9fe1-f51bb96554d6",
+        "driver_id": "a32e7c24-e19e-469c-9476-4339dba18651",
         "visibility": event.isAvailable
       });
     });

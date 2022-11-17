@@ -6,12 +6,14 @@ class AppDialog extends StatelessWidget {
   final VoidCallback onTap;
   final String optionTitle;
   final String message;
+  final bool isConfirm;
 
   const AppDialog({
     Key? key,
     required this.onTap,
     required this.optionTitle,
     required this.message,
+    this.isConfirm = false,
   }) : super(key: key);
 
   @override
@@ -37,7 +39,7 @@ class AppDialog extends StatelessWidget {
                     vertical: AppPadding.padding_16,
                   ),
                   child: Text(
-                    'Are you sure?',
+                    isConfirm ? 'Alert' : 'Are you sure?',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: AppFontSizes.font_size_20,
@@ -88,23 +90,25 @@ class AppDialog extends StatelessWidget {
                             ),
                           ),
                         ),
-                        const VerticalDivider(),
-                        Expanded(
-                          child: GestureDetector(
-                            onTap: () => Navigator.pop(context),
-                            child: Container(
-                              padding: const EdgeInsets.all(10.0),
-                              child: Center(
-                                child: Text(
-                                  'Cancel',
-                                  style: TextStyle(
-                                      fontSize: AppFontSizes.font_size_18,
-                                      color: AppColors.appBlack),
+                        isConfirm ? const SizedBox() : const VerticalDivider(),
+                        isConfirm
+                            ? const SizedBox()
+                            : Expanded(
+                                child: GestureDetector(
+                                  onTap: () => Navigator.pop(context),
+                                  child: Container(
+                                    padding: const EdgeInsets.all(10.0),
+                                    child: Center(
+                                      child: Text(
+                                        'Cancel',
+                                        style: TextStyle(
+                                            fontSize: AppFontSizes.font_size_18,
+                                            color: AppColors.appBlack),
+                                      ),
+                                    ),
+                                  ),
                                 ),
                               ),
-                            ),
-                          ),
-                        ),
                       ],
                     ),
                   ),
