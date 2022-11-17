@@ -11,10 +11,12 @@ import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/order/ord
 import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/polylines/polyline_bloc.dart';
 import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/socket/socket_bloc.dart';
 import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/update_location/update_location_bloc.dart';
+import 'package:lastmile_mobile/src/presentation/views/home_page/cubits/select_cancel_reason_cubit.dart';
 import 'package:lastmile_mobile/src/presentation/views/home_page/home_page_view.dart';
 import 'package:lastmile_mobile/src/presentation/views/splash_page/splash_page_view.dart';
 
 import 'src/core/utils/scroll_behaviour.dart';
+import 'src/data/datasources/local/app_hive_service.dart';
 
 Future<void> main() async {
   WidgetsBinding binding = WidgetsFlutterBinding.ensureInitialized();
@@ -23,6 +25,9 @@ Future<void> main() async {
 
   /// INITIALIZE DEPENDENCIES
   await initializeDependencies();
+
+  ///INIT HIVE BOXES
+  await AppHiveService.instance.initHiveBoxes();
 
   runApp(const LastMile());
 }
@@ -49,6 +54,7 @@ class LastMile extends StatelessWidget {
         BlocProvider<PolyLineBloc>(
           create: (context) => PolyLineBloc(),
         ),
+        BlocProvider(create: (context) => SelectCancelReasonCubit(''))
       ],
       child: BlocListener<SocketBloc, SocketState>(
         listener: (context, state) {

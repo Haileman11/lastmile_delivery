@@ -1,6 +1,9 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/services.dart';
+import 'package:lastmile_mobile/src/core/utils/constants.dart';
+import 'package:lastmile_mobile/src/data/datasources/local/app_hive_service.dart';
+import 'package:lastmile_mobile/src/data/models/driver.dart';
 import 'package:socket_io_client/socket_io_client.dart';
 
 import '../../../../../data/models/order.dart';
@@ -12,8 +15,11 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
   Socket socket;
 
   OrderBloc(this.socket) : super(const OrderUnassigned()) {
-    socket.on('order_assignment:3114c256-6cea-4582-9fe1-f51bb96554d6', (data) {
-      print("Data $data");
+    /// GET DRIVER PROFILE FROM HIVE
+    final DriverModel driverModel =
+        AppHiveService.instance.driverBox.get(AppValues.driverBoxKey);
+
+    socket.on('order_assignment:${driverModel.id}', (data) {
       add(OrderAssignedEvent(Order.fromMap(data)));
     });
     on<OrderAssignedEvent>((event, emit) {
@@ -21,26 +27,50 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
       emit(OrderAssigned(event.order));
     });
     on<OrderAcceptedEvent>((event, emit) {
-      print(event.order.id);
-      socket.emit('order_assignment:3114c256-6cea-4582-9fe1-f51bb96554d6',
+      socket.emit('order_assignment:${driverModel.id}',
           {"order_id": event.order.id, "accepted": true});
       emit(OrderHeadingForPickup(event.order));
-      // socket.on('order_status_id_$event.order.id', (data) {
-      //   var order = Order.fromMap(data);
-      //   switch (order.orderStatus) {
-      //     case OrderStatus.assigned:
-      //       add(OrderHeadingForPickupEvent(order));
-      //       break;
-      //     default:
-      //   }
-      // });
     });
     on<OrderRejectedEvent>((event, emit) {
-      print(state);
-      socket.emit('order_assignment:3114c256-6cea-4582-9fe1-f51bb96554d6',
+      socket.emit('order_assignment:${driverModel.id}',
           {"order_id": event.order.id, "accepted": false});
-      emit(OrderUnassigned());
+      emit(const OrderUnassigned());
     });
+
+    /// CANCEL ORDER
+    on<CancelOrderEvent>((event, emit) {
+      try {
+        socket.emit('order_cancellation', {
+          "driver_id": event.driverId,
+          "order_id": event.orderId,
+          "reason": event.reason,
+          "cancelled": true,
+        });
+        emit(const OrderCancelled());
+        emit(const OrderUnassigned());
+      } catch (e) {
+        emit(OrderCancellationFailed(e.toString()));
+      }
+    });
+
+    /// GET LATEST CANCELLATION REASONS
+    on<GetCancellationReasons>((event, emit) {
+      try {
+        List<String> reasons = [];
+        socket.emit('cancellation_reasons', 'get_cancellation_reasons');
+        socket.on('cancellation_reasons', (data) {
+          reasons = List<String>.from(data['cancellation_reasons']);
+          add(UpdateCancellationReasons(reasons));
+        });
+      } catch (e) {
+        emit(CancellationReasonsFailed(e.toString()));
+      }
+    });
+
+    on<UpdateCancellationReasons>((event, emit) {
+      emit(CancellationReasonsHere(event.cancellationReasons));
+    });
+
     on<OrderHeadingForPickupEvent>((event, emit) {
       emit(OrderHeadingForPickup(event.order));
     });

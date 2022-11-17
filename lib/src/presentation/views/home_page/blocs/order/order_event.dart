@@ -38,3 +38,19 @@ class OrderPickedUpEvent extends OrderEvent {}
 class OrderReachedDestinationEvent extends OrderEvent {}
 
 class OrderConfirmDeliveryEvent extends OrderEvent {}
+
+class CancelOrderEvent extends OrderEvent {
+  final String reason;
+  final String orderId;
+  final String driverId;
+
+  const CancelOrderEvent(this.reason, this.orderId, this.driverId);
+}
+
+class GetCancellationReasons extends OrderEvent {}
+
+class UpdateCancellationReasons extends OrderEvent {
+  final List<String> cancellationReasons;
+
+  const UpdateCancellationReasons(this.cancellationReasons);
+}

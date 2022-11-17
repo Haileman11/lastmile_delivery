@@ -1,5 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:lastmile_mobile/src/core/utils/constants.dart';
+import 'package:lastmile_mobile/src/data/datasources/local/app_hive_service.dart';
 import 'package:lastmile_mobile/src/data/models/driver.dart';
 import 'package:socket_io_client/socket_io_client.dart';
 
@@ -10,29 +12,28 @@ class DriverProfileBloc extends Bloc<DriverProfileEvent, DriverProfileState> {
   Socket socket;
   DriverProfileBloc({required this.socket})
       : super(DriverProfileLoaded(
-            driverProfile: DriverModel(
-                id: "3114c256-6cea-4582-9fe1-f51bb96554d6",
-                name: "name",
-                phoneNumber: "phoneNumber",
-                isAvailable: false,
-                status: "status"))) {
+            driverProfile: AppHiveService.instance.driverBox
+                .get(AppValues.driverBoxKey))) {
+    /// GET DRIVER PROFILE FROM HIVE
+    final String driverId =
+        AppHiveService.instance.driverBox.get(AppValues.driverBoxKey).id;
     socket.on(
       "driver_availability",
       (data) {
-        print("data >>>>>>>>>>>>>>>>>>>>> $data");
-        print(data['visibility']);
         DriverModel driverModel = (state as DriverProfileLoaded).driverProfile;
         driverModel = driverModel.copyWith(isAvailable: data['visibility']);
         add(UpdateDriverProfileEvent(driverModel: driverModel));
       },
     );
     on<UpdateDriverAvailabilityEvent>((event, emit) async {
-      socket.emit('driver_availability', {
-        "driver_id": "3114c256-6cea-4582-9fe1-f51bb96554d6",
-        "visibility": event.isAvailable
-      });
+      socket.emit('driver_availability',
+          {"driver_id": driverId, "visibility": event.isAvailable});
     });
     on<UpdateDriverProfileEvent>((event, emit) async {
+      /// ADD DRIVER MODEL TO HIVE
+      AppHiveService.instance.driverBox
+          .put(AppValues.driverBoxKey, event.driverModel);
+
       emit(DriverProfileLoaded(driverProfile: event.driverModel));
     });
   }

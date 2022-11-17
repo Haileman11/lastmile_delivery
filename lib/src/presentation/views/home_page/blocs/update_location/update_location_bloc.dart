@@ -10,7 +10,6 @@ class UpdateLocationBloc
     extends Bloc<UpdateLocationEvent, UpdateLocationState> {
   UpdateLocationBloc(this.socket) : super(const UpdateLocationInitial()) {
     on<UpdateLocation>((event, emit) {
-      print('EMITTING >>>>>>>>>>>>>>>>>>>>> ${event.latLng.longitude}');
       socket.emit('location_update', {
         'id': event.driverId,
         'lat': event.latLng.latitude,
