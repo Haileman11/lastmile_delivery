@@ -46,6 +46,8 @@ class StatusSwitchWidget extends StatelessWidget {
                     'Available',
                     style: TextStyle(color: AppColors.appGreen),
                   );
+                } else {
+                  BlocProvider.of<SocketBloc>(context).add(SocketDisconnect());
                 }
               }
 
@@ -78,6 +80,7 @@ class StatusSwitchWidget extends StatelessWidget {
                               globalContext.read<DriverProfileBloc>().add(
                                   const UpdateDriverAvailabilityEvent(
                                       isAvailable: false));
+
                               Navigator.pop(context);
                             },
                           );

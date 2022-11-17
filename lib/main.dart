@@ -36,9 +36,7 @@ class LastMile extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider<SocketBloc>(create: (context) => injector()),
-        BlocProvider<DriverProfileBloc>(
-            create: (context) =>
-                injector()..add(SetupDriverProfileListenerEvent())),
+        BlocProvider<DriverProfileBloc>(create: (context) => injector()),
         BlocProvider<DriverLocationBloc>(
           create: (context) => injector()..add(GetDriverLocation()),
         ),
