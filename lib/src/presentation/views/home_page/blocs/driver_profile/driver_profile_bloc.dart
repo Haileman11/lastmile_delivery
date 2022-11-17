@@ -11,7 +11,7 @@ class DriverProfileBloc extends Bloc<DriverProfileEvent, DriverProfileState> {
   DriverProfileBloc({required this.socket})
       : super(DriverProfileLoaded(
             driverProfile: DriverModel(
-                id: "a32e7c24-e19e-469c-9476-4339dba18651",
+                id: "3114c256-6cea-4582-9fe1-f51bb96554d6",
                 name: "name",
                 phoneNumber: "phoneNumber",
                 isAvailable: false,
@@ -28,7 +28,7 @@ class DriverProfileBloc extends Bloc<DriverProfileEvent, DriverProfileState> {
     );
     on<UpdateDriverAvailabilityEvent>((event, emit) async {
       socket.emit('driver_availability', {
-        "driver_id": "a32e7c24-e19e-469c-9476-4339dba18651",
+        "driver_id": "3114c256-6cea-4582-9fe1-f51bb96554d6",
         "visibility": event.isAvailable
       });
     });

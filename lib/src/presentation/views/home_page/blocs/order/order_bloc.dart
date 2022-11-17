@@ -12,8 +12,8 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
   Socket socket;
 
   OrderBloc(this.socket) : super(const OrderUnassigned()) {
-    socket.on('order_assignment:a32e7c24-e19e-469c-9476-4339dba18651', (data) {
-      print(data);
+    socket.on('order_assignment:3114c256-6cea-4582-9fe1-f51bb96554d6', (data) {
+      print("Data $data");
       add(OrderAssignedEvent(Order.fromMap(data)));
     });
     on<OrderAssignedEvent>((event, emit) {
@@ -21,8 +21,9 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
       emit(OrderAssigned(event.order));
     });
     on<OrderAcceptedEvent>((event, emit) {
-      socket.emit(
-          'order_assignment', {"orderId": event.order.id, "accepted": true});
+      print(event.order.id);
+      socket.emit('order_assignment:3114c256-6cea-4582-9fe1-f51bb96554d6',
+          {"order_id": event.order.id, "accepted": true});
       emit(OrderHeadingForPickup(event.order));
       // socket.on('order_status_id_$event.order.id', (data) {
       //   var order = Order.fromMap(data);
@@ -36,8 +37,8 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
     });
     on<OrderRejectedEvent>((event, emit) {
       print(state);
-      // socket.emit(
-      //     'order_assignment', {"orderId": event.order.id, "accepted": false});
+      socket.emit('order_assignment:3114c256-6cea-4582-9fe1-f51bb96554d6',
+          {"order_id": event.order.id, "accepted": false});
       emit(OrderUnassigned());
     });
     on<OrderHeadingForPickupEvent>((event, emit) {
