@@ -1,13 +1,9 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lastmile_mobile/src/config/themes/app_themes.dart';
 import 'package:lastmile_mobile/src/data/models/order.dart';
-import 'package:lastmile_mobile/src/presentation/common/app_dialog.dart';
 import 'package:lastmile_mobile/src/presentation/common/swiping_button.dart';
 import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/order/order_bloc.dart';
-import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/polylines/polyline_bloc.dart';
 import 'package:lastmile_mobile/src/presentation/views/home_page/widgets/cancel_reasons_widget.dart';
 
 class HeadingToPickup extends StatelessWidget {
@@ -36,6 +32,19 @@ class HeadingToPickup extends StatelessWidget {
                         style: Theme.of(context).textTheme.titleLarge,
                       ),
                     ),
+                    IconButton(
+                      onPressed: () {
+                        showModalBottomSheet(
+                          context: context,
+                          enableDrag: true,
+                          isDismissible: false,
+                          builder: (context) {
+                            return CancelReasonsWidget(orderId: order.id);
+                          },
+                        );
+                      },
+                      icon: const Icon(Icons.close),
+                    )
                   ],
                 )),
             Column(
@@ -104,25 +113,6 @@ class HeadingToPickup extends StatelessWidget {
                   BlocProvider.of<OrderBloc>(context)
                       .add(OrderAcceptedEvent(order));
                 }),
-            ElevatedButton(
-                onPressed: () {
-                  showDialog(
-                    context: context,
-                    builder: (_) => AppDialog(
-                        onTap: () {
-                          //         BlocProvider.of<PolyLineBloc>(context)
-                          //     .add(const ClearPolyLinesEvent());
-                          // BlocProvider.of<OrderBloc>(context)
-                          //     .add(OrderRejectedEvent(order));
-                        },
-                        optionTitle: "",
-                        message: "Are you sure you want to cancel order"),
-                  );
-                },
-                child: Text("Cancel")),
-            SizedBox(
-              height: 4,
-            ),
           ],
         ),
       ),
