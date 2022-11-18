@@ -14,6 +14,7 @@ import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/update_lo
 import 'package:lastmile_mobile/src/presentation/views/home_page/cubits/select_cancel_reason_cubit.dart';
 import 'package:lastmile_mobile/src/presentation/views/home_page/home_page_view.dart';
 import 'package:lastmile_mobile/src/presentation/views/splash_page/splash_page_view.dart';
+import 'package:lastmile_mobile/src/presentation/views/waiting_for_driver_page/waiting_for_driver_page.dart';
 
 import 'src/core/utils/scroll_behaviour.dart';
 import 'src/data/datasources/local/app_hive_service.dart';
@@ -89,10 +90,12 @@ class LastMile extends StatelessWidget {
               ),
             );
           },
-          initialRoute: AppRoutes.splashScreenRoute,
+          initialRoute: AppRoutes.homePageRoute,
           routes: {
             AppRoutes.homePageRoute: (context) => HomePageView(),
             AppRoutes.splashScreenRoute: (context) => const SplashPageView(),
+            AppRoutes.waitingForDriverPageRoute: (context) =>
+                const WaitingDriverPageView(),
           },
         ),
       ),

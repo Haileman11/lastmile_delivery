@@ -95,7 +95,7 @@ class OrderCancellationBloc
     });
 
     /// DRIVER NOT FOUND
-    on<DriverFoundEvent>((event, emit) {
+    on<DriverNotFoundEvent>((event, emit) {
       emit(const DriverNotFound());
     });
 
