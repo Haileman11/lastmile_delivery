@@ -29,3 +29,30 @@ class CancellationReasonsFailed extends OrderCancellationState {
   final String errorMessage;
   const CancellationReasonsFailed(this.errorMessage);
 }
+
+class LookingForDriver extends OrderCancellationState {
+  const LookingForDriver();
+}
+
+class DriverFound extends OrderCancellationState {
+  final String driverName;
+  final String phoneNumber;
+  const DriverFound(this.driverName, this.phoneNumber);
+}
+
+class DriverNotFound extends OrderCancellationState {
+  const DriverNotFound();
+}
+
+class VerificationComplete extends OrderCancellationState {
+  const VerificationComplete();
+}
+
+class VerificationFailed extends OrderCancellationState {
+  final String errorMessage;
+  const VerificationFailed(this.errorMessage);
+}
+
+class TransferComplete extends OrderCancellationState {
+  const TransferComplete();
+}

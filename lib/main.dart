@@ -13,12 +13,12 @@ import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/socket/so
 import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/update_location/update_location_bloc.dart';
 import 'package:lastmile_mobile/src/presentation/views/home_page/cubits/select_cancel_reason_cubit.dart';
 import 'package:lastmile_mobile/src/presentation/views/home_page/home_page_view.dart';
-import 'package:lastmile_mobile/src/presentation/views/home_page/order_cancellation/order_cancellation_bloc.dart';
 import 'package:lastmile_mobile/src/presentation/views/splash_page/splash_page_view.dart';
 
 import 'src/core/utils/scroll_behaviour.dart';
-import 'src/presentation/views/home_page/blocs/task/task_bloc.dart';
 import 'src/data/datasources/local/app_hive_service.dart';
+import 'src/presentation/views/home_page/blocs/order_cancellation/order_cancellation_bloc.dart';
+import 'src/presentation/views/home_page/blocs/task/task_bloc.dart';
 
 Future<void> main() async {
   WidgetsBinding binding = WidgetsFlutterBinding.ensureInitialized();
