@@ -12,16 +12,16 @@ class TaskPending extends TaskState {
   const TaskPending() : super(null);
 }
 
-class TaskOngoing extends TaskState {
-  const TaskOngoing(super.task);
+class TaskHeadingToPickup extends TaskState {
+  const TaskHeadingToPickup(super.task);
 }
 
 // class TaskWaitingForConfirmation extends TaskState {
 //   const TaskWaitingForConfirmation(super.task);
 // }
 
-class PickupWaitingForPackage extends TaskState {
-  const PickupWaitingForPackage(super.task);
+class TaskWaitingForPackage extends TaskState {
+  const TaskWaitingForPackage(super.task);
 }
 
 class PickupComplete extends TaskState {

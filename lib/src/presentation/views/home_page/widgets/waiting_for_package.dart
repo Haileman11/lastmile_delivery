@@ -1,28 +1,24 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lastmile_mobile/src/config/themes/app_themes.dart';
 import 'package:lastmile_mobile/src/data/models/order.dart';
-import 'package:lastmile_mobile/src/presentation/common/app_dialog.dart';
 import 'package:lastmile_mobile/src/presentation/common/swiping_button.dart';
 import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/order/order_bloc.dart';
-import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/polylines/polyline_bloc.dart';
 import 'package:lastmile_mobile/src/presentation/views/home_page/widgets/cancel_reasons_widget.dart';
 
 import '../../../../data/models/task.dart';
 import '../blocs/task/task_bloc.dart';
 
-class HeadingToPickup extends StatelessWidget {
+class WaitingForPackage extends StatelessWidget {
   final Task task;
-  const HeadingToPickup({required this.task, super.key});
+  const WaitingForPackage({required this.task, super.key});
 
   @override
   Widget build(BuildContext context) {
     final Order order = BlocProvider.of<OrderBloc>(context).state.order!;
     return SafeArea(
       child: Container(
-        key: const Key('HEADING_TO_PICKUP'),
+        key: const Key('WAITING_FOR_PACKAGE'),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -35,7 +31,7 @@ class HeadingToPickup extends StatelessWidget {
                       padding: const EdgeInsets.all(16),
                       alignment: Alignment.center,
                       child: Text(
-                        'Heading to Pickup',
+                        'Waiting For Package',
                         style: Theme.of(context).textTheme.titleLarge,
                       ),
                     ),
@@ -61,64 +57,43 @@ class HeadingToPickup extends StatelessWidget {
                   children: [
                     Expanded(
                       child: InformationWidget(
-                          caption: "Client", value: order.businessCustomerName),
+                          caption: "Responsible Person",
+                          value: task.responsiblePersonName),
                     ),
                     Expanded(
                       child: InformationWidget(
-                          caption: "Estimated cost",
-                          value: "${order.estimatedPrice} Birr"),
+                          caption: "Responsible Person Phone Number",
+                          value: task.responsiblePersonPhone),
                     ),
                   ],
                 ),
-                Row(
-                  children: [
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: order.pickupTasks
-                            .map(
-                              (pickUpTask) => InformationWidget(
-                                  caption: "Pickup ${pickUpTask.id}",
-                                  value: pickUpTask.address),
-                            )
-                            .toList(),
-                      ),
-                    ),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: order.dropoffTasks
-                            .map(
-                              (dropoffTask) => InformationWidget(
-                                  caption: "Destination ${dropoffTask.id}",
-                                  value: dropoffTask.address),
-                            )
-                            .toList(),
-                      ),
-                    ),
-                  ],
-                ),
+                Container(
+                    alignment: Alignment.centerLeft,
+                    padding: EdgeInsets.symmetric(horizontal: 16.0),
+                    child: Text("Current Task")),
                 Row(
                   children: [
                     Expanded(
                       child: InformationWidget(
-                          caption: "Distance",
-                          value: "${order.estimatedTripDistance} km"),
+                          caption: "${task.taskType.toMap()} ${task.id}",
+                          value: task.address),
                     ),
                     Expanded(
                       child: InformationWidget(
-                          caption: "Time", value: "${order.estimatedTime} min"),
+                          caption: "Timeout", value: "${5} min"),
                     ),
                   ],
                 ),
               ],
             ),
             SwipingButton(
-                text: 'Slide to arrive',
+                text: 'Received, proceed to next task',
                 color: AppColors.appGreen,
                 onSwipeCallback: () {
                   BlocProvider.of<TaskBloc>(context)
-                      .add(ArriveToPickupEvent(task));
+                      .add(CompletePickupEvent(task));
+                  BlocProvider.of<OrderBloc>(context)
+                      .add(OrderPickUpCompleteEvent(order, task));
                 }),
           ],
         ),

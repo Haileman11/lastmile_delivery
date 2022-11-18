@@ -8,6 +8,7 @@ import 'package:lastmile_mobile/src/presentation/views/home_page/widgets/google_
 import 'package:lastmile_mobile/src/presentation/views/home_page/widgets/heading_to_pickup.dart';
 import 'package:lastmile_mobile/src/presentation/views/home_page/widgets/order_request.dart';
 import 'package:lastmile_mobile/src/presentation/views/home_page/widgets/status_switch_widget.dart';
+import 'package:lastmile_mobile/src/presentation/views/home_page/widgets/waiting_for_package.dart';
 
 import '../../../data/models/order.dart';
 import 'blocs/order/order_bloc.dart';
@@ -19,7 +20,6 @@ class HomePageView extends StatelessWidget {
   late OrderState orderState;
   @override
   Widget build(BuildContext context) {
-    print(">>BUILLDER ");
     return Scaffold(
       appBar: AppBar(
         leading: Icon(
@@ -69,8 +69,8 @@ class HomePageView extends StatelessWidget {
                 child: BlocConsumer<OrderBloc, OrderState>(
                   listener: (context, state) {
                     if (state is OrderHeadingForPickup) {
-                      BlocProvider.of<TaskBloc>(context).add(
-                          HeadingForPickupEvent(state.order!.pickupTasks[0]));
+                      BlocProvider.of<TaskBloc>(context)
+                          .add(HeadingForPickupEvent(state.currentTask));
                     }
                   },
                   builder: (context, state) {
@@ -90,20 +90,41 @@ class HomePageView extends StatelessWidget {
                         ),
                       );
                     }
-
+                    print(state);
                     return BlocConsumer<TaskBloc, TaskState>(
                       listener: (context, state) {
                         // BlocProvider.of<TaskBloc>(context).add(event)
                       },
                       builder: (context, state) {
+                        print(state);
                         return Offstage(
-                          offstage: orderState is OrderUnassigned,
-                          child: orderState is! OrderAssigned
-                              ? orderState is OrderHeadingForPickup
-                                  ? HeadingToPickup(order: orderState.order!)
-                                  : Container()
-                              : OrderRequest(order: orderState.order!),
-                        );
+                            offstage: orderState is OrderUnassigned,
+                            child: Builder(builder: (context) {
+                              switch (orderState.runtimeType) {
+                                case OrderUnassigned:
+                                  return Container();
+                                case OrderAssigned:
+                                  return OrderRequest(order: orderState.order!);
+                                case OrderHeadingForPickup:
+                                  switch (state.runtimeType) {
+                                    case TaskHeadingToPickup:
+                                      return HeadingToPickup(task: state.task!);
+                                    case TaskWaitingForPackage:
+                                      return WaitingForPackage(
+                                          task: state.task!);
+                                    default:
+                                      return Container();
+                                  }
+                                default:
+                                  return Container();
+                              }
+                              // orderState is! OrderAssigned
+                              //     ? orderState is OrderHeadingForPickup
+                              //         ? HeadingToPickup(task: state.task!)
+                              //         : Container()
+                              //     : OrderRequest(order: orderState.order!);
+                              // return Container();
+                            }));
                       },
                     );
                   },

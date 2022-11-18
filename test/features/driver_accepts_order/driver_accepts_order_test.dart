@@ -62,7 +62,7 @@ Future<void> main() async {
       'Driver accepts order',
       build: () => OrderBloc(injector()),
       act: (bloc) => bloc.add(OrderAcceptedEvent(order)),
-      expect: () => [OrderHeadingForPickup(order)],
+      expect: () => [OrderHeadingForPickup(order, order.pickupTasks.first)],
     );
   });
 }

@@ -31,8 +31,8 @@ class OrderCancelledEvent extends OrderEvent {
 
 class OrderHeadingForPickupEvent extends OrderEvent {
   final Order order;
-
-  const OrderHeadingForPickupEvent(this.order);
+  final Task currentTask;
+  const OrderHeadingForPickupEvent(this.order, this.currentTask);
 }
 
 class OrderHeadingForDropoffEvent extends OrderEvent {
@@ -49,6 +49,6 @@ class OrderDropoffCompleteEvent extends OrderEvent {
 
 class OrderPickUpCompleteEvent extends OrderEvent {
   final Order order;
-
-  const OrderPickUpCompleteEvent(this.order);
+  final Task task;
+  const OrderPickUpCompleteEvent(this.order, this.task);
 }

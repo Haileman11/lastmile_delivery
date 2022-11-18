@@ -18,7 +18,8 @@ class OrderAssigned extends OrderState {
 }
 
 class OrderHeadingForPickup extends OrderState {
-  const OrderHeadingForPickup(super.order);
+  final Task currentTask;
+  const OrderHeadingForPickup(super.order, this.currentTask);
 }
 
 class OrderPickedUp extends OrderState {
