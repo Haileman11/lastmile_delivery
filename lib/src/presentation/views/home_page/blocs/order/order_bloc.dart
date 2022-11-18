@@ -36,54 +36,19 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
           {"order_id": event.order.id, "accepted": false});
       emit(const OrderUnassigned());
     });
-
-    /// CANCEL ORDER
-    on<CancelOrderEvent>((event, emit) {
-      try {
-        socket.emit('order_cancellation', {
-          "driver_id": event.driverId,
-          "order_id": event.orderId,
-          "reason": event.reason,
-          "cancelled": true,
-        });
-        emit(const OrderCancelled());
-        emit(const OrderUnassigned());
-      } catch (e) {
-        emit(OrderCancellationFailed(e.toString()));
-      }
+    on<OrderCancelledEvent>((event, emit) {
+      emit(const OrderUnassigned());
     });
-
-    /// GET LATEST CANCELLATION REASONS
-    on<GetCancellationReasons>((event, emit) {
-      try {
-        List<String> reasons = [];
-        socket.emit('cancellation_reasons', 'get_cancellation_reasons');
-        socket.on('cancellation_reasons', (data) {
-          reasons = List<String>.from(data['cancellation_reasons']);
-          add(UpdateCancellationReasons(reasons));
-        });
-      } catch (e) {
-        emit(CancellationReasonsFailed(e.toString()));
-      }
-    });
-
-    on<UpdateCancellationReasons>((event, emit) {
-      emit(CancellationReasonsHere(event.cancellationReasons));
-    });
-
     on<OrderHeadingForPickupEvent>((event, emit) {
       emit(OrderHeadingForPickup(event.order));
     });
-    on<OrderReachedPickupEvent>((event, emit) {
+    on<OrderPickUpCompleteEvent>((event, emit) {
       // TODO: implement event handler
     });
-    on<OrderPickedUpEvent>((event, emit) {
-      // TODO: implement event handler
+    on<OrderHeadingForDropoffEvent>((event, emit) {
+      emit(OrderHeadingForPickup(event.order));
     });
-    on<OrderReachedDestinationEvent>((event, emit) {
-      // TODO: implement event handler
-    });
-    on<OrderConfirmDeliveryEvent>((event, emit) {
+    on<OrderDropoffCompleteEvent>((event, emit) {
       // TODO: implement event handler
     });
   }

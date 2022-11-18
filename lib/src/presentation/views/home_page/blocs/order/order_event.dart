@@ -25,32 +25,30 @@ class OrderRejectedEvent extends OrderEvent {
   const OrderRejectedEvent(this.order);
 }
 
+class OrderCancelledEvent extends OrderEvent {
+  const OrderCancelledEvent();
+}
+
 class OrderHeadingForPickupEvent extends OrderEvent {
   final Order order;
 
   const OrderHeadingForPickupEvent(this.order);
 }
 
-class OrderReachedPickupEvent extends OrderEvent {}
+class OrderHeadingForDropoffEvent extends OrderEvent {
+  final Order order;
 
-class OrderPickedUpEvent extends OrderEvent {}
-
-class OrderReachedDestinationEvent extends OrderEvent {}
-
-class OrderConfirmDeliveryEvent extends OrderEvent {}
-
-class CancelOrderEvent extends OrderEvent {
-  final String reason;
-  final String orderId;
-  final String driverId;
-
-  const CancelOrderEvent(this.reason, this.orderId, this.driverId);
+  const OrderHeadingForDropoffEvent(this.order);
 }
 
-class GetCancellationReasons extends OrderEvent {}
+class OrderDropoffCompleteEvent extends OrderEvent {
+  final Order order;
 
-class UpdateCancellationReasons extends OrderEvent {
-  final List<String> cancellationReasons;
+  const OrderDropoffCompleteEvent(this.order);
+}
 
-  const UpdateCancellationReasons(this.cancellationReasons);
+class OrderPickUpCompleteEvent extends OrderEvent {
+  final Order order;
+
+  const OrderPickUpCompleteEvent(this.order);
 }

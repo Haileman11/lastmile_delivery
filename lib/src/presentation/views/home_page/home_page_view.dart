@@ -5,14 +5,18 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:lastmile_mobile/src/config/themes/app_themes.dart';
 import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/polylines/polyline_bloc.dart';
 import 'package:lastmile_mobile/src/presentation/views/home_page/widgets/google_maps_widget.dart';
+import 'package:lastmile_mobile/src/presentation/views/home_page/widgets/heading_to_pickup.dart';
+import 'package:lastmile_mobile/src/presentation/views/home_page/widgets/order_request.dart';
 import 'package:lastmile_mobile/src/presentation/views/home_page/widgets/status_switch_widget.dart';
 
+import '../../../data/models/order.dart';
 import 'blocs/order/order_bloc.dart';
-import 'widgets/order_request.dart';
+import 'blocs/task/task_bloc.dart';
+import 'order_cancellation/order_cancellation_bloc.dart';
 
 class HomePageView extends StatelessWidget {
-  const HomePageView({Key? key}) : super(key: key);
-
+  HomePageView({Key? key}) : super(key: key);
+  late OrderState orderState;
   @override
   Widget build(BuildContext context) {
     print(">>BUILLDER ");
@@ -43,32 +47,67 @@ class HomePageView extends StatelessWidget {
         children: [
           Column(
             children: [
-              Expanded(child: MapView()),
-              BlocBuilder<OrderBloc, OrderState>(
-                builder: (context, state) {
-                  if (state is OrderAssigned) {
-                    BlocProvider.of<PolyLineBloc>(context).add(
-                      DecodePolyLineEvent(
-                        state.order!.route.encodedPolyline,
-                        state.order!.route.bounds,
-                        state.order!.dropoffTasks
-                            .map(
-                              (e) => Marker(
-                                  markerId: MarkerId("${e.id}"),
-                                  position: e.location),
-                            )
-                            .toSet(),
+              const Expanded(child: MapView()),
+              BlocListener<OrderCancellationBloc, OrderCancellationState>(
+                listener: (context, state) {
+                  if (state is OrderCancelled) {
+                    BlocProvider.of<OrderBloc>(context)
+                        .add(const OrderCancelledEvent());
+                    BlocProvider.of<PolyLineBloc>(context)
+                        .add(const ClearPolyLinesEvent());
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        backgroundColor: AppColors.appBlack,
+                        content: Text(
+                          'Order cancelled',
+                          style: TextStyle(color: AppColors.white),
+                        ),
                       ),
                     );
                   }
-
-                  return Offstage(
-                    child: state is! OrderAssigned
-                        ? Container()
-                        : OrderRequest(order: state.order!),
-                    offstage: state is! OrderAssigned,
-                  );
                 },
+                child: BlocConsumer<OrderBloc, OrderState>(
+                  listener: (context, state) {
+                    if (state is OrderHeadingForPickup) {
+                      BlocProvider.of<TaskBloc>(context).add(
+                          HeadingForPickupEvent(state.order!.pickupTasks[0]));
+                    }
+                  },
+                  builder: (context, state) {
+                    orderState = state;
+                    if (state is OrderAssigned) {
+                      BlocProvider.of<PolyLineBloc>(context).add(
+                        DecodePolyLineEvent(
+                          state.order!.route.encodedPolyline,
+                          state.order!.route.bounds,
+                          state.order!.dropoffTasks
+                              .map(
+                                (e) => Marker(
+                                    markerId: MarkerId("${e.id}"),
+                                    position: e.location),
+                              )
+                              .toSet(),
+                        ),
+                      );
+                    }
+
+                    return BlocConsumer<TaskBloc, TaskState>(
+                      listener: (context, state) {
+                        // BlocProvider.of<TaskBloc>(context).add(event)
+                      },
+                      builder: (context, state) {
+                        return Offstage(
+                          offstage: orderState is OrderUnassigned,
+                          child: orderState is! OrderAssigned
+                              ? orderState is OrderHeadingForPickup
+                                  ? HeadingToPickup(order: orderState.order!)
+                                  : Container()
+                              : OrderRequest(order: orderState.order!),
+                        );
+                      },
+                    );
+                  },
+                ),
               )
             ],
           ),

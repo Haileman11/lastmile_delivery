@@ -8,9 +8,11 @@ import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/driver_pr
 import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/order/order_bloc.dart';
 import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/socket/socket_bloc.dart';
 import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/update_location/update_location_bloc.dart';
+import 'package:lastmile_mobile/src/presentation/views/home_page/order_cancellation/order_cancellation_bloc.dart';
 import 'package:socket_io_client/socket_io_client.dart';
 
 import 'presentation/views/home_page/blocs/polylines/polyline_bloc.dart';
+import 'presentation/views/home_page/blocs/task/task_bloc.dart';
 
 final injector = GetIt.instance;
 
@@ -25,6 +27,7 @@ Future<void> initializeDependencies() async {
       OptionBuilder()
           .setTransports(["websocket"])
           .setTimeout(3000)
+          // .setPath('/v1/drivers/socket.io/')
           .setReconnectionDelay(5000)
           .disableAutoConnect()
           .build(),
@@ -36,6 +39,9 @@ Future<void> initializeDependencies() async {
     ..registerSingleton<GeoLocationRepository>(GeoLocationRepositoryImpl())
 
     /// BLOCS
+    ..registerFactory<TaskBloc>(() => TaskBloc(injector()))
+    ..registerFactory<OrderCancellationBloc>(
+        () => OrderCancellationBloc(injector()))
     ..registerFactory<OrderBloc>(() => OrderBloc(injector()))
     ..registerFactory<DriverProfileBloc>(
         () => DriverProfileBloc(socket: injector()))

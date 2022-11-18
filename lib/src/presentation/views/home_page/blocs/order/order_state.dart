@@ -25,8 +25,8 @@ class OrderPickedUp extends OrderState {
   const OrderPickedUp(super.order);
 }
 
-class OrderHeadingForDestination extends OrderState {
-  const OrderHeadingForDestination(super.order);
+class OrderHeadingForDropoff extends OrderState {
+  const OrderHeadingForDropoff(super.order);
 }
 
 class OrderReachedDestination extends OrderState {
@@ -39,25 +39,4 @@ class OrderDeliveryConfirmed extends OrderState {
 
 class OrderCompleted extends OrderState {
   const OrderCompleted(super.order);
-}
-
-class OrderCancelled extends OrderState {
-  const OrderCancelled() : super(null);
-}
-
-class OrderCancellationFailed extends OrderState {
-  final String errorMessage;
-
-  const OrderCancellationFailed(this.errorMessage) : super(null);
-}
-
-class CancellationReasonsHere extends OrderState {
-  final List<String> cancellationReasons;
-
-  const CancellationReasonsHere(this.cancellationReasons) : super(null);
-}
-
-class CancellationReasonsFailed extends OrderState {
-  final String errorMessage;
-  const CancellationReasonsFailed(this.errorMessage) : super(null);
 }

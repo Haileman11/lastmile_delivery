@@ -30,7 +30,6 @@ class SocketBloc extends Bloc<SocketEvent, SocketState> {
       emit(const SocketConnecting());
     });
     on<SocketOnConnect>((event, emit) {
-      socket.emit('order_assignment', "Hello");
       emit(SocketConnected(_socket.id!));
     });
     on<SocketConnectErrorEvent>((event, emit) {

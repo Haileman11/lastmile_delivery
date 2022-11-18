@@ -5,6 +5,9 @@ import 'package:lastmile_mobile/src/core/utils/constants.dart';
 import 'package:lastmile_mobile/src/data/datasources/local/app_hive_service.dart';
 import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/order/order_bloc.dart';
 import 'package:lastmile_mobile/src/presentation/views/home_page/cubits/select_cancel_reason_cubit.dart';
+import 'package:lastmile_mobile/src/presentation/views/home_page/order_cancellation/order_cancellation_bloc.dart';
+
+import '../../../common/app_dialog.dart';
 
 class CancelReasonsWidget extends StatefulWidget {
   const CancelReasonsWidget({Key? key, required this.orderId})
@@ -18,7 +21,8 @@ class CancelReasonsWidget extends StatefulWidget {
 class _CancelReasonsWidgetState extends State<CancelReasonsWidget> {
   @override
   void initState() {
-    BlocProvider.of<OrderBloc>(context).add(GetCancellationReasons());
+    BlocProvider.of<OrderCancellationBloc>(context)
+        .add(GetCancellationReasons());
     super.initState();
   }
 
@@ -31,6 +35,7 @@ class _CancelReasonsWidgetState extends State<CancelReasonsWidget> {
       width: double.infinity,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
         children: [
           Container(
             padding: const EdgeInsets.symmetric(
@@ -56,9 +61,11 @@ class _CancelReasonsWidgetState extends State<CancelReasonsWidget> {
               ],
             ),
           ),
-          BlocBuilder<OrderBloc, OrderState>(
+          BlocBuilder<OrderCancellationBloc, OrderCancellationState>(
             builder: (context, state) {
               if (state is CancellationReasonsHere) {
+                BlocProvider.of<SelectCancelReasonCubit>(context)
+                    .updateSelectedReason(state.cancellationReasons.first);
                 return Column(
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -115,7 +122,7 @@ class _CancelReasonsWidgetState extends State<CancelReasonsWidget> {
               if (state is CancellationReasonsFailed) {
                 return GestureDetector(
                   onTap: () {
-                    BlocProvider.of<OrderBloc>(context)
+                    BlocProvider.of<OrderCancellationBloc>(context)
                         .add(GetCancellationReasons());
                   },
                   child: const Center(
@@ -130,17 +137,27 @@ class _CancelReasonsWidgetState extends State<CancelReasonsWidget> {
           GestureDetector(
             onTap: () {
               /// GET DRIVER ID FROM HIVE
-              final driverId = AppHiveService.instance.driverBox
-                  .get(AppValues.driverBoxKey)
-                  .id;
+              showDialog(
+                context: context,
+                builder: (_) => AppDialog(
+                    onTap: () {
+                      final driverId = AppHiveService.instance.driverBox
+                          .get(AppValues.driverBoxKey)
+                          .id;
 
-              BlocProvider.of<OrderBloc>(context).add(
-                CancelOrderEvent(
-                  BlocProvider.of<SelectCancelReasonCubit>(context).state,
-                  widget.orderId,
-                  driverId,
-                ),
-              );
+                      BlocProvider.of<OrderCancellationBloc>(context).add(
+                        CancelOrderEvent(
+                          BlocProvider.of<SelectCancelReasonCubit>(context)
+                              .state,
+                          widget.orderId,
+                          driverId,
+                        ),
+                      );
+                      Navigator.pop(context);
+                    },
+                    optionTitle: "Yes",
+                    message: "Are you sure you want to cancel order"),
+              ).then((value) => Navigator.pop(context));
             },
             child: Container(
               height: 45.0,

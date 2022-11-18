@@ -55,7 +55,7 @@ class TestApp extends StatelessWidget {
           ),
           initialRoute: initialRoute,
           routes: {
-            AppRoutes.homePageRoute: (context) => const HomePageView(),
+            AppRoutes.homePageRoute: (context) => HomePageView(),
             AppRoutes.splashScreenRoute: (context) => const SplashPageView(),
           },
           debugShowCheckedModeBanner: false,

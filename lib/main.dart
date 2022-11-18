@@ -13,9 +13,11 @@ import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/socket/so
 import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/update_location/update_location_bloc.dart';
 import 'package:lastmile_mobile/src/presentation/views/home_page/cubits/select_cancel_reason_cubit.dart';
 import 'package:lastmile_mobile/src/presentation/views/home_page/home_page_view.dart';
+import 'package:lastmile_mobile/src/presentation/views/home_page/order_cancellation/order_cancellation_bloc.dart';
 import 'package:lastmile_mobile/src/presentation/views/splash_page/splash_page_view.dart';
 
 import 'src/core/utils/scroll_behaviour.dart';
+import 'src/presentation/views/home_page/blocs/task/task_bloc.dart';
 import 'src/data/datasources/local/app_hive_service.dart';
 
 Future<void> main() async {
@@ -51,6 +53,12 @@ class LastMile extends StatelessWidget {
         BlocProvider<OrderBloc>(
           create: (context) => OrderBloc(injector()),
         ),
+        BlocProvider<OrderCancellationBloc>(
+          create: (context) => OrderCancellationBloc(injector()),
+        ),
+        BlocProvider<TaskBloc>(
+          create: (context) => injector(),
+        ),
         BlocProvider<PolyLineBloc>(
           create: (context) => PolyLineBloc(),
         ),
@@ -83,7 +91,7 @@ class LastMile extends StatelessWidget {
           },
           initialRoute: AppRoutes.splashScreenRoute,
           routes: {
-            AppRoutes.homePageRoute: (context) => const HomePageView(),
+            AppRoutes.homePageRoute: (context) => HomePageView(),
             AppRoutes.splashScreenRoute: (context) => const SplashPageView(),
           },
         ),

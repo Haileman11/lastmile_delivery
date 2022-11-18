@@ -4,22 +4,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lastmile_mobile/src/config/themes/app_themes.dart';
 import 'package:lastmile_mobile/src/data/models/order.dart';
+import 'package:lastmile_mobile/src/presentation/common/app_dialog.dart';
 import 'package:lastmile_mobile/src/presentation/common/swiping_button.dart';
 import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/order/order_bloc.dart';
 import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/polylines/polyline_bloc.dart';
+import 'package:lastmile_mobile/src/presentation/views/home_page/widgets/cancel_reasons_widget.dart';
 
-import '../blocs/task/task_bloc.dart';
-
-class OrderRequest extends StatelessWidget {
+class HeadingToPickup extends StatelessWidget {
   final Order order;
 
-  const OrderRequest({required this.order, super.key});
+  const HeadingToPickup({required this.order, super.key});
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Container(
-        key: const Key('ORDER_ASSIGNMENT_PAGE'),
+        key: const Key('HEADING_TO_PICKUP'),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -32,11 +32,23 @@ class OrderRequest extends StatelessWidget {
                       padding: const EdgeInsets.all(16),
                       alignment: Alignment.center,
                       child: Text(
-                        'Order Request',
+                        'Heading to Pickup',
                         style: Theme.of(context).textTheme.titleLarge,
                       ),
                     ),
-                    TimerWidget(order: order),
+                    IconButton(
+                      onPressed: () {
+                        showModalBottomSheet(
+                          context: context,
+                          enableDrag: true,
+                          isDismissible: false,
+                          builder: (context) {
+                            return CancelReasonsWidget(orderId: order.id);
+                          },
+                        );
+                      },
+                      icon: Icon(Icons.cancel),
+                    )
                   ],
                 )),
             Column(
@@ -99,102 +111,16 @@ class OrderRequest extends StatelessWidget {
               ],
             ),
             SwipingButton(
-                text: 'Slide to accept',
+                text: 'Slide to arrive',
                 color: AppColors.appGreen,
                 onSwipeCallback: () {
                   BlocProvider.of<OrderBloc>(context)
                       .add(OrderAcceptedEvent(order));
-                  BlocProvider.of<TaskBloc>(context)
-                      .add((HeadingForPickupEvent(order.pickupTasks[0])));
                 }),
             SizedBox(
               height: 4,
             ),
-            SwipingButton(
-                text: 'Slide to reject',
-                color: AppColors.errorRed,
-                onSwipeCallback: () {
-                  BlocProvider.of<PolyLineBloc>(context)
-                      .add(const ClearPolyLinesEvent());
-                  BlocProvider.of<OrderBloc>(context)
-                      .add(OrderRejectedEvent(order));
-                }),
           ],
-        ),
-      ),
-    );
-  }
-}
-
-class TimerWidget extends StatefulWidget {
-  const TimerWidget({
-    Key? key,
-    required this.order,
-  }) : super(key: key);
-
-  final Order order;
-
-  @override
-  State<TimerWidget> createState() => _TimerWidgetState();
-}
-
-class _TimerWidgetState extends State<TimerWidget> {
-  late Timer _timer;
-  int _start = 30;
-  @override
-  void initState() {
-    startTimer();
-    super.initState();
-  }
-
-  void startTimer() {
-    const oneSec = Duration(seconds: 1);
-    _timer = Timer.periodic(
-      oneSec,
-      (Timer timer) {
-        if (_start == 0) {
-          setState(() {
-            timer.cancel();
-            BlocProvider.of<PolyLineBloc>(context)
-                .add(const ClearPolyLinesEvent());
-            BlocProvider.of<OrderBloc>(context)
-                .add(OrderRejectedEvent(widget.order));
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                backgroundColor: AppColors.black,
-                content: Text(
-                  'Order timed out',
-                  style: TextStyle(
-                    color: AppColors.white,
-                  ),
-                ),
-              ),
-            );
-          });
-        } else {
-          setState(() {
-            _start--;
-          });
-        }
-      },
-    );
-  }
-
-  @override
-  void dispose() {
-    _timer.cancel();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      alignment: Alignment.center,
-      child: Container(
-        child: Text(
-          "$_start",
-          style: Theme.of(context).textTheme.titleLarge,
         ),
       ),
     );

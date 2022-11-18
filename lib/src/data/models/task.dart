@@ -2,6 +2,8 @@
 import 'dart:convert';
 
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+
+import 'package:lastmile_mobile/src/core/utils/enums.dart';
 import 'package:lastmile_mobile/src/core/utils/helpers.dart';
 
 class Task {
@@ -10,12 +12,16 @@ class Task {
   final String address;
   final String responsiblePersonName;
   final String responsiblePersonPhone;
+  final TaskType taskType;
+  final TaskStatus status;
   Task({
     required this.id,
     required this.location,
     required this.address,
     required this.responsiblePersonName,
     required this.responsiblePersonPhone,
+    required this.taskType,
+    required this.status,
   });
 
   Task copyWith({
@@ -24,6 +30,8 @@ class Task {
     String? address,
     String? responsiblePersonName,
     String? responsiblePersonPhone,
+    TaskType? taskType,
+    TaskStatus? status,
   }) {
     return Task(
       id: id ?? this.id,
@@ -33,6 +41,8 @@ class Task {
           responsiblePersonName ?? this.responsiblePersonName,
       responsiblePersonPhone:
           responsiblePersonPhone ?? this.responsiblePersonPhone,
+      taskType: taskType ?? this.taskType,
+      status: status ?? this.status,
     );
   }
 
@@ -43,6 +53,8 @@ class Task {
       'address': address,
       'responsiblePersonName': responsiblePersonName,
       'responsiblePersonPhone': responsiblePersonPhone,
+      'taskType': taskType.toMap(),
+      'status': status.toMap(),
     };
   }
 
@@ -53,6 +65,8 @@ class Task {
       address: map['address'] as String,
       responsiblePersonName: map['responsiblePersonName'] as String,
       responsiblePersonPhone: map['responsiblePersonPhone'] as String,
+      taskType: TaskType.fromMap(map['taskType'] as String),
+      status: TaskStatus.fromMap(map['status'] as String),
     );
   }
 
@@ -63,7 +77,7 @@ class Task {
 
   @override
   String toString() {
-    return 'Task(id: $id, location: $location, address: $address ,responsiblePersonName: $responsiblePersonName, responsiblePersonPhone: $responsiblePersonPhone)';
+    return 'Task(id: $id, location: $location, address: $address, responsiblePersonName: $responsiblePersonName, responsiblePersonPhone: $responsiblePersonPhone, taskType: $taskType, status: $status)';
   }
 
   @override
@@ -74,7 +88,9 @@ class Task {
         other.location == location &&
         other.address == address &&
         other.responsiblePersonName == responsiblePersonName &&
-        other.responsiblePersonPhone == responsiblePersonPhone;
+        other.responsiblePersonPhone == responsiblePersonPhone &&
+        other.taskType == taskType &&
+        other.status == status;
   }
 
   @override
@@ -83,6 +99,8 @@ class Task {
         location.hashCode ^
         address.hashCode ^
         responsiblePersonName.hashCode ^
-        responsiblePersonPhone.hashCode;
+        responsiblePersonPhone.hashCode ^
+        taskType.hashCode ^
+        status.hashCode;
   }
 }

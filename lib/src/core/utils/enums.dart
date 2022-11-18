@@ -30,3 +30,21 @@ enum OrderType {
   String toMap() => name;
   static OrderType fromMap(String json) => values.byName(json);
 }
+
+enum TaskStatus {
+  pending,
+  inprogress,
+  cancelled,
+  done;
+
+  String toMap() => name;
+  static TaskStatus fromMap(String json) => values.byName(json);
+}
+
+enum TaskType {
+  pickup,
+  dropoff;
+
+  String toMap() => name;
+  static TaskType fromMap(String json) => values.byName(json);
+}
