@@ -38,9 +38,22 @@ class _CancelReasonsWidgetState extends State<CancelReasonsWidget> {
               vertical: AppPadding.padding_14,
             ),
             margin: const EdgeInsets.symmetric(vertical: AppMargin.margin_4),
-            child: const Text(
-              'Select a reason for cancelling...',
-              style: TextStyle(fontSize: AppFontSizes.font_size_14),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text(
+                  'Select a reason for cancelling...',
+                  style: TextStyle(fontSize: AppFontSizes.font_size_16),
+                ),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                  child: const Icon(
+                    Icons.clear,
+                  ),
+                ),
+              ],
             ),
           ),
           BlocBuilder<OrderBloc, OrderState>(

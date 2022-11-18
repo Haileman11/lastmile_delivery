@@ -4,11 +4,12 @@ import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:lastmile_mobile/src/config/themes/app_themes.dart';
 import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/polylines/polyline_bloc.dart';
+import 'package:lastmile_mobile/src/presentation/views/home_page/widgets/cancel_reasons_widget.dart';
 import 'package:lastmile_mobile/src/presentation/views/home_page/widgets/google_maps_widget.dart';
-import 'package:lastmile_mobile/src/presentation/views/home_page/widgets/order_request.dart';
 import 'package:lastmile_mobile/src/presentation/views/home_page/widgets/status_switch_widget.dart';
 
 import 'blocs/order/order_bloc.dart';
+import 'blocs/socket/socket_bloc.dart';
 
 class HomePageView extends StatelessWidget {
   const HomePageView({Key? key}) : super(key: key);
@@ -53,21 +54,31 @@ class HomePageView extends StatelessWidget {
                         state.order!.route.bounds,
                         state.order!.dropoffTasks
                             .map(
-                              (e) => Marker(
+                              (e) =>
+                              Marker(
                                   markerId: MarkerId("${e.id}"),
                                   position: e.location),
-                            )
+                        )
                             .toSet(),
                       ),
                     );
                   }
 
-                  return Offstage(
-                    child: state is! OrderAssigned
-                        ? Container()
-                        : OrderRequest(order: state.order!),
-                    offstage: state is! OrderAssigned,
+                  return BlocBuilder<SocketBloc, SocketState>(
+                    builder: (context, state) {
+                      if (state is SocketConnected){
+                        return CancelReasonsWidget(orderId: '');
+                      }
+                      return const SizedBox();
+                    },
                   );
+
+                  // return Offstage(
+                  //   child: state is! OrderAssigned
+                  //       ? Container()
+                  //       : OrderRequest(order: state.order!),
+                  //   offstage: state is! OrderAssigned,
+                  // );
                 },
               )
             ],
