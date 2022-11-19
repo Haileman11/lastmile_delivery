@@ -37,18 +37,23 @@ class OrderHeadingForPickupEvent extends OrderEvent {
 
 class OrderHeadingForDropoffEvent extends OrderEvent {
   final Order order;
-
-  const OrderHeadingForDropoffEvent(this.order);
+  final Task currentTask;
+  const OrderHeadingForDropoffEvent(this.order, this.currentTask);
 }
 
 class OrderDropoffCompleteEvent extends OrderEvent {
   final Order order;
-
-  const OrderDropoffCompleteEvent(this.order);
+  final Task task;
+  const OrderDropoffCompleteEvent(this.order, this.task);
 }
 
 class OrderPickUpCompleteEvent extends OrderEvent {
   final Order order;
   final Task task;
   const OrderPickUpCompleteEvent(this.order, this.task);
+}
+
+class OrderCompleteEvent extends OrderEvent {
+  final Order order;
+  const OrderCompleteEvent(this.order);
 }

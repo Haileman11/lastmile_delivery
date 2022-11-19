@@ -27,15 +27,13 @@ class OrderPickedUp extends OrderState {
 }
 
 class OrderHeadingForDropoff extends OrderState {
-  const OrderHeadingForDropoff(super.order);
+  final Task currentTask;
+
+  const OrderHeadingForDropoff(super.order, this.currentTask);
 }
 
-class OrderReachedDestination extends OrderState {
-  const OrderReachedDestination(super.order);
-}
-
-class OrderDeliveryConfirmed extends OrderState {
-  const OrderDeliveryConfirmed(super.order);
+class OrderDroppedOff extends OrderState {
+  const OrderDroppedOff(super.order);
 }
 
 class OrderCompleted extends OrderState {

@@ -16,14 +16,22 @@ class TaskHeadingToPickup extends TaskState {
   const TaskHeadingToPickup(super.task);
 }
 
-// class TaskWaitingForConfirmation extends TaskState {
-//   const TaskWaitingForConfirmation(super.task);
-// }
+class TaskHeadingToDropoff extends TaskState {
+  const TaskHeadingToDropoff(super.task);
+}
+
+class TaskWaitingForConfirmation extends TaskState {
+  const TaskWaitingForConfirmation(super.task);
+}
 
 class TaskWaitingForPackage extends TaskState {
   const TaskWaitingForPackage(super.task);
 }
 
-class PickupComplete extends TaskState {
-  const PickupComplete(super.task);
+class TaskPickupComplete extends TaskState {
+  const TaskPickupComplete(super.task);
+}
+
+class TaskDropoffComplete extends TaskState {
+  const TaskDropoffComplete(super.task);
 }

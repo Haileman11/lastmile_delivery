@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lastmile_mobile/src/config/themes/app_themes.dart';
 import 'package:lastmile_mobile/src/data/models/order.dart';
 import 'package:lastmile_mobile/src/presentation/common/swiping_button.dart';
+import 'package:lastmile_mobile/src/presentation/common/task_detail_widget.dart';
 import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/order/order_bloc.dart';
 import 'package:lastmile_mobile/src/presentation/views/home_page/widgets/cancel_reasons_widget.dart';
 
@@ -27,65 +28,50 @@ class WaitingForPackage extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Container(
-                      padding: const EdgeInsets.all(16),
-                      alignment: Alignment.center,
-                      child: Text(
-                        'Waiting For Package',
-                        style: Theme.of(context).textTheme.titleLarge,
-                      ),
+                    Row(
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.all(16),
+                          alignment: Alignment.center,
+                          child: Text(
+                            'Waiting For Package',
+                            style: Theme.of(context).textTheme.titleLarge,
+                          ),
+                        ),
+                        const CircularProgressIndicator.adaptive(),
+                      ],
                     ),
-                    IconButton(
-                      onPressed: () {
-                        showModalBottomSheet(
-                          context: context,
-                          enableDrag: true,
-                          isDismissible: false,
-                          builder: (context) {
-                            return CancelReasonsWidget(orderId: order.id);
+                    Builder(builder: (_) {
+                      if (order.pickupTasks.indexOf(task) == 0) {
+                        return IconButton(
+                          onPressed: () {
+                            showModalBottomSheet(
+                              context: context,
+                              enableDrag: true,
+                              isDismissible: false,
+                              builder: (context) {
+                                return CancelReasonsWidget(orderId: order.id);
+                              },
+                            );
                           },
+                          icon: const Icon(Icons.cancel),
                         );
-                      },
-                      icon: Icon(Icons.cancel),
-                    )
+                      } else {
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                          child: ElevatedButton(
+                            style: ButtonStyle(
+                                backgroundColor: MaterialStatePropertyAll(
+                                    AppColors.errorRed)),
+                            onPressed: () {},
+                            child: const Text("Transfer"),
+                          ),
+                        );
+                      }
+                    })
                   ],
                 )),
-            Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Row(
-                  children: [
-                    Expanded(
-                      child: InformationWidget(
-                          caption: "Responsible Person",
-                          value: task.responsiblePersonName),
-                    ),
-                    Expanded(
-                      child: InformationWidget(
-                          caption: "Responsible Person Phone Number",
-                          value: task.responsiblePersonPhone),
-                    ),
-                  ],
-                ),
-                Container(
-                    alignment: Alignment.centerLeft,
-                    padding: EdgeInsets.symmetric(horizontal: 16.0),
-                    child: Text("Current Task")),
-                Row(
-                  children: [
-                    Expanded(
-                      child: InformationWidget(
-                          caption: "${task.taskType.toMap()} ${task.id}",
-                          value: task.address),
-                    ),
-                    Expanded(
-                      child: InformationWidget(
-                          caption: "Timeout", value: "${5} min"),
-                    ),
-                  ],
-                ),
-              ],
-            ),
+            TaskDetailsWidget(order: order, task: task),
             SwipingButton(
                 text: 'Received, proceed to next task',
                 color: AppColors.appGreen,

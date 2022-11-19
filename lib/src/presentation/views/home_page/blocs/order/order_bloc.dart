@@ -45,24 +45,37 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
       emit(OrderHeadingForPickup(event.order, event.currentTask));
     });
     on<OrderPickUpCompleteEvent>((event, emit) {
-      // TODO: implement event handler
-      //if currenttask is last emit Heading FOr Dropoff
-      //else Heading For Pickup
       emit(OrderPickedUp(event.order));
       var pickupTasks = event.order.pickupTasks;
       var index = pickupTasks.indexOf(event.task);
       print(index);
-      if (index == pickupTasks.length) {
-        emit(OrderHeadingForDropoff(event.order));
+      if (index == pickupTasks.length - 1) {
+        emit(OrderHeadingForDropoff(
+            event.order, event.order.dropoffTasks.first));
       } else {
         emit(OrderHeadingForPickup(event.order, pickupTasks[index + 1]));
       }
     });
     on<OrderHeadingForDropoffEvent>((event, emit) {
-      emit(OrderHeadingForDropoff(event.order));
+      emit(OrderHeadingForDropoff(event.order, event.currentTask));
     });
     on<OrderDropoffCompleteEvent>((event, emit) {
-      // TODO: implement event handler
+      emit(OrderDroppedOff(event.order));
+      var dropoffTasks = event.order.dropoffTasks;
+      var index = dropoffTasks.indexOf(event.task);
+      print(index);
+      if (index == dropoffTasks.length - 1) {
+        emit(OrderCompleted(
+          event.order,
+        ));
+      } else {
+        emit(OrderHeadingForDropoff(event.order, dropoffTasks[index + 1]));
+      }
     });
+    on<OrderCompleteEvent>(
+      (event, emit) {
+        emit(const OrderUnassigned());
+      },
+    );
   }
 }
