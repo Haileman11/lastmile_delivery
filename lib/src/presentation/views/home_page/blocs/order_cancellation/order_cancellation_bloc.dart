@@ -66,9 +66,18 @@ class OrderCancellationBloc
             add(const DriverNotFoundEvent());
           }
         });
+        socket.on('driver_here', (data) {
+          print(">>>>>>>>>>>>>>>>> $data");
+          add(DriverIsHereEvent());
+        });
       } catch (e) {
         add(const DriverNotFoundEvent());
       }
+    });
+
+    /// DRIVER IS HERE
+    on<DriverIsHereEvent>((event, emit) {
+      emit(DriverIsHereState());
     });
 
     /// VERIFY PROOF OF DELIVERY

@@ -5,13 +5,13 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:lastmile_mobile/src/config/themes/app_themes.dart';
 import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/polylines/polyline_bloc.dart';
 import 'package:lastmile_mobile/src/presentation/views/home_page/widgets/google_maps_widget.dart';
-import 'package:lastmile_mobile/src/presentation/views/home_page/widgets/heading_to_pickup.dart';
-import 'package:lastmile_mobile/src/presentation/views/home_page/widgets/order_request.dart';
 import 'package:lastmile_mobile/src/presentation/views/home_page/widgets/status_switch_widget.dart';
 
 import 'blocs/order/order_bloc.dart';
 import 'blocs/order_cancellation/order_cancellation_bloc.dart';
 import 'blocs/task/task_bloc.dart';
+import 'widgets/heading_to_pickup.dart';
+import 'widgets/order_request.dart';
 
 class HomePageView extends StatelessWidget {
   HomePageView({Key? key}) : super(key: key);

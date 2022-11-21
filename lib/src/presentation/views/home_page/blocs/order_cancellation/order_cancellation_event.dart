@@ -34,6 +34,10 @@ class DriverNotFoundEvent extends OrderCancellationEvent {
   const DriverNotFoundEvent();
 }
 
+class DriverIsHereEvent extends OrderCancellationEvent {
+  const DriverIsHereEvent();
+}
+
 class LookForDriverToTransfer extends OrderCancellationEvent {
   final String orderId;
   const LookForDriverToTransfer(this.orderId);

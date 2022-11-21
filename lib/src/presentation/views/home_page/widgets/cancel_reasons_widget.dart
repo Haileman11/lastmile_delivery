@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lastmile_mobile/src/config/routes/app_routes.dart';
 import 'package:lastmile_mobile/src/config/themes/app_themes.dart';
 import 'package:lastmile_mobile/src/core/utils/constants.dart';
+import 'package:lastmile_mobile/src/core/utils/navigations.dart';
 import 'package:lastmile_mobile/src/data/datasources/local/app_hive_service.dart';
 import 'package:lastmile_mobile/src/presentation/views/home_page/cubits/select_cancel_reason_cubit.dart';
 
@@ -9,9 +11,11 @@ import '../../../common/app_dialog.dart';
 import '../blocs/order_cancellation/order_cancellation_bloc.dart';
 
 class CancelReasonsWidget extends StatefulWidget {
-  const CancelReasonsWidget({Key? key, required this.orderId})
+  const CancelReasonsWidget(
+      {Key? key, required this.orderId, this.isTransfer = false})
       : super(key: key);
   final String orderId;
+  final bool isTransfer;
 
   @override
   State<CancelReasonsWidget> createState() => _CancelReasonsWidgetState();
@@ -144,18 +148,28 @@ class _CancelReasonsWidgetState extends State<CancelReasonsWidget> {
                           .get(AppValues.driverBoxKey)
                           .id;
 
-                      BlocProvider.of<OrderCancellationBloc>(context).add(
-                        CancelOrderEvent(
-                          BlocProvider.of<SelectCancelReasonCubit>(context)
-                              .state,
-                          widget.orderId,
-                          driverId,
-                        ),
-                      );
-                      Navigator.pop(context);
+                      if (widget.isTransfer) {
+                        NavigationService.instance.navigateToWithArgs(
+                            AppRoutes.waitingForDriverPageRoute, context, {
+                          'order_id': widget.orderId,
+                        });
+                      } else {
+                        BlocProvider.of<OrderCancellationBloc>(context).add(
+                          CancelOrderEvent(
+                            BlocProvider.of<SelectCancelReasonCubit>(context)
+                                .state,
+                            widget.orderId,
+                            driverId,
+                          ),
+                        );
+
+                        Navigator.pop(context);
+                      }
                     },
                     optionTitle: "Yes",
-                    message: "Are you sure you want to cancel order"),
+                    message: widget.isTransfer
+                        ? "Are you sure you want to transfer order?"
+                        : "Are you sure you want to cancel order?"),
               ).then((value) => Navigator.pop(context));
             },
             child: Container(
