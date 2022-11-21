@@ -10,13 +10,22 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
   final Socket socket;
   TaskBloc(this.socket) : super(TaskPending()) {
     on<HeadingForPickupEvent>((event, emit) {
-      // TODO: implement event handler
+      emit(TaskHeadingToPickup(event.task));
     });
     on<ArriveToPickupEvent>((event, emit) {
-      // TODO: implement event handler
+      emit(TaskWaitingForPackage(event.task));
     });
     on<CompletePickupEvent>((event, emit) {
-      // TODO: implement event handler
+      emit(TaskPickupComplete(event.task));
+    });
+    on<HeadingForDropoffEvent>((event, emit) {
+      emit(TaskHeadingToDropoff(event.task));
+    });
+    on<ArriveToDropoffEvent>((event, emit) {
+      emit(TaskWaitingForConfirmation(event.task));
+    });
+    on<CompleteDropoffEvent>((event, emit) {
+      emit(TaskDropoffComplete(event.task));
     });
   }
 }

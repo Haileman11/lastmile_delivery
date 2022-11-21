@@ -8,6 +8,7 @@ import 'package:lastmile_mobile/src/presentation/common/swiping_button.dart';
 import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/order/order_bloc.dart';
 import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/polylines/polyline_bloc.dart';
 
+import '../../../common/information_widget.dart';
 import '../blocs/task/task_bloc.dart';
 
 class OrderRequest extends StatelessWidget {
@@ -196,34 +197,6 @@ class _TimerWidgetState extends State<TimerWidget> {
           "$_start",
           style: Theme.of(context).textTheme.titleLarge,
         ),
-      ),
-    );
-  }
-}
-
-class InformationWidget extends StatelessWidget {
-  const InformationWidget({
-    Key? key,
-    required this.caption,
-    required this.value,
-  }) : super(key: key);
-
-  final String caption;
-  final String value;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(16.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text(caption, style: Theme.of(context).textTheme.caption),
-          Text(
-            value,
-          ),
-        ],
       ),
     );
   }

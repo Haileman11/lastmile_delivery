@@ -53,8 +53,9 @@ dependencies:
   socket_io_client: ^1.0.2
   bloc_test:
   flutter_slidable: ^2.0.0
-  pinput: ^1.2.0
+  dotted_line: ^3.1.0
   url_launcher: ^6.1.6
+  pinput: ^1.2.0
 
 dev_dependencies:
   flutter_test:

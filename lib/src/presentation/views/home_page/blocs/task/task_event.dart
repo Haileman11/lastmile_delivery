@@ -19,3 +19,15 @@ class ArriveToPickupEvent extends TaskEvent {
 class CompletePickupEvent extends TaskEvent {
   const CompletePickupEvent(super.task);
 }
+
+class HeadingForDropoffEvent extends TaskEvent {
+  const HeadingForDropoffEvent(super.task);
+}
+
+class ArriveToDropoffEvent extends TaskEvent {
+  const ArriveToDropoffEvent(super.task);
+}
+
+class CompleteDropoffEvent extends TaskEvent {
+  const CompleteDropoffEvent(super.task);
+}

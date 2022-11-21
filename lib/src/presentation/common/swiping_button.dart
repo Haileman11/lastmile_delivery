@@ -50,7 +50,8 @@ class SwipingButton extends StatelessWidget {
     final textStyle = TextStyle(
         fontSize: 17.0, fontWeight: FontWeight.w400, color: Colors.white);
     return Flexible(
-      flex: 2,
+      flex: 8,
+      fit: FlexFit.tight,
       child: Text(
         text.toUpperCase(),
         style: textStyle,
