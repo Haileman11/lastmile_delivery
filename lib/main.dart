@@ -20,6 +20,7 @@ import 'package:lastmile_mobile/src/presentation/views/waiting_for_driver_page/w
 import 'src/core/utils/scroll_behaviour.dart';
 import 'src/data/datasources/local/app_hive_service.dart';
 import 'src/presentation/views/home_page/blocs/order_cancellation/order_cancellation_bloc.dart';
+import 'src/data/repositories/notification.dart';
 import 'src/presentation/views/home_page/blocs/task/task_bloc.dart';
 
 Future<void> main() async {
@@ -32,6 +33,7 @@ Future<void> main() async {
 
   ///INIT HIVE BOXES
   await AppHiveService.instance.initHiveBoxes();
+  await AppNotificationService().setup();
   runApp(const LastMile());
 }
 

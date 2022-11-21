@@ -2,6 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/services.dart';
 import 'package:lastmile_mobile/src/data/models/driver.dart';
+import 'package:lastmile_mobile/src/data/repositories/notification.dart';
 import 'package:lastmile_mobile/src/data/models/task.dart';
 import 'package:socket_io_client/socket_io_client.dart';
 
@@ -20,6 +21,7 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
     });
     on<OrderAssignedEvent>((event, emit) {
       HapticFeedback.vibrate();
+      AppNotificationService().showNotificationWithActions();
       emit(OrderAssigned(event.order));
     });
     on<OrderAcceptedEvent>((event, emit) {
