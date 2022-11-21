@@ -8,6 +8,7 @@ import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/order/ord
 
 import '../../../../data/models/task.dart';
 import '../blocs/task/task_bloc.dart';
+import 'cancel_reasons_widget.dart';
 
 class HeadingToDropoff extends StatelessWidget {
   final Task task;
@@ -41,7 +42,17 @@ class HeadingToDropoff extends StatelessWidget {
                         style: ButtonStyle(
                             backgroundColor:
                                 MaterialStatePropertyAll(AppColors.errorRed)),
-                        onPressed: () {},
+                        onPressed: () {
+                          showModalBottomSheet(
+                            context: context,
+                            enableDrag: true,
+                            isDismissible: false,
+                            builder: (context) {
+                              return CancelReasonsWidget(
+                                  orderId: order.id, isTransfer: true);
+                            },
+                          );
+                        },
                         child: const Text("Transfer"),
                       ),
                     )

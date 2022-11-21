@@ -5,6 +5,7 @@ import 'package:lastmile_mobile/src/data/models/order.dart';
 import 'package:lastmile_mobile/src/presentation/common/swiping_button.dart';
 import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/order/order_bloc.dart';
 import 'package:lastmile_mobile/src/presentation/views/home_page/widgets/cancel_reasons_widget.dart';
+
 import '../../../../data/models/task.dart';
 import '../../../common/task_detail_widget.dart';
 import '../blocs/task/task_bloc.dart';
@@ -58,7 +59,17 @@ class HeadingToPickup extends StatelessWidget {
                           style: ButtonStyle(
                               backgroundColor:
                                   MaterialStatePropertyAll(AppColors.errorRed)),
-                          onPressed: () {},
+                          onPressed: () {
+                            showModalBottomSheet(
+                              context: context,
+                              enableDrag: true,
+                              isDismissible: false,
+                              builder: (context) {
+                                return CancelReasonsWidget(
+                                    orderId: order.id, isTransfer: true);
+                              },
+                            );
+                          },
                           child: const Text("Transfer"),
                         ),
                       );

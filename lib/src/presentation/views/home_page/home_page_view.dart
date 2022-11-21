@@ -14,8 +14,8 @@ import 'package:lastmile_mobile/src/presentation/views/home_page/widgets/status_
 import 'package:lastmile_mobile/src/presentation/views/home_page/widgets/waiting_for_package.dart';
 
 import 'blocs/order/order_bloc.dart';
+import 'blocs/order_cancellation/order_cancellation_bloc.dart';
 import 'blocs/task/task_bloc.dart';
-import 'order_cancellation/order_cancellation_bloc.dart';
 
 class HomePageView extends StatelessWidget {
   HomePageView({Key? key}) : super(key: key);
