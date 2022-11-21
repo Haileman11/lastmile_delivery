@@ -1,4 +1,13 @@
+import 'dart:developer';
+
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:lastmile_mobile/src/injector.dart';
+
+import '../../presentation/views/home_page/blocs/order/order_bloc.dart';
+import '../models/order.dart';
+
+const accept_request_action_id = "accept_request_action_id";
+const reject_request_action_id = "reject_request_action_id";
 
 class AppNotificationService {
   final flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
@@ -15,53 +24,57 @@ class AppNotificationService {
     await flutterLocalNotificationsPlugin.initialize(
       initSettings,
       onDidReceiveNotificationResponse: onDidReceiveNotificationResponse,
-      // onDidReceiveBackgroundNotificationResponse: notificationTapBackground,
-    );
-
-    final androidDetail = AndroidNotificationDetails(
-        "channel", // channel Id
-        "channel" // channel Name
-        );
-
-    final iosDetail = DarwinNotificationDetails();
-
-    final noticeDetail = NotificationDetails(
-      iOS: iosDetail,
-      android: androidDetail,
+      onDidReceiveBackgroundNotificationResponse: notificationTapBackground,
     );
   }
 
   void onDidReceiveNotificationResponse(
       NotificationResponse notificationResponse) async {
     final String? payload = notificationResponse.payload;
-    if (notificationResponse.payload != null) {
-      print('notification payload: $payload');
+    final Order order = Order.fromJson(payload!);
+    final orderBloc = injector<OrderBloc>();
+    if (notificationResponse.actionId == accept_request_action_id) {
+      orderBloc.add(OrderAcceptedEvent(order));
+    } else {
+      orderBloc.add(OrderRejectedEvent(order));
     }
-    // await Navigator.push(
-    //   context,
-    //   MaterialPageRoute<void>(builder: (context) => SecondScreen(payload)),
-    // );
+    if (notificationResponse.payload != null) {
+      log('notification payload: $payload');
+    }
   }
 
   @pragma('vm:entry-point')
-  void notificationTapBackground(NotificationResponse notificationResponse) {
+  static void notificationTapBackground(
+      NotificationResponse notificationResponse) {
     // handle action
+    final String? payload = notificationResponse.payload;
+    final Order order = Order.fromJson(payload!);
+    final orderBloc = injector<OrderBloc>();
+    if (notificationResponse.actionId == accept_request_action_id) {
+      orderBloc.add(OrderAcceptedEvent(order));
+    } else {
+      orderBloc.add(OrderRejectedEvent(order));
+    }
+    if (notificationResponse.payload != null) {
+      log('notification payload: $payload');
+    }
   }
-  Future<void> showNotificationWithActions() async {
-    const AndroidNotificationDetails androidNotificationDetails =
-        AndroidNotificationDetails(
-      '...',
-      '...',
+
+  Future<void> showNotificationWithActions(Order order) async {
+    AndroidNotificationDetails androidNotificationDetails =
+        const AndroidNotificationDetails(
+      'order_request',
+      'Order request',
       channelDescription: '...',
       actions: <AndroidNotificationAction>[
-        AndroidNotificationAction('id_1', 'Action 1'),
-        AndroidNotificationAction('id_2', 'Action 2'),
-        AndroidNotificationAction('id_3', 'Action 3'),
+        AndroidNotificationAction(accept_request_action_id, 'Accept'),
+        AndroidNotificationAction(reject_request_action_id, 'Reject'),
       ],
     );
-    const NotificationDetails notificationDetails =
+    NotificationDetails notificationDetails =
         NotificationDetails(android: androidNotificationDetails);
-    await flutterLocalNotificationsPlugin.show(
-        0, '...', '...', notificationDetails);
+    await flutterLocalNotificationsPlugin.show(0, 'Incoming order request',
+        'From ${order.businessCustomerName}', notificationDetails,
+        payload: order.toJson());
   }
 }
