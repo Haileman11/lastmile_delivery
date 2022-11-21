@@ -9,9 +9,8 @@ import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/task/task
 import '../../utils/test_injector.dart';
 
 Future<void> main() async {
-  TestWidgetsFlutterBinding.ensureInitialized();
-  await initializeTestDependencies();
   await AppHiveService.instance.initHiveBoxes();
+  await initializeTestDependencies();
   group('''Driver accepts order''', () {
     var order = Order.fromMap({
       'id': 'id',

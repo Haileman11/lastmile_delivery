@@ -6,9 +6,9 @@ import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/update_lo
 
 import '../../utils/test_injector.dart';
 
-void main() {
+Future<void> main() async {
+  await initializeTestDependencies();
   group('''Driver updates location''', () {
-    initializeTestDependencies();
     blocTest(
       'Driver doesn\'t update location',
       build: () => UpdateLocationBloc(injector()),

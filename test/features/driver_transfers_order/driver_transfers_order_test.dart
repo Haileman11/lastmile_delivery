@@ -7,7 +7,6 @@ import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/order_can
 import '../../utils/test_injector.dart';
 
 Future<void> main() async {
-  TestWidgetsFlutterBinding.ensureInitialized();
   await initializeTestDependencies();
   await AppHiveService.instance.initHiveBoxes();
   group('''Driver transfers orders''', () {

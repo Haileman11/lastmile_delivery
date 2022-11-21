@@ -8,8 +8,8 @@ import '../../utils/test_injector.dart';
 
 Future<void> main() async {
   await AppHiveService.instance.initHiveBoxes();
+  await initializeTestDependencies();
   group('''Driver cancels order''', () {
-    initializeTestDependencies();
     blocTest(
       'Driver cancels order',
       build: () => OrderCancellationBloc(injector()),

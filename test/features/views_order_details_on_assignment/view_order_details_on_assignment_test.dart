@@ -1,14 +1,19 @@
+import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:lastmile_mobile/src/data/datasources/local/app_hive_service.dart';
 import 'package:lastmile_mobile/src/data/models/order.dart';
 import 'package:lastmile_mobile/src/injector.dart';
 import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/order/order_bloc.dart';
-import 'package:mockito/mockito.dart';
 
-import '../../../utils/test_injector.mocks.dart';
+import '../../utils/test_injector.dart';
 
-Future<void> driverAvailabilityIs(WidgetTester tester, bool isAvailable) async {
-  var orderBloc = injector<OrderBloc>();
-  orderBloc.add(OrderAssignedEvent(Order.fromMap({
+Future<void> main() async {
+  TestWidgetsFlutterBinding.ensureInitialized();
+
+  await AppHiveService.instance.initHiveBoxes();
+  await initializeTestDependencies();
+
+  final order = Order.fromMap({
     'id': 'id',
     'businessCustomerName': "Boss burger",
     'orderCategory': 'singleToSingle',
@@ -25,6 +30,8 @@ Future<void> driverAvailabilityIs(WidgetTester tester, bool isAvailable) async {
         'location': {"lat": 42.3599162, "lng": -71.3496743},
         'responsiblePersonName': "Abaeb",
         'responsiblePersonPhone': "_234243",
+        'status': 'pending',
+        'taskType': 'pickup'
       }
     ],
     'dropoffTasks': [
@@ -34,6 +41,8 @@ Future<void> driverAvailabilityIs(WidgetTester tester, bool isAvailable) async {
         'location': {"lat": 42.3599162, "lng": -71.3496743},
         'responsiblePersonName': "Abaeb",
         'responsiblePersonPhone': "_234243",
+        'status': 'pending',
+        'taskType': 'dropoff'
       }
     ],
     'route': {
@@ -44,5 +53,14 @@ Future<void> driverAvailabilityIs(WidgetTester tester, bool isAvailable) async {
         "southwest": {"lat": 42.3599162, "lng": -71.3496743}
       }
     },
-  })));
+  });
+
+  group('Driver views order detail', () {
+    blocTest(
+      'Driver sees order detail when assigned',
+      build: () => OrderBloc(injector()),
+      act: (bloc) => bloc.add(OrderAssignedEvent(order)),
+      expect: () => [OrderAssigned(order)],
+    );
+  });
 }

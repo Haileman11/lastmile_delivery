@@ -7,8 +7,6 @@ abstract class DriverProfileEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class SetupDriverProfileListenerEvent extends DriverProfileEvent {}
-
 class UpdateDriverAvailabilityEvent extends DriverProfileEvent {
   final bool isAvailable;
 

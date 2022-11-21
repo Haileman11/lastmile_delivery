@@ -61,3 +61,16 @@ class OrderCompleteEvent extends OrderEvent {
 class OrderTransferredEvent extends OrderEvent {
   const OrderTransferredEvent();
 }
+
+/// DELIVERY PROOF
+class DropOffProveEvent extends OrderEvent {
+  const DropOffProveEvent();
+}
+
+class DropOffProveSuccessEvent extends OrderEvent {
+  const DropOffProveSuccessEvent();
+}
+
+class DropOffProveFailedEvent extends OrderEvent {
+  const DropOffProveFailedEvent();
+}

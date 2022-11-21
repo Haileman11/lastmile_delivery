@@ -5,9 +5,12 @@ import 'package:lastmile_mobile/src/injector.dart';
 import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/driver_location/driver_location_bloc.dart';
 import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/driver_profile/driver_profile_bloc.dart';
 import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/order/order_bloc.dart';
+import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/order_cancellation/order_cancellation_bloc.dart';
 import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/polylines/polyline_bloc.dart';
 import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/socket/socket_bloc.dart';
+import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/task/task_bloc.dart';
 import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/update_location/update_location_bloc.dart';
+import 'package:lastmile_mobile/src/presentation/views/home_page/cubits/select_cancel_reason_cubit.dart';
 import 'package:lastmile_mobile/src/presentation/views/home_page/home_page_view.dart';
 import 'package:lastmile_mobile/src/presentation/views/splash_page/splash_page_view.dart';
 
@@ -25,16 +28,24 @@ class TestApp extends StatelessWidget {
         ),
         BlocProvider<SocketBloc>(create: (context) => injector()),
         BlocProvider<DriverProfileBloc>(
-            create: (context) =>
-                injector()..add(SetupDriverProfileListenerEvent())),
+            create: (context) => DriverProfileBloc(socket: injector())),
         BlocProvider<UpdateLocationBloc>(
           create: (context) => UpdateLocationBloc(injector()),
         ),
         BlocProvider<OrderBloc>(
           create: (context) => OrderBloc(injector()),
         ),
+        BlocProvider<TaskBloc>(
+          create: (context) => TaskBloc(injector()),
+        ),
         BlocProvider<PolyLineBloc>(
           create: (context) => PolyLineBloc(),
+        ),
+        BlocProvider<OrderCancellationBloc>(
+          create: (context) => OrderCancellationBloc(injector()),
+        ),
+        BlocProvider<SelectCancelReasonCubit>(
+          create: (context) => SelectCancelReasonCubit(injector()),
         ),
       ],
       child: BlocListener<SocketBloc, SocketState>(

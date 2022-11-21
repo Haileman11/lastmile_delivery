@@ -4,16 +4,10 @@ import 'package:lastmile_mobile/src/data/datasources/local/app_hive_service.dart
 import 'package:lastmile_mobile/src/data/models/order.dart';
 import 'package:lastmile_mobile/src/injector.dart';
 import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/order/order_bloc.dart';
+
 import '../../utils/test_injector.dart';
 
 Future<void> main() async {
-  // setUpAll(() async {
-  //   TestWidgetsFlutterBinding.ensureInitialized();
-  //   await initializeTestDependencies();
-  //   await AppHiveService.instance.initHiveBoxes();
-  // });
-
-  TestWidgetsFlutterBinding.ensureInitialized();
   await initializeTestDependencies();
   await AppHiveService.instance.initHiveBoxes();
   group('''Driver accepts order''', () {

@@ -39,3 +39,16 @@ class OrderDroppedOff extends OrderState {
 class OrderCompleted extends OrderState {
   const OrderCompleted(super.order);
 }
+
+/// DELIVERY PROOF
+class DropOffProvedSuccessfully extends OrderState {
+  const DropOffProvedSuccessfully() : super(null);
+}
+
+class DropOffProofFailed extends OrderState {
+  const DropOffProofFailed() : super(null);
+}
+
+class DropOffProofLoading extends OrderState {
+  const DropOffProofLoading() : super(null);
+}
