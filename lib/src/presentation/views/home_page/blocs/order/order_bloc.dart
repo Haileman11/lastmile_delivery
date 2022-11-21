@@ -42,6 +42,10 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
     on<OrderHeadingForPickupEvent>((event, emit) {
       emit(OrderHeadingForPickup(event.order));
     });
+
+    on<OrderTransferredEvent>((event, emit) {
+      emit(const OrderUnassigned());
+    });
     on<OrderPickUpCompleteEvent>((event, emit) {
       // TODO: implement event handler
     });

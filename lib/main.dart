@@ -13,6 +13,7 @@ import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/socket/so
 import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/update_location/update_location_bloc.dart';
 import 'package:lastmile_mobile/src/presentation/views/home_page/cubits/select_cancel_reason_cubit.dart';
 import 'package:lastmile_mobile/src/presentation/views/home_page/home_page_view.dart';
+import 'package:lastmile_mobile/src/presentation/views/pod_page/pod_page_view.dart';
 import 'package:lastmile_mobile/src/presentation/views/splash_page/splash_page_view.dart';
 import 'package:lastmile_mobile/src/presentation/views/waiting_for_driver_page/waiting_for_driver_page.dart';
 
@@ -90,12 +91,20 @@ class LastMile extends StatelessWidget {
               ),
             );
           },
-          initialRoute: AppRoutes.homePageRoute,
+          initialRoute: AppRoutes.splashScreenRoute,
           routes: {
             AppRoutes.homePageRoute: (context) => HomePageView(),
             AppRoutes.splashScreenRoute: (context) => const SplashPageView(),
-            AppRoutes.waitingForDriverPageRoute: (context) =>
-                const WaitingDriverPageView(),
+            AppRoutes.waitingForDriverPageRoute: (context) {
+              final args =
+                  ModalRoute.of(context)!.settings.arguments as ScreenArguments;
+              return BlocProvider<OrderCancellationBloc>(
+                create: (context) => injector()
+                  ..add(LookForDriverToTransfer(args.args['order_id'])),
+                child: const WaitingDriverPageView(),
+              );
+            },
+            AppRoutes.podPageRoute: (context) => const PodPageView(),
           },
         ),
       ),

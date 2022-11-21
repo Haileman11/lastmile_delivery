@@ -52,3 +52,7 @@ class OrderPickUpCompleteEvent extends OrderEvent {
 
   const OrderPickUpCompleteEvent(this.order);
 }
+
+class OrderTransferredEvent extends OrderEvent {
+  const OrderTransferredEvent();
+}

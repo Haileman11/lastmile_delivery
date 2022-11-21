@@ -8,4 +8,5 @@ class AppRoutes {
   static const homePageRoute = '/home-page';
   static const splashScreenRoute = '/splash-page';
   static const waitingForDriverPageRoute = '/waiting-for-driver-page';
+  static const podPageRoute = '/pod-page';
 }

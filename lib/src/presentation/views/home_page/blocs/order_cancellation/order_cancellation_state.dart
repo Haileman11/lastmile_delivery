@@ -44,6 +44,10 @@ class DriverNotFound extends OrderCancellationState {
   const DriverNotFound();
 }
 
+class DriverIsHereState extends OrderCancellationState {
+  const DriverIsHereState();
+}
+
 class VerificationComplete extends OrderCancellationState {
   const VerificationComplete();
 }
