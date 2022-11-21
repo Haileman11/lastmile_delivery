@@ -114,13 +114,11 @@ class HomePageView extends StatelessWidget {
                         ),
                       );
                     }
-                    print(state);
                     return BlocConsumer<TaskBloc, TaskState>(
                       listener: (context, state) {
                         // BlocProvider.of<TaskBloc>(context).add(event)
                       },
                       builder: (context, state) {
-                        print(state);
                         return Offstage(
                           offstage: orderState is OrderUnassigned,
                           child: Builder(builder: (context) {

@@ -67,8 +67,7 @@ class OrderCancellationBloc
           }
         });
         socket.on('driver_here', (data) {
-          print(">>>>>>>>>>>>>>>>> $data");
-          add(DriverIsHereEvent());
+          add(const DriverIsHereEvent());
         });
       } catch (e) {
         add(const DriverNotFoundEvent());
@@ -77,7 +76,7 @@ class OrderCancellationBloc
 
     /// DRIVER IS HERE
     on<DriverIsHereEvent>((event, emit) {
-      emit(DriverIsHereState());
+      emit(const DriverIsHereState());
     });
 
     /// VERIFY PROOF OF DELIVERY

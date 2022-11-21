@@ -52,7 +52,6 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
       emit(OrderPickedUp(event.order));
       var pickupTasks = event.order.pickupTasks;
       var index = pickupTasks.indexOf(event.task);
-      print(index);
       if (index == pickupTasks.length - 1) {
         emit(OrderHeadingForDropoff(
             event.order, event.order.dropoffTasks.first));
@@ -67,7 +66,6 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
       emit(OrderDroppedOff(event.order));
       var dropoffTasks = event.order.dropoffTasks;
       var index = dropoffTasks.indexOf(event.task);
-      print(index);
       if (index == dropoffTasks.length - 1) {
         emit(OrderCompleted(
           event.order,
