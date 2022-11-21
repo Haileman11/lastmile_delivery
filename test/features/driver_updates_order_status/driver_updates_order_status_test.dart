@@ -5,7 +5,7 @@ import 'package:lastmile_mobile/src/data/models/order.dart';
 import 'package:lastmile_mobile/src/injector.dart';
 import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/order/order_bloc.dart';
 import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/task/task_bloc.dart';
-import 'package:lastmile_mobile/src/presentation/views/home_page/widgets/waiting_for_package.dart';
+
 import '../../utils/test_injector.dart';
 
 Future<void> main() async {
@@ -32,11 +32,29 @@ Future<void> main() async {
           'responsiblePersonPhone': "_234243",
           'status': 'pending',
           'taskType': 'pickup'
+        },
+        {
+          'id': '2',
+          "address": "Kazanchis, Addis Ababa",
+          'location': {"lat": 42.3599162, "lng": -71.3496743},
+          'responsiblePersonName': "Abaeb",
+          'responsiblePersonPhone': "_234243",
+          'status': 'pending',
+          'taskType': 'pickup'
         }
       ],
       'dropoffTasks': [
         {
           'id': '1',
+          'address': "Bole, Addis Ababa",
+          'location': {"lat": 42.3599162, "lng": -71.3496743},
+          'responsiblePersonName': "Abaeb",
+          'responsiblePersonPhone': "_234243",
+          'status': 'pending',
+          'taskType': 'dropoff'
+        },
+        {
+          'id': '2',
           'address': "Bole, Addis Ababa",
           'location': {"lat": 42.3599162, "lng": -71.3496743},
           'responsiblePersonName': "Abaeb",
@@ -64,7 +82,7 @@ Future<void> main() async {
       'when the driver reaches pickup location, fires task arrive-to-pickup event which emits the waiting for package state.',
       build: () => TaskBloc(injector()),
       act: (bloc) => bloc.add(ArriveToPickupEvent(order.pickupTasks.first)),
-      expect: () => [WaitingForPackage(task: order.pickupTasks.first)],
+      expect: () => [TaskWaitingForPackage(order.pickupTasks.first)],
     );
     blocTest(
       'fires complete-pickup event which updates the task state to pickup-complete.',
@@ -77,14 +95,20 @@ Future<void> main() async {
       build: () => OrderBloc(injector()),
       act: (bloc) =>
           bloc.add(OrderPickUpCompleteEvent(order, order.pickupTasks.first)),
-      expect: () => [OrderHeadingForPickup(order, order.pickupTasks[1])],
+      expect: () => [
+        OrderPickedUp(order),
+        OrderHeadingForPickup(order, order.pickupTasks[1])
+      ],
     );
     blocTest(
       'If there are no pickup tasks, heading-to-dropoff state will be emitted.',
       build: () => OrderBloc(injector()),
       act: (bloc) =>
           bloc.add(OrderPickUpCompleteEvent(order, order.pickupTasks.last)),
-      expect: () => [OrderHeadingForDropoff(order, order.pickupTasks[1])],
+      expect: () => [
+        OrderPickedUp(order),
+        OrderHeadingForDropoff(order, order.pickupTasks[1])
+      ],
     );
     //dropoff
     blocTest(
@@ -110,14 +134,17 @@ Future<void> main() async {
       build: () => OrderBloc(injector()),
       act: (bloc) =>
           bloc.add(OrderDropoffCompleteEvent(order, order.dropoffTasks.first)),
-      expect: () => [OrderHeadingForDropoff(order, order.dropoffTasks[1])],
+      expect: () => [
+        OrderDroppedOff(order),
+        OrderHeadingForDropoff(order, order.dropoffTasks[1])
+      ],
     );
     blocTest(
       'If there are no dropoff tasks, order complete state will be emitted.',
       build: () => OrderBloc(injector()),
       act: (bloc) =>
-          bloc.add(OrderPickUpCompleteEvent(order, order.pickupTasks.last)),
-      expect: () => [OrderCompleteEvent(order)],
+          bloc.add(OrderDropoffCompleteEvent(order, order.dropoffTasks.last)),
+      expect: () => [OrderDroppedOff(order), OrderCompleted(order)],
     );
     blocTest(
       'complete order event changes the state to order unassigned.',
