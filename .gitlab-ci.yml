@@ -10,7 +10,7 @@ stages:
 dev_test:
   stage: test
   tags:
-    #- flutter
+    #-  flutter
     - 2f-flutter-ssh
   before_script:
     - flutter clean
