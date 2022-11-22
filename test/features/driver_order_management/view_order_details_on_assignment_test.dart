@@ -55,12 +55,10 @@ Future<void> main() async {
       setUpAll(() async {
         TestWidgetsFlutterBinding.ensureInitialized();
         await initializeTestDependencies();
-        await AppHiveService.instance.initHiveBoxes();
       });
     } finally {
       tearDownAll(() async {
         injector.reset();
-        await AppHiveService.instance.driverBox.close();
       });
     }
 

@@ -7,8 +7,9 @@ import 'dart:async' as _i9;
 
 import 'package:bloc/bloc.dart' as _i11;
 import 'package:geolocator/geolocator.dart' as _i10;
-import 'package:hive/hive.dart' as _i7;
 import 'package:lastmile_mobile/src/data/datasources/local/app_hive_service.dart'
+    as _i7;
+import 'package:lastmile_mobile/src/data/repositories/app_hive_repository.dart'
     as _i13;
 import 'package:lastmile_mobile/src/data/repositories/base_location_repo_impl.dart'
     as _i8;
@@ -86,8 +87,9 @@ class _FakeUpdateLocationState_4 extends _i1.SmartFake
         );
 }
 
-class _FakeBox_5<E> extends _i1.SmartFake implements _i7.Box<E> {
-  _FakeBox_5(
+class _FakeAppHiveService_5 extends _i1.SmartFake
+    implements _i7.AppHiveService {
+  _FakeAppHiveService_5(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -1030,46 +1032,53 @@ class MockUpdateLocationBloc extends _i1.Mock
       );
 }
 
-/// A class which mocks [AppHiveService].
+/// A class which mocks [AppHiveRepositoryImpl].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockAppHiveService extends _i1.Mock implements _i13.AppHiveService {
+class MockAppHiveRepositoryImpl extends _i1.Mock
+    implements _i13.AppHiveRepositoryImpl {
   @override
-  _i7.Box<dynamic> get driverBox => (super.noSuchMethod(
-        Invocation.getter(#driverBox),
-        returnValue: _FakeBox_5<dynamic>(
+  _i7.AppHiveService get hiveService => (super.noSuchMethod(
+        Invocation.getter(#hiveService),
+        returnValue: _FakeAppHiveService_5(
           this,
-          Invocation.getter(#driverBox),
+          Invocation.getter(#hiveService),
         ),
-        returnValueForMissingStub: _FakeBox_5<dynamic>(
+        returnValueForMissingStub: _FakeAppHiveService_5(
           this,
-          Invocation.getter(#driverBox),
+          Invocation.getter(#hiveService),
         ),
-      ) as _i7.Box<dynamic>);
+      ) as _i7.AppHiveService);
   @override
-  set driverBox(_i7.Box<dynamic>? _driverBox) => super.noSuchMethod(
+  set hiveService(_i7.AppHiveService? _hiveService) => super.noSuchMethod(
         Invocation.setter(
-          #driverBox,
-          _driverBox,
+          #hiveService,
+          _hiveService,
         ),
         returnValueForMissingStub: null,
       );
   @override
-  _i9.Future<void> initHiveBoxes() => (super.noSuchMethod(
+  _i9.Future<void> putData(
+    String? key,
+    dynamic value,
+  ) =>
+      (super.noSuchMethod(
         Invocation.method(
-          #initHiveBoxes,
-          [],
+          #putData,
+          [
+            key,
+            value,
+          ],
         ),
         returnValue: _i9.Future<void>.value(),
         returnValueForMissingStub: _i9.Future<void>.value(),
       ) as _i9.Future<void>);
   @override
-  _i9.Future<void> initHiveAdapters() => (super.noSuchMethod(
+  dynamic getData(String? key) => super.noSuchMethod(
         Invocation.method(
-          #initHiveAdapters,
-          [],
+          #getData,
+          [key],
         ),
-        returnValue: _i9.Future<void>.value(),
-        returnValueForMissingStub: _i9.Future<void>.value(),
-      ) as _i9.Future<void>);
+        returnValueForMissingStub: null,
+      );
 }

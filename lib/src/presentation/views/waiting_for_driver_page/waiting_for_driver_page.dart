@@ -3,10 +3,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:lastmile_mobile/src/config/routes/app_routes.dart';
 import 'package:lastmile_mobile/src/config/themes/app_themes.dart';
+import 'package:lastmile_mobile/src/injector.dart';
 import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/order_cancellation/order_cancellation_bloc.dart';
 import 'package:lastmile_mobile/src/presentation/views/waiting_for_driver_page/widgets/driver_on_the_way.dart';
 import 'package:lastmile_mobile/src/presentation/views/waiting_for_driver_page/widgets/transfer_error.dart';
 
+import '../../../data/models/driver.dart';
 import 'widgets/looking_for_driver.dart';
 
 class WaitingDriverPageView extends StatelessWidget {
@@ -52,8 +54,8 @@ class WaitingDriverPageView extends StatelessWidget {
           if (state is DriverNotFound) {
             return GestureDetector(
               onTap: () {
-                BlocProvider.of<OrderCancellationBloc>(context)
-                    .add(LookForDriverToTransfer(orderId));
+                BlocProvider.of<OrderCancellationBloc>(context).add(
+                    LookForDriverToTransfer(orderId, injector<DriverModel>()));
               },
               child: const TransferError(
                   message: 'Driver not found, tap to retry'),
@@ -62,8 +64,8 @@ class WaitingDriverPageView extends StatelessWidget {
 
           return GestureDetector(
               onTap: () {
-                BlocProvider.of<OrderCancellationBloc>(context)
-                    .add(LookForDriverToTransfer(orderId));
+                BlocProvider.of<OrderCancellationBloc>(context).add(
+                    LookForDriverToTransfer(orderId, injector<DriverModel>()));
               },
               child: const TransferError(
                   message: 'Something went wrong, tap to retry'));

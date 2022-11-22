@@ -12,12 +12,10 @@ Future<void> main() async {
   group('''Driver accepts order''', () {
     setUpAll(() async {
       await initializeTestDependencies();
-      await AppHiveService.instance.initHiveBoxes();
     });
 
     tearDownAll(() async {
       injector.reset();
-      await AppHiveService.instance.driverBox.close();
     });
 
     var order = Order.fromMap({

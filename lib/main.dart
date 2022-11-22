@@ -32,7 +32,6 @@ Future<void> main() async {
 
   ///INIT HIVE BOXES
   await AppHiveService.instance.initHiveBoxes();
-
   runApp(const LastMile());
 }
 
@@ -100,7 +99,8 @@ class LastMile extends StatelessWidget {
                   ModalRoute.of(context)!.settings.arguments as ScreenArguments;
               return BlocProvider<OrderCancellationBloc>(
                 create: (context) => injector()
-                  ..add(LookForDriverToTransfer(args.args['order_id'])),
+                  ..add(LookForDriverToTransfer(
+                      args.args['order_id'], injector())),
                 child: const WaitingDriverPageView(),
               );
             },

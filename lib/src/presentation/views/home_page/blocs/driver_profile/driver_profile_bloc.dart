@@ -5,18 +5,23 @@ import 'package:lastmile_mobile/src/data/datasources/local/app_hive_service.dart
 import 'package:lastmile_mobile/src/data/models/driver.dart';
 import 'package:socket_io_client/socket_io_client.dart';
 
+import '../../../../../domain/repositories/app_hive_repository.dart';
+
 part 'driver_profile_event.dart';
 part 'driver_profile_state.dart';
 
 class DriverProfileBloc extends Bloc<DriverProfileEvent, DriverProfileState> {
   Socket socket;
-  DriverProfileBloc({required this.socket})
-      : super(DriverProfileLoaded(
-            driverProfile: AppHiveService.instance.driverBox
-                .get(AppValues.driverBoxKey))) {
+
+  DriverModel driverProfile;
+  AppHiveRepository hiveRepository;
+  DriverProfileBloc(
+      {required this.socket,
+      required this.driverProfile,
+      required this.hiveRepository})
+      : super(DriverProfileLoaded(driverProfile: driverProfile)) {
     /// GET DRIVER PROFILE FROM HIVE
-    final String driverId =
-        AppHiveService.instance.driverBox.get(AppValues.driverBoxKey).id;
+    final String driverId = driverProfile.id;
     socket.on(
       "driver_availability",
       (data) {
@@ -31,8 +36,6 @@ class DriverProfileBloc extends Bloc<DriverProfileEvent, DriverProfileState> {
     });
     on<UpdateDriverProfileEvent>((event, emit) async {
       /// ADD DRIVER MODEL TO HIVE
-      AppHiveService.instance.driverBox
-          .put(AppValues.driverBoxKey, event.driverModel);
 
       emit(DriverProfileLoaded(driverProfile: event.driverModel));
     });

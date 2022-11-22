@@ -27,17 +27,19 @@ Future<void> main() async {
   group('Driver updates availability', () {
     setUpAll(() async {
       await initializeTestDependencies();
-      await AppHiveService.instance.initHiveBoxes();
     });
 
     tearDownAll(() async {
       injector.reset();
-      await AppHiveService.instance.driverBox.close();
     });
 
     blocTest(
       'Driver becomes online',
-      build: () => DriverProfileBloc(socket: injector()),
+      build: () => DriverProfileBloc(
+        socket: injector(),
+        driverProfile: injector(),
+        hiveRepository: injector(),
+      ),
       act: (bloc) =>
           bloc.add(UpdateDriverProfileEvent(driverModel: driverModelAvailable)),
       expect: () => [DriverProfileLoaded(driverProfile: driverModelAvailable)],
@@ -45,7 +47,11 @@ Future<void> main() async {
 
     blocTest(
       'Driver becomes offline',
-      build: () => DriverProfileBloc(socket: injector()),
+      build: () => DriverProfileBloc(
+        socket: injector(),
+        driverProfile: injector(),
+        hiveRepository: injector(),
+      ),
       act: (bloc) => bloc
           .add(UpdateDriverProfileEvent(driverModel: driverModelUnavailable)),
       expect: () =>

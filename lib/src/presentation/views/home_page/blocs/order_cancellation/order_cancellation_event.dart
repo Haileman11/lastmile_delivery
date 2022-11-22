@@ -40,7 +40,9 @@ class DriverIsHereEvent extends OrderCancellationEvent {
 
 class LookForDriverToTransfer extends OrderCancellationEvent {
   final String orderId;
-  const LookForDriverToTransfer(this.orderId);
+
+  final DriverModel driverModel;
+  const LookForDriverToTransfer(this.orderId, this.driverModel);
 }
 
 class VerifyTransferEvent extends OrderCancellationEvent {

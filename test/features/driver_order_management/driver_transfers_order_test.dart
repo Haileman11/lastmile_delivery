@@ -10,12 +10,10 @@ Future<void> main() async {
   group('''Driver transfers orders''', () {
     setUpAll(() async {
       await initializeTestDependencies();
-      await AppHiveService.instance.initHiveBoxes();
     });
 
     tearDownAll(() async {
       injector.reset();
-      await AppHiveService.instance.driverBox.close();
     });
 
     blocTest(

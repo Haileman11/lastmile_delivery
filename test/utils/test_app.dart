@@ -28,7 +28,11 @@ class TestApp extends StatelessWidget {
         ),
         BlocProvider<SocketBloc>(create: (context) => injector()),
         BlocProvider<DriverProfileBloc>(
-            create: (context) => DriverProfileBloc(socket: injector())),
+            create: (context) => DriverProfileBloc(
+                  socket: injector(),
+                  driverProfile: injector(),
+                  hiveRepository: injector(),
+                )),
         BlocProvider<UpdateLocationBloc>(
           create: (context) => UpdateLocationBloc(injector()),
         ),

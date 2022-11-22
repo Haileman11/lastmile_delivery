@@ -14,8 +14,6 @@ class OrderCancellationBloc
 
   OrderCancellationBloc(this.socket) : super(OrderCancellationInitial()) {
     /// GET DRIVER PROFILE FROM HIVE
-    final DriverModel driverModel =
-        AppHiveService.instance.driverBox.get(AppValues.driverBoxKey);
 
     /// CANCEL ORDER
     on<CancelOrderEvent>((event, emit) {
@@ -57,7 +55,7 @@ class OrderCancellationBloc
       try {
         socket.emit('look_for_transfer_driver', {
           'order_id': event.orderId,
-          'driver_id': driverModel.id,
+          'driver_id': event.driverModel.id,
         });
         socket.on('transfer_driver', (data) {
           if (data['driver_found']) {
