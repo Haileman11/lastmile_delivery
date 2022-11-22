@@ -53,7 +53,7 @@ class LastMile extends StatelessWidget {
           create: (context) => UpdateLocationBloc(injector()),
         ),
         BlocProvider<OrderBloc>(
-          create: (context) => OrderBloc(injector()),
+          create: (context) => OrderBloc(injector(), injector()),
         ),
         BlocProvider<OrderCancellationBloc>(
           create: (context) => OrderCancellationBloc(injector()),

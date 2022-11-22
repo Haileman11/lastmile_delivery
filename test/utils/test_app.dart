@@ -33,7 +33,7 @@ class TestApp extends StatelessWidget {
           create: (context) => UpdateLocationBloc(injector()),
         ),
         BlocProvider<OrderBloc>(
-          create: (context) => OrderBloc(injector()),
+          create: (context) => OrderBloc(injector(), injector()),
         ),
         BlocProvider<TaskBloc>(
           create: (context) => TaskBloc(injector()),

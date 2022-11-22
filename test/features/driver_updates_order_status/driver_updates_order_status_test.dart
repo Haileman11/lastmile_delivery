@@ -99,7 +99,7 @@ Future<void> main() async {
     );
     blocTest(
       'triggers the order pickup-complete-event which starts the next pickup task',
-      build: () => OrderBloc(injector()),
+      build: () => OrderBloc(injector(), injector()),
       act: (bloc) =>
           bloc.add(OrderPickUpCompleteEvent(order, order.pickupTasks.first)),
       expect: () => [
@@ -109,7 +109,7 @@ Future<void> main() async {
     );
     blocTest(
       'If there are no pickup tasks, heading-to-dropoff state will be emitted.',
-      build: () => OrderBloc(injector()),
+      build: () => OrderBloc(injector(), injector()),
       act: (bloc) =>
           bloc.add(OrderPickUpCompleteEvent(order, order.pickupTasks.last)),
       expect: () => [
@@ -138,7 +138,7 @@ Future<void> main() async {
     );
     blocTest(
       'triggers the order dropoff-complete-event which starts the next dropoff task',
-      build: () => OrderBloc(injector()),
+      build: () => OrderBloc(injector(), injector()),
       act: (bloc) =>
           bloc.add(OrderDropoffCompleteEvent(order, order.dropoffTasks.first)),
       expect: () => [
@@ -148,14 +148,14 @@ Future<void> main() async {
     );
     blocTest(
       'If there are no dropoff tasks, order complete state will be emitted.',
-      build: () => OrderBloc(injector()),
+      build: () => OrderBloc(injector(), injector()),
       act: (bloc) =>
           bloc.add(OrderDropoffCompleteEvent(order, order.dropoffTasks.last)),
       expect: () => [OrderDroppedOff(order), OrderCompleted(order)],
     );
     blocTest(
       'complete order event changes the state to order unassigned.',
-      build: () => OrderBloc(injector()),
+      build: () => OrderBloc(injector(), injector()),
       act: (bloc) => bloc.add(OrderCompleteEvent(
         order,
       )),

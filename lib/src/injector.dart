@@ -10,6 +10,8 @@ import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/socket/so
 import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/update_location/update_location_bloc.dart';
 import 'package:socket_io_client/socket_io_client.dart';
 
+import 'data/datasources/local/app_hive_service.dart';
+import 'data/models/driver.dart';
 import 'presentation/views/home_page/blocs/order_cancellation/order_cancellation_bloc.dart';
 import 'presentation/views/home_page/blocs/polylines/polyline_bloc.dart';
 import 'presentation/views/home_page/blocs/task/task_bloc.dart';
@@ -20,6 +22,8 @@ Future<void> initializeDependencies() async {
   /// DIO CLIENT
   injector
     ..registerFactory<Dio>(Dio.new)
+    ..registerFactory<DriverModel>(
+        () => AppHiveService.instance.driverBox.get(AppValues.driverBoxKey))
 
     /// API DEPENDENCIES
     ..registerSingleton<Socket>(io(
@@ -36,13 +40,16 @@ Future<void> initializeDependencies() async {
     /// DATASOURCE
 
     /// REPOSITORIES
+
+    /// GET DRIVER PROFILE FROM HIVE
+
     ..registerSingleton<GeoLocationRepository>(GeoLocationRepositoryImpl())
 
     /// BLOCS
     ..registerFactory<TaskBloc>(() => TaskBloc(injector()))
     ..registerFactory<OrderCancellationBloc>(
         () => OrderCancellationBloc(injector()))
-    ..registerFactory<OrderBloc>(() => OrderBloc(injector()))
+    ..registerFactory<OrderBloc>(() => OrderBloc(injector(), injector()))
     ..registerFactory<DriverProfileBloc>(
         () => DriverProfileBloc(socket: injector()))
     ..registerFactory<SocketBloc>(() => SocketBloc(socket: injector()))

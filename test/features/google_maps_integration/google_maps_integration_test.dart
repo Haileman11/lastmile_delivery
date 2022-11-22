@@ -35,7 +35,7 @@ void main() {
 
     tearDownAll(() async {
       injector.reset();
-      await MockAppHiveService().driverBox.close();
+      await AppHiveService.instance.driverBox.close();
     });
 
     testWidgets('''Google maps is rendered successfully''', (tester) async {

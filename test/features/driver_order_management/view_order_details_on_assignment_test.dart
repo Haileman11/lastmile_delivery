@@ -66,7 +66,7 @@ Future<void> main() async {
 
     blocTest(
       'Driver sees order detail when assigned',
-      build: () => OrderBloc(injector()),
+      build: () => OrderBloc(injector(), injector()),
       act: (bloc) => bloc.add(OrderAssignedEvent(order)),
       expect: () => [OrderAssigned(order)],
     );
