@@ -33,7 +33,7 @@ Future<void> main() async {
 
   ///INIT HIVE BOXES
   await AppHiveService.instance.initHiveBoxes();
-  await AppNotificationService().setup();
+  final notificationService = AppNotificationServiceImpl()..setup();
   runApp(const LastMile());
 }
 

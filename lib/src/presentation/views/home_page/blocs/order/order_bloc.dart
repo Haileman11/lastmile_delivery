@@ -21,7 +21,7 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
     });
     on<OrderAssignedEvent>((event, emit) {
       HapticFeedback.vibrate();
-      AppNotificationService().showNotificationWithActions(event.order);
+      AppNotificationServiceImpl().showNotificationWithActions(event.order);
       emit(OrderAssigned(event.order));
     });
     on<OrderAcceptedEvent>((event, emit) {

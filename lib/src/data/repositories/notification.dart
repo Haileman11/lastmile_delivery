@@ -3,13 +3,14 @@ import 'dart:developer';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:lastmile_mobile/src/injector.dart';
 
+import '../../domain/repositories/notification.dart';
 import '../../presentation/views/home_page/blocs/order/order_bloc.dart';
 import '../models/order.dart';
 
 const accept_request_action_id = "accept_request_action_id";
 const reject_request_action_id = "reject_request_action_id";
 
-class AppNotificationService {
+class AppNotificationServiceImpl implements AppNotificationService {
   final flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
   Future<void> setup() async {
     // #1
@@ -60,6 +61,7 @@ class AppNotificationService {
     }
   }
 
+  @override
   Future<void> showNotificationWithActions(Order order) async {
     AndroidNotificationDetails androidNotificationDetails =
         const AndroidNotificationDetails(
