@@ -8,8 +8,6 @@ import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/order/ord
 import '../../utils/test_injector.dart';
 
 Future<void> main() async {
-  await initializeTestDependencies();
-  await AppHiveService.instance.initHiveBoxes();
   group('''Driver accepts order''', () {
     var order = Order.fromMap({
       'id': 'id',
@@ -58,5 +56,15 @@ Future<void> main() async {
       act: (bloc) => bloc.add(OrderAcceptedEvent(order)),
       expect: () => [OrderHeadingForPickup(order, order.pickupTasks.first)],
     );
+
+    setUpAll(() async {
+      await initializeTestDependencies();
+      await AppHiveService.instance.initHiveBoxes();
+    });
+
+    tearDownAll(() async {
+      injector.reset();
+      await AppHiveService.instance.driverBox.close();
+    });
   });
 }

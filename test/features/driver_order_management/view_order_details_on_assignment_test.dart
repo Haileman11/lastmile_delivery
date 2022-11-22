@@ -8,11 +8,6 @@ import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/order/ord
 import '../../utils/test_injector.dart';
 
 Future<void> main() async {
-  TestWidgetsFlutterBinding.ensureInitialized();
-
-  await AppHiveService.instance.initHiveBoxes();
-  await initializeTestDependencies();
-
   final order = Order.fromMap({
     'id': 'id',
     'businessCustomerName': "Boss burger",
@@ -56,6 +51,19 @@ Future<void> main() async {
   });
 
   group('Driver views order detail', () {
+    try {
+      setUpAll(() async {
+        TestWidgetsFlutterBinding.ensureInitialized();
+        await initializeTestDependencies();
+        await AppHiveService.instance.initHiveBoxes();
+      });
+    } finally {
+      tearDownAll(() async {
+        injector.reset();
+        await AppHiveService.instance.driverBox.close();
+      });
+    }
+
     blocTest(
       'Driver sees order detail when assigned',
       build: () => OrderBloc(injector()),

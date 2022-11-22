@@ -9,9 +9,17 @@ import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/task/task
 import '../../utils/test_injector.dart';
 
 Future<void> main() async {
-  await AppHiveService.instance.initHiveBoxes();
-  await initializeTestDependencies();
   group('''Driver accepts order''', () {
+    setUpAll(() async {
+      await initializeTestDependencies();
+      await AppHiveService.instance.initHiveBoxes();
+    });
+
+    tearDownAll(() async {
+      injector.reset();
+      await AppHiveService.instance.driverBox.close();
+    });
+
     var order = Order.fromMap({
       'id': 'id',
       'businessCustomerName': "Boss burger",

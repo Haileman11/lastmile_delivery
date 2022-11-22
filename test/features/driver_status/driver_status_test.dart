@@ -8,9 +8,6 @@ import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/driver_pr
 import '../../utils/test_injector.dart';
 
 Future<void> main() async {
-  await AppHiveService.instance.initHiveBoxes();
-  await initializeTestDependencies();
-
   final DriverModel driverModelAvailable = DriverModel.fromMap({
     'id': '1',
     'name': 'Haile',
@@ -28,6 +25,16 @@ Future<void> main() async {
   });
 
   group('Driver updates availability', () {
+    setUpAll(() async {
+      await initializeTestDependencies();
+      await AppHiveService.instance.initHiveBoxes();
+    });
+
+    tearDownAll(() async {
+      injector.reset();
+      await AppHiveService.instance.driverBox.close();
+    });
+
     blocTest(
       'Driver becomes online',
       build: () => DriverProfileBloc(socket: injector()),

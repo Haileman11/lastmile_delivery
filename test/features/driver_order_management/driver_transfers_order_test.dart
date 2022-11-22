@@ -7,9 +7,17 @@ import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/order_can
 import '../../utils/test_injector.dart';
 
 Future<void> main() async {
-  await initializeTestDependencies();
-  await AppHiveService.instance.initHiveBoxes();
   group('''Driver transfers orders''', () {
+    setUpAll(() async {
+      await initializeTestDependencies();
+      await AppHiveService.instance.initHiveBoxes();
+    });
+
+    tearDownAll(() async {
+      injector.reset();
+      await AppHiveService.instance.driverBox.close();
+    });
+
     blocTest(
       'Driver gets a new driver for the order',
       build: () => OrderCancellationBloc(injector()),
