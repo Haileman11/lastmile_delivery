@@ -11,7 +11,7 @@ dev_test:
   stage: test
   tags:
     - flutter
-    #- 2f-flutter-ssh
+    # - 2f-flutter-ssh
   before_script:
     - flutter clean
   script:
