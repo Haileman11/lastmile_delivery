@@ -1,3 +1,4 @@
+import 'package:lastmile_mobile/src/data/datasources/local/app_hive_service.dart';
 import 'package:lastmile_mobile/src/data/repositories/base_location_repo_impl.dart';
 import 'package:lastmile_mobile/src/domain/repositories/base_geolocation_repo.dart';
 import 'package:lastmile_mobile/src/injector.dart';
@@ -20,6 +21,7 @@ import 'test_injector.mocks.dart';
   MockSpec<Socket>(),
   MockSpec<SocketBloc>(),
   MockSpec<UpdateLocationBloc>(),
+  MockSpec<AppHiveService>()
 ])
 Future<void> initializeTestDependencies() async {
   injector

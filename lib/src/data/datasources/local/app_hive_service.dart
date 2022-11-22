@@ -15,7 +15,7 @@ class AppHiveService {
   static AppHiveService get instance => _instance;
 
   /// OPEN HIVE BOXES
-  initHiveBoxes() async {
+  Future<void> initHiveBoxes() async {
     /// REGISTER HIVE ADAPTERS
     await initHiveAdapters();
 

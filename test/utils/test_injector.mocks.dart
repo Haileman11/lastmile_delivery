@@ -3,12 +3,15 @@
 // Do not manually edit this file.
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i8;
+import 'dart:async' as _i9;
 
-import 'package:bloc/bloc.dart' as _i10;
-import 'package:geolocator/geolocator.dart' as _i9;
+import 'package:bloc/bloc.dart' as _i11;
+import 'package:geolocator/geolocator.dart' as _i10;
+import 'package:hive/hive.dart' as _i7;
+import 'package:lastmile_mobile/src/data/datasources/local/app_hive_service.dart'
+    as _i13;
 import 'package:lastmile_mobile/src/data/repositories/base_location_repo_impl.dart'
-    as _i7;
+    as _i8;
 import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/driver_location/driver_location_bloc.dart'
     as _i2;
 import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/socket/socket_bloc.dart'
@@ -18,7 +21,7 @@ import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/update_lo
 import 'package:mockito/mockito.dart' as _i1;
 import 'package:socket_io_client/socket_io_client.dart' as _i4;
 import 'package:socket_io_client/src/manager.dart' as _i3;
-import 'package:socket_io_common/src/util/event_emitter.dart' as _i11;
+import 'package:socket_io_common/src/util/event_emitter.dart' as _i12;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values
@@ -83,20 +86,30 @@ class _FakeUpdateLocationState_4 extends _i1.SmartFake
         );
 }
 
+class _FakeBox_5<E> extends _i1.SmartFake implements _i7.Box<E> {
+  _FakeBox_5(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
 /// A class which mocks [GeoLocationRepositoryImpl].
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockGeoLocationRepositoryImpl extends _i1.Mock
-    implements _i7.GeoLocationRepositoryImpl {
+    implements _i8.GeoLocationRepositoryImpl {
   @override
-  _i8.Stream<_i9.Position?> getCurrentLocation() => (super.noSuchMethod(
+  _i9.Stream<_i10.Position?> getCurrentLocation() => (super.noSuchMethod(
         Invocation.method(
           #getCurrentLocation,
           [],
         ),
-        returnValue: _i8.Stream<_i9.Position?>.empty(),
-        returnValueForMissingStub: _i8.Stream<_i9.Position?>.empty(),
-      ) as _i8.Stream<_i9.Position?>);
+        returnValue: _i9.Stream<_i10.Position?>.empty(),
+        returnValueForMissingStub: _i9.Stream<_i10.Position?>.empty(),
+      ) as _i9.Stream<_i10.Position?>);
 }
 
 /// A class which mocks [DriverLocationBloc].
@@ -117,11 +130,11 @@ class MockDriverLocationBloc extends _i1.Mock
         ),
       ) as _i2.DriverLocationState);
   @override
-  _i8.Stream<_i2.DriverLocationState> get stream => (super.noSuchMethod(
+  _i9.Stream<_i2.DriverLocationState> get stream => (super.noSuchMethod(
         Invocation.getter(#stream),
-        returnValue: _i8.Stream<_i2.DriverLocationState>.empty(),
-        returnValueForMissingStub: _i8.Stream<_i2.DriverLocationState>.empty(),
-      ) as _i8.Stream<_i2.DriverLocationState>);
+        returnValue: _i9.Stream<_i2.DriverLocationState>.empty(),
+        returnValueForMissingStub: _i9.Stream<_i2.DriverLocationState>.empty(),
+      ) as _i9.Stream<_i2.DriverLocationState>);
   @override
   bool get isClosed => (super.noSuchMethod(
         Invocation.getter(#isClosed),
@@ -129,14 +142,14 @@ class MockDriverLocationBloc extends _i1.Mock
         returnValueForMissingStub: false,
       ) as bool);
   @override
-  _i8.Future<void> close() => (super.noSuchMethod(
+  _i9.Future<void> close() => (super.noSuchMethod(
         Invocation.method(
           #close,
           [],
         ),
-        returnValue: _i8.Future<void>.value(),
-        returnValueForMissingStub: _i8.Future<void>.value(),
-      ) as _i8.Future<void>);
+        returnValue: _i9.Future<void>.value(),
+        returnValueForMissingStub: _i9.Future<void>.value(),
+      ) as _i9.Future<void>);
   @override
   void add(_i2.DriverLocationEvent? event) => super.noSuchMethod(
         Invocation.method(
@@ -163,8 +176,8 @@ class MockDriverLocationBloc extends _i1.Mock
       );
   @override
   void on<E extends _i2.DriverLocationEvent>(
-    _i10.EventHandler<E, _i2.DriverLocationState>? handler, {
-    _i10.EventTransformer<E>? transformer,
+    _i11.EventHandler<E, _i2.DriverLocationState>? handler, {
+    _i11.EventTransformer<E>? transformer,
   }) =>
       super.noSuchMethod(
         Invocation.method(
@@ -176,7 +189,7 @@ class MockDriverLocationBloc extends _i1.Mock
       );
   @override
   void onTransition(
-          _i10.Transition<_i2.DriverLocationEvent, _i2.DriverLocationState>?
+          _i11.Transition<_i2.DriverLocationEvent, _i2.DriverLocationState>?
               transition) =>
       super.noSuchMethod(
         Invocation.method(
@@ -186,7 +199,7 @@ class MockDriverLocationBloc extends _i1.Mock
         returnValueForMissingStub: null,
       );
   @override
-  void onChange(_i10.Change<_i2.DriverLocationState>? change) =>
+  void onChange(_i11.Change<_i2.DriverLocationState>? change) =>
       super.noSuchMethod(
         Invocation.method(
           #onChange,
@@ -693,7 +706,7 @@ class MockSocket extends _i1.Mock implements _i4.Socket {
   @override
   void on(
     String? event,
-    _i11.EventHandler<dynamic>? handler,
+    _i12.EventHandler<dynamic>? handler,
   ) =>
       super.noSuchMethod(
         Invocation.method(
@@ -708,7 +721,7 @@ class MockSocket extends _i1.Mock implements _i4.Socket {
   @override
   void once(
     String? event,
-    _i11.EventHandler<dynamic>? handler,
+    _i12.EventHandler<dynamic>? handler,
   ) =>
       super.noSuchMethod(
         Invocation.method(
@@ -723,7 +736,7 @@ class MockSocket extends _i1.Mock implements _i4.Socket {
   @override
   void off(
     String? event, [
-    _i11.EventHandler<dynamic>? handler,
+    _i12.EventHandler<dynamic>? handler,
   ]) =>
       super.noSuchMethod(
         Invocation.method(
@@ -771,11 +784,11 @@ class MockSocketBloc extends _i1.Mock implements _i5.SocketBloc {
         ),
       ) as _i5.SocketState);
   @override
-  _i8.Stream<_i5.SocketState> get stream => (super.noSuchMethod(
+  _i9.Stream<_i5.SocketState> get stream => (super.noSuchMethod(
         Invocation.getter(#stream),
-        returnValue: _i8.Stream<_i5.SocketState>.empty(),
-        returnValueForMissingStub: _i8.Stream<_i5.SocketState>.empty(),
-      ) as _i8.Stream<_i5.SocketState>);
+        returnValue: _i9.Stream<_i5.SocketState>.empty(),
+        returnValueForMissingStub: _i9.Stream<_i5.SocketState>.empty(),
+      ) as _i9.Stream<_i5.SocketState>);
   @override
   bool get isClosed => (super.noSuchMethod(
         Invocation.getter(#isClosed),
@@ -783,14 +796,14 @@ class MockSocketBloc extends _i1.Mock implements _i5.SocketBloc {
         returnValueForMissingStub: false,
       ) as bool);
   @override
-  _i8.Future<void> close() => (super.noSuchMethod(
+  _i9.Future<void> close() => (super.noSuchMethod(
         Invocation.method(
           #close,
           [],
         ),
-        returnValue: _i8.Future<void>.value(),
-        returnValueForMissingStub: _i8.Future<void>.value(),
-      ) as _i8.Future<void>);
+        returnValue: _i9.Future<void>.value(),
+        returnValueForMissingStub: _i9.Future<void>.value(),
+      ) as _i9.Future<void>);
   @override
   void add(_i5.SocketEvent? event) => super.noSuchMethod(
         Invocation.method(
@@ -817,8 +830,8 @@ class MockSocketBloc extends _i1.Mock implements _i5.SocketBloc {
       );
   @override
   void on<E extends _i5.SocketEvent>(
-    _i10.EventHandler<E, _i5.SocketState>? handler, {
-    _i10.EventTransformer<E>? transformer,
+    _i11.EventHandler<E, _i5.SocketState>? handler, {
+    _i11.EventTransformer<E>? transformer,
   }) =>
       super.noSuchMethod(
         Invocation.method(
@@ -830,7 +843,7 @@ class MockSocketBloc extends _i1.Mock implements _i5.SocketBloc {
       );
   @override
   void onTransition(
-          _i10.Transition<_i5.SocketEvent, _i5.SocketState>? transition) =>
+          _i11.Transition<_i5.SocketEvent, _i5.SocketState>? transition) =>
       super.noSuchMethod(
         Invocation.method(
           #onTransition,
@@ -839,7 +852,7 @@ class MockSocketBloc extends _i1.Mock implements _i5.SocketBloc {
         returnValueForMissingStub: null,
       );
   @override
-  void onChange(_i10.Change<_i5.SocketState>? change) => super.noSuchMethod(
+  void onChange(_i11.Change<_i5.SocketState>? change) => super.noSuchMethod(
         Invocation.method(
           #onChange,
           [change],
@@ -908,11 +921,11 @@ class MockUpdateLocationBloc extends _i1.Mock
         ),
       ) as _i6.UpdateLocationState);
   @override
-  _i8.Stream<_i6.UpdateLocationState> get stream => (super.noSuchMethod(
+  _i9.Stream<_i6.UpdateLocationState> get stream => (super.noSuchMethod(
         Invocation.getter(#stream),
-        returnValue: _i8.Stream<_i6.UpdateLocationState>.empty(),
-        returnValueForMissingStub: _i8.Stream<_i6.UpdateLocationState>.empty(),
-      ) as _i8.Stream<_i6.UpdateLocationState>);
+        returnValue: _i9.Stream<_i6.UpdateLocationState>.empty(),
+        returnValueForMissingStub: _i9.Stream<_i6.UpdateLocationState>.empty(),
+      ) as _i9.Stream<_i6.UpdateLocationState>);
   @override
   bool get isClosed => (super.noSuchMethod(
         Invocation.getter(#isClosed),
@@ -945,8 +958,8 @@ class MockUpdateLocationBloc extends _i1.Mock
       );
   @override
   void on<E extends _i6.UpdateLocationEvent>(
-    _i10.EventHandler<E, _i6.UpdateLocationState>? handler, {
-    _i10.EventTransformer<E>? transformer,
+    _i11.EventHandler<E, _i6.UpdateLocationState>? handler, {
+    _i11.EventTransformer<E>? transformer,
   }) =>
       super.noSuchMethod(
         Invocation.method(
@@ -958,7 +971,7 @@ class MockUpdateLocationBloc extends _i1.Mock
       );
   @override
   void onTransition(
-          _i10.Transition<_i6.UpdateLocationEvent, _i6.UpdateLocationState>?
+          _i11.Transition<_i6.UpdateLocationEvent, _i6.UpdateLocationState>?
               transition) =>
       super.noSuchMethod(
         Invocation.method(
@@ -968,16 +981,16 @@ class MockUpdateLocationBloc extends _i1.Mock
         returnValueForMissingStub: null,
       );
   @override
-  _i8.Future<void> close() => (super.noSuchMethod(
+  _i9.Future<void> close() => (super.noSuchMethod(
         Invocation.method(
           #close,
           [],
         ),
-        returnValue: _i8.Future<void>.value(),
-        returnValueForMissingStub: _i8.Future<void>.value(),
-      ) as _i8.Future<void>);
+        returnValue: _i9.Future<void>.value(),
+        returnValueForMissingStub: _i9.Future<void>.value(),
+      ) as _i9.Future<void>);
   @override
-  void onChange(_i10.Change<_i6.UpdateLocationState>? change) =>
+  void onChange(_i11.Change<_i6.UpdateLocationState>? change) =>
       super.noSuchMethod(
         Invocation.method(
           #onChange,
@@ -1015,4 +1028,48 @@ class MockUpdateLocationBloc extends _i1.Mock
         ),
         returnValueForMissingStub: null,
       );
+}
+
+/// A class which mocks [AppHiveService].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockAppHiveService extends _i1.Mock implements _i13.AppHiveService {
+  @override
+  _i7.Box<dynamic> get driverBox => (super.noSuchMethod(
+        Invocation.getter(#driverBox),
+        returnValue: _FakeBox_5<dynamic>(
+          this,
+          Invocation.getter(#driverBox),
+        ),
+        returnValueForMissingStub: _FakeBox_5<dynamic>(
+          this,
+          Invocation.getter(#driverBox),
+        ),
+      ) as _i7.Box<dynamic>);
+  @override
+  set driverBox(_i7.Box<dynamic>? _driverBox) => super.noSuchMethod(
+        Invocation.setter(
+          #driverBox,
+          _driverBox,
+        ),
+        returnValueForMissingStub: null,
+      );
+  @override
+  _i9.Future<void> initHiveBoxes() => (super.noSuchMethod(
+        Invocation.method(
+          #initHiveBoxes,
+          [],
+        ),
+        returnValue: _i9.Future<void>.value(),
+        returnValueForMissingStub: _i9.Future<void>.value(),
+      ) as _i9.Future<void>);
+  @override
+  _i9.Future<void> initHiveAdapters() => (super.noSuchMethod(
+        Invocation.method(
+          #initHiveAdapters,
+          [],
+        ),
+        returnValue: _i9.Future<void>.value(),
+        returnValueForMissingStub: _i9.Future<void>.value(),
+      ) as _i9.Future<void>);
 }
