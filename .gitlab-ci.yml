@@ -10,7 +10,6 @@ stages:
 dev_test:
   stage: test
   tags:
-    #- flutter
     - 2f-flutter-ssh
   before_script:
     - flutter clean
@@ -24,7 +23,6 @@ dev_test:
 android:debug:
   stage: build
   tags:
-    #- flutter
     - 2f-flutter-ssh
   script:
     - flutter doctor --android-licenses
@@ -33,4 +31,9 @@ android:debug:
     paths:
       - "**/**/**/**/**/**/*.apk"
     expire_in: 1 day
+
+  only:
+      refs:
+          - dev
+
 
