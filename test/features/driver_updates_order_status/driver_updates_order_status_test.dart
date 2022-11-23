@@ -1,6 +1,5 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:lastmile_mobile/src/data/datasources/local/app_hive_service.dart';
 import 'package:lastmile_mobile/src/data/models/order.dart';
 import 'package:lastmile_mobile/src/injector.dart';
 import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/order/order_bloc.dart';
@@ -9,7 +8,7 @@ import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/task/task
 import '../../utils/test_injector.dart';
 
 Future<void> main() async {
-  group('''Driver accepts order''', () {
+  group('''Driver updates order status''', () {
     setUpAll(() async {
       await initializeTestDependencies();
     });
@@ -144,6 +143,27 @@ Future<void> main() async {
         OrderHeadingForDropoff(order, order.dropoffTasks[1])
       ],
     );
+
+    blocTest(
+      'verifies order drop off with POD',
+      build: () => TaskBloc(injector()),
+      act: (bloc) =>
+          bloc.add(TaskDropOffVerifySuccessEvent(order.dropoffTasks[1])),
+      expect: () => [
+        TaskDropOffVerifySuccessState(order.dropoffTasks[1]),
+      ],
+    );
+
+    blocTest(
+      'fails to verify order drop off with POD',
+      build: () => TaskBloc(injector()),
+      act: (bloc) =>
+          bloc.add(TaskDropOffVerifyFailedEvent(order.dropoffTasks[1])),
+      expect: () => [
+        TaskDropOffVerifyFailedState(order.dropoffTasks[1]),
+      ],
+    );
+
     blocTest(
       'If there are no dropoff tasks, order complete state will be emitted.',
       build: () => OrderBloc(injector(), injector()),
