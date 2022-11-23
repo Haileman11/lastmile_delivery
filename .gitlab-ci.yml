@@ -50,5 +50,5 @@ android:release:
 
   only:
       refs:
-          - project_setup
+          - main
 
