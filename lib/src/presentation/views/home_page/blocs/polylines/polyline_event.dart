@@ -8,12 +8,13 @@ abstract class PolyLineEvent extends Equatable {
 }
 
 class DecodePolyLineEvent extends PolyLineEvent {
-  final String encodedPolyLine;
+  final String encodedOrderPolyLine;
+  final String encodedPickUpPolyLine;
   final LatLngBounds latLngBounds;
   final Set<Marker> markers;
 
-  const DecodePolyLineEvent(
-      this.encodedPolyLine, this.latLngBounds, this.markers);
+  const DecodePolyLineEvent(this.encodedOrderPolyLine,
+      this.encodedPickUpPolyLine, this.latLngBounds, this.markers);
 }
 
 class ClearPolyLinesEvent extends PolyLineEvent {

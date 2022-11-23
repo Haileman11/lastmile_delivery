@@ -17,9 +17,30 @@ import 'blocs/order/order_bloc.dart';
 import 'blocs/order_cancellation/order_cancellation_bloc.dart';
 import 'blocs/task/task_bloc.dart';
 
-class HomePageView extends StatelessWidget {
+class HomePageView extends StatefulWidget {
   HomePageView({Key? key}) : super(key: key);
+
+  @override
+  State<HomePageView> createState() => _HomePageViewState();
+}
+
+class _HomePageViewState extends State<HomePageView> {
   late OrderState orderState;
+  BitmapDescriptor? icon;
+
+  @override
+  void initState() {
+    getPickUpIcon();
+    super.initState();
+  }
+
+  Future getPickUpIcon() async {
+    icon = await BitmapDescriptor.fromAssetImage(
+      const ImageConfiguration(),
+      "assets/images/first_pickup_marker.png",
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,120 +65,125 @@ class HomePageView extends StatelessWidget {
           const SizedBox(width: 15),
         ],
       ),
-      body: Stack(
-        alignment: Alignment.topCenter,
+      body: Column(
         children: [
-          Column(
-            children: [
-              const Expanded(child: MapView()),
-              BlocListener<OrderCancellationBloc, OrderCancellationState>(
-                listener: (context, state) {
-                  if (state is OrderCancelled) {
-                    BlocProvider.of<OrderBloc>(context)
-                        .add(const OrderCancelledEvent());
-                    BlocProvider.of<PolyLineBloc>(context)
-                        .add(const ClearPolyLinesEvent());
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        backgroundColor: AppColors.appBlack,
-                        content: Text(
-                          'Order cancelled',
-                          style: TextStyle(color: AppColors.white),
-                        ),
-                      ),
-                    );
-                  }
-                },
-                child: BlocConsumer<OrderBloc, OrderState>(
+          const StatusSwitchWidget(),
+          const Expanded(child: MapView()),
+          BlocListener<OrderCancellationBloc, OrderCancellationState>(
+            listener: (context, state) {
+              if (state is OrderCancelled) {
+                BlocProvider.of<OrderBloc>(context)
+                    .add(const OrderCancelledEvent());
+                BlocProvider.of<PolyLineBloc>(context)
+                    .add(const ClearPolyLinesEvent());
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    backgroundColor: AppColors.appBlack,
+                    content: Text(
+                      'Order cancelled',
+                      style: TextStyle(color: AppColors.white),
+                    ),
+                  ),
+                );
+              }
+            },
+            child: BlocConsumer<OrderBloc, OrderState>(
+              listener: (context, state) {
+                if (state is OrderHeadingForPickup) {
+                  BlocProvider.of<TaskBloc>(context)
+                      .add(HeadingForPickupEvent(state.currentTask));
+                }
+                if (state is OrderHeadingForDropoff) {
+                  BlocProvider.of<TaskBloc>(context)
+                      .add(HeadingForDropoffEvent(state.currentTask));
+                }
+                if (state is OrderCompleted) {
+                  showDialog(
+                      context: context,
+                      builder: (_) {
+                        return AppDialog(
+                          message: 'Order completed successfully',
+                          onTap: () {
+                            BlocProvider.of<OrderBloc>(context)
+                                .add(OrderCompleteEvent(state.order!));
+                            BlocProvider.of<PolyLineBloc>(context)
+                                .add(const ClearPolyLinesEvent());
+                            Navigator.pop(context);
+                          },
+                          optionTitle: 'Okay',
+                          isConfirm: true,
+                        );
+                      });
+                }
+              },
+              builder: (context, state) {
+                orderState = state;
+                if (state is OrderAssigned) {
+                  final markers =
+                      (state.order!.pickupTasks + state.order!.dropoffTasks)
+                          .map(
+                            (e) => Marker(
+                              markerId: MarkerId(e.id),
+                              position: e.location,
+                              icon: state.order!.pickupTasks.first.id == e.id
+                                  ? (icon ?? BitmapDescriptor.defaultMarker)
+                                  : BitmapDescriptor.defaultMarkerWithHue(
+                                      BitmapDescriptor.hueGreen,
+                                    ),
+                              consumeTapEvents: true,
+                            ),
+                          )
+                          .toSet();
+                  BlocProvider.of<PolyLineBloc>(context).add(
+                    DecodePolyLineEvent(
+                      state.order!.route.encodedPolyline,
+                      '',
+                      state.order!.route.bounds,
+                      markers,
+                    ),
+                  );
+                }
+                return BlocConsumer<TaskBloc, TaskState>(
                   listener: (context, state) {
-                    if (state is OrderHeadingForPickup) {
-                      BlocProvider.of<TaskBloc>(context)
-                          .add(HeadingForPickupEvent(state.currentTask));
-                    }
-                    if (state is OrderHeadingForDropoff) {
-                      BlocProvider.of<TaskBloc>(context)
-                          .add(HeadingForDropoffEvent(state.currentTask));
-                    }
-                    if (state is OrderCompleted) {
-                      showDialog(
-                          context: context,
-                          builder: (_) {
-                            return AppDialog(
-                              message: 'Order completed successfully',
-                              onTap: () {
-                                BlocProvider.of<OrderBloc>(context)
-                                    .add(OrderCompleteEvent(state.order!));
-                                BlocProvider.of<PolyLineBloc>(context)
-                                    .add(const ClearPolyLinesEvent());
-                                Navigator.pop(context);
-                              },
-                              optionTitle: 'Okay',
-                              isConfirm: true,
-                            );
-                          });
-                    }
+                    // BlocProvider.of<TaskBloc>(context).add(event)
                   },
                   builder: (context, state) {
-                    orderState = state;
-                    if (state is OrderAssigned) {
-                      BlocProvider.of<PolyLineBloc>(context).add(
-                        DecodePolyLineEvent(
-                          state.order!.route.encodedPolyline,
-                          state.order!.route.bounds,
-                          state.order!.dropoffTasks
-                              .map(
-                                (e) => Marker(
-                                    markerId: MarkerId("${e.id}"),
-                                    position: e.location),
-                              )
-                              .toSet(),
-                        ),
-                      );
-                    }
-                    return BlocConsumer<TaskBloc, TaskState>(
-                      listener: (context, state) {
-                        // BlocProvider.of<TaskBloc>(context).add(event)
-                      },
-                      builder: (context, state) {
-                        return Offstage(
-                          offstage: orderState is OrderUnassigned,
-                          child: Builder(builder: (context) {
-                            switch (orderState.runtimeType) {
-                              case OrderUnassigned:
-                                return Container();
-                              case OrderAssigned:
-                                return OrderRequest(order: orderState.order!);
-                              case OrderHeadingForPickup:
-                                switch (state.runtimeType) {
-                                  case TaskHeadingToPickup:
-                                    return HeadingToPickup(task: state.task!);
-                                  case TaskWaitingForPackage:
-                                    return WaitingForPackage(task: state.task!);
-                                  default:
-                                    return Container();
-                                }
-                              case OrderHeadingForDropoff:
-                                switch (state.runtimeType) {
-                                  case TaskHeadingToDropoff:
-                                    return HeadingToDropoff(task: state.task!);
-                                  case TaskWaitingForConfirmation:
-                                    return ConfirmDelivery(task: state.task!);
-                                  default:
-                                    return Container();
-                                }
+                    return Offstage(
+                      offstage: orderState is OrderUnassigned,
+                      child: Builder(builder: (context) {
+                        switch (orderState.runtimeType) {
+                          case OrderUnassigned:
+                            return Container();
+                          case OrderAssigned:
+                            return OrderRequest(order: orderState.order!);
+                          case OrderHeadingForPickup:
+                            switch (state.runtimeType) {
+                              case TaskHeadingToPickup:
+                                return HeadingToPickup(task: state.task!);
+                              case TaskWaitingForPackage:
+                                return WaitingForPackage(task: state.task!);
                               default:
                                 return Container();
                             }
-                          }),
-                        );
-                      },
+                          case OrderHeadingForDropoff:
+                            switch (state.runtimeType) {
+                              case TaskHeadingToDropoff:
+                                return HeadingToDropoff(task: state.task!);
+                              case TaskWaitingForConfirmation:
+                                return ConfirmDelivery(task: state.task!);
+                              default:
+                                return Container();
+                            }
+                          default:
+                            return Container();
+                        }
+                      }),
                     );
                   },
-                ),
-              )
-            ],
-          ),
-          const StatusSwitchWidget(),
+                );
+              },
+            ),
+          )
         ],
       ),
     );
