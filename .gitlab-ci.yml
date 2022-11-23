@@ -28,7 +28,7 @@ android:debug:
     - 2f-flutter-ssh
   script:
     - flutter doctor --android-licenses
-    - flutter build apk --flavor ${FLAVOR} --debug
+    - flutter build apk --debug
   artifacts:
     paths:
       - "**/**/**/**/**/**/*.apk"
