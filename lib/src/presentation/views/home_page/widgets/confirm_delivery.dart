@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lastmile_mobile/src/data/models/order.dart';
 import 'package:lastmile_mobile/src/presentation/common/task_detail_widget.dart';
+import 'package:lastmile_mobile/src/presentation/common/transfer_button_widget.dart';
 import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/order/order_bloc.dart';
-import '../../../../config/themes/app_themes.dart';
+import 'package:lastmile_mobile/src/presentation/views/pod_page/pod_page_view.dart';
+
 import '../../../../data/models/task.dart';
-import '../blocs/task/task_bloc.dart';
 
 class ConfirmDelivery extends StatelessWidget {
   final Task task;
@@ -33,26 +34,18 @@ class ConfirmDelivery extends StatelessWidget {
                         style: Theme.of(context).textTheme.titleLarge,
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                      child: ElevatedButton(
-                        style: ButtonStyle(
-                            backgroundColor:
-                                MaterialStatePropertyAll(AppColors.errorRed)),
-                        onPressed: () {},
-                        child: const Text("Transfer"),
-                      ),
-                    )
+                    TransferButton(orderId: order.id),
                   ],
                 )),
             TaskDetailsWidget(order: order, task: task),
             ElevatedButton(
                 child: const Text('Confirm'),
                 onPressed: () {
-                  BlocProvider.of<TaskBloc>(context)
-                      .add((CompleteDropoffEvent(task)));
-                  BlocProvider.of<OrderBloc>(context)
-                      .add(OrderDropoffCompleteEvent(order, task));
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => PodPageView(
+                            order: order,
+                            task: task,
+                          )));
                 }),
           ],
         ),

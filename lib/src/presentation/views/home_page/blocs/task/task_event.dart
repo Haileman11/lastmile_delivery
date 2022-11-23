@@ -33,11 +33,9 @@ class CompleteDropoffEvent extends TaskEvent {
 }
 
 class TaskDropOffVerifyEvent extends TaskEvent {
-  final String driverId;
   final String verificationCode;
 
-  const TaskDropOffVerifyEvent(
-      this.driverId, this.verificationCode, super.task);
+  const TaskDropOffVerifyEvent(this.verificationCode, super.task);
 }
 
 class TaskDropOffVerifyFailedEvent extends TaskEvent {

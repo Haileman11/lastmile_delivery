@@ -4,11 +4,11 @@ import 'package:lastmile_mobile/src/config/themes/app_themes.dart';
 import 'package:lastmile_mobile/src/data/models/order.dart';
 import 'package:lastmile_mobile/src/presentation/common/swiping_button.dart';
 import 'package:lastmile_mobile/src/presentation/common/task_detail_widget.dart';
+import 'package:lastmile_mobile/src/presentation/common/transfer_button_widget.dart';
 import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/order/order_bloc.dart';
 
 import '../../../../data/models/task.dart';
 import '../blocs/task/task_bloc.dart';
-import 'cancel_reasons_widget.dart';
 
 class HeadingToDropoff extends StatelessWidget {
   final Task task;
@@ -36,26 +36,7 @@ class HeadingToDropoff extends StatelessWidget {
                         style: Theme.of(context).textTheme.titleLarge,
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                      child: ElevatedButton(
-                        style: ButtonStyle(
-                            backgroundColor:
-                                MaterialStatePropertyAll(AppColors.errorRed)),
-                        onPressed: () {
-                          showModalBottomSheet(
-                            context: context,
-                            enableDrag: true,
-                            isDismissible: false,
-                            builder: (context) {
-                              return CancelReasonsWidget(
-                                  orderId: order.id, isTransfer: true);
-                            },
-                          );
-                        },
-                        child: const Text("Transfer"),
-                      ),
-                    )
+                    TransferButton(orderId: order.id),
                   ],
                 )),
             TaskDetailsWidget(order: order, task: task),

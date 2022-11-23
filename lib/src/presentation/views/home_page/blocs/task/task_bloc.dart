@@ -39,7 +39,6 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
           }
         });
         socket.emit('verify_dropoff', {
-          'driver_id': event.driverId,
           'task_id': event.task.id,
           'verification_code': event.verificationCode,
         });
