@@ -12,18 +12,31 @@ class PolyLineBloc extends Bloc<PolyLineEvent, PolyLineState> {
     on<DecodePolyLineEvent>((event, emit) {
       try {
         final List<PointLatLng> decodeResult =
-            PolylinePoints().decodePolyline(event.encodedPolyLine);
+            PolylinePoints().decodePolyline(event.encodedOrderPolyLine);
+
+        final List<PointLatLng> driverPolyLineResult =
+            PolylinePoints().decodePolyline(event.encodedPickUpPolyLine);
 
         List<LatLng> points = [];
         for (var pointLatLng in decodeResult) {
           points.add(LatLng(pointLatLng.latitude, pointLatLng.longitude));
         }
 
+        List<LatLng> driverPoints = [];
+        for (var pointLatLng in driverPolyLineResult) {
+          driverPoints.add(LatLng(pointLatLng.latitude, pointLatLng.longitude));
+        }
+
         Set<Polyline> polyLines = {};
         polyLines.add(Polyline(
-          polylineId: const PolylineId(''),
+          polylineId: const PolylineId('order_polyline'),
           points: points,
           color: AppColors.appGreen,
+        ));
+        polyLines.add(Polyline(
+          polylineId: const PolylineId('driver_polyline'),
+          points: driverPoints,
+          color: AppColors.black,
         ));
 
         emit(DecodingSuccess(polyLines, event.latLngBounds, event.markers));

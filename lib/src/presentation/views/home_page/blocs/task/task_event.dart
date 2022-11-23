@@ -31,3 +31,17 @@ class ArriveToDropoffEvent extends TaskEvent {
 class CompleteDropoffEvent extends TaskEvent {
   const CompleteDropoffEvent(super.task);
 }
+
+class TaskDropOffVerifyEvent extends TaskEvent {
+  final String verificationCode;
+
+  const TaskDropOffVerifyEvent(this.verificationCode, super.task);
+}
+
+class TaskDropOffVerifyFailedEvent extends TaskEvent {
+  const TaskDropOffVerifyFailedEvent(super.task);
+}
+
+class TaskDropOffVerifySuccessEvent extends TaskEvent {
+  const TaskDropOffVerifySuccessEvent(super.task);
+}

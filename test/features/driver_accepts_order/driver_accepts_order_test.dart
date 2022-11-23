@@ -1,6 +1,5 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:lastmile_mobile/src/data/datasources/local/app_hive_service.dart';
 import 'package:lastmile_mobile/src/data/models/order.dart';
 import 'package:lastmile_mobile/src/injector.dart';
 import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/order/order_bloc.dart';
@@ -8,7 +7,7 @@ import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/order/ord
 import '../../utils/test_injector.dart';
 
 Future<void> main() async {
-  group('''Driver accepts order''', () {
+  group('''Driver accepts, rejects order''', () {
     var order = Order.fromMap({
       'id': 'id',
       'businessCustomerName': "Boss burger",
@@ -55,6 +54,13 @@ Future<void> main() async {
       build: () => OrderBloc(injector(), injector()),
       act: (bloc) => bloc.add(OrderAcceptedEvent(order)),
       expect: () => [OrderHeadingForPickup(order, order.pickupTasks.first)],
+    );
+
+    blocTest(
+      'Driver rejects order',
+      build: () => OrderBloc(injector(), injector()),
+      act: (bloc) => bloc.add(OrderRejectedEvent(order)),
+      expect: () => [const OrderUnassigned()],
     );
 
     setUpAll(() async {

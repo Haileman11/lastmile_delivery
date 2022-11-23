@@ -8,7 +8,7 @@ part 'task_state.dart';
 
 class TaskBloc extends Bloc<TaskEvent, TaskState> {
   final Socket socket;
-  TaskBloc(this.socket) : super(TaskPending()) {
+  TaskBloc(this.socket) : super(const TaskPending()) {
     on<HeadingForPickupEvent>((event, emit) {
       emit(TaskHeadingToPickup(event.task));
     });
@@ -26,6 +26,33 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
     });
     on<CompleteDropoffEvent>((event, emit) {
       emit(TaskDropoffComplete(event.task));
+    });
+
+    /// DROP OFF TASK VERIFICATION
+    on<TaskDropOffVerifyEvent>((event, emit) {
+      try {
+        socket.on('verify_dropoff', (data) {
+          if (data['verified']) {
+            add(TaskDropOffVerifySuccessEvent(event.task));
+          } else {
+            add(TaskDropOffVerifyFailedEvent(event.task));
+          }
+        });
+        socket.emit('verify_dropoff', {
+          'task_id': event.task.id,
+          'verification_code': event.verificationCode,
+        });
+      } catch (e) {
+        add(TaskDropOffVerifyFailedEvent(event.task));
+      }
+    });
+
+    on<TaskDropOffVerifyFailedEvent>((event, emit) {
+      emit(TaskDropOffVerifyFailedState(event.task));
+    });
+
+    on<TaskDropOffVerifySuccessEvent>((event, emit) {
+      emit(TaskDropOffVerifySuccessState(event.task));
     });
   }
 }

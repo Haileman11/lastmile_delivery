@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lastmile_mobile/src/config/themes/app_themes.dart';
 import 'package:lastmile_mobile/src/data/models/order.dart';
 import 'package:lastmile_mobile/src/presentation/common/swiping_button.dart';
+import 'package:lastmile_mobile/src/presentation/common/transfer_button_widget.dart';
 import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/order/order_bloc.dart';
 import 'package:lastmile_mobile/src/presentation/views/home_page/widgets/cancel_reasons_widget.dart';
 
@@ -53,26 +54,7 @@ class HeadingToPickup extends StatelessWidget {
                         icon: const Icon(Icons.cancel),
                       );
                     } else {
-                      return Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                        child: ElevatedButton(
-                          style: ButtonStyle(
-                              backgroundColor:
-                                  MaterialStatePropertyAll(AppColors.errorRed)),
-                          onPressed: () {
-                            showModalBottomSheet(
-                              context: context,
-                              enableDrag: true,
-                              isDismissible: false,
-                              builder: (context) {
-                                return CancelReasonsWidget(
-                                    orderId: order.id, isTransfer: true);
-                              },
-                            );
-                          },
-                          child: const Text("Transfer"),
-                        ),
-                      );
+                      return TransferButton(orderId: order.id);
                     }
                   })
                 ],

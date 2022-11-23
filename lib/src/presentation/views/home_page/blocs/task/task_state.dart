@@ -35,3 +35,11 @@ class TaskPickupComplete extends TaskState {
 class TaskDropoffComplete extends TaskState {
   const TaskDropoffComplete(super.task);
 }
+
+class TaskDropOffVerifyFailedState extends TaskState {
+  const TaskDropOffVerifyFailedState(super.task);
+}
+
+class TaskDropOffVerifySuccessState extends TaskState {
+  const TaskDropOffVerifySuccessState(super.task);
+}

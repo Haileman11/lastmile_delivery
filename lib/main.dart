@@ -104,7 +104,9 @@ class LastMile extends StatelessWidget {
                 child: const WaitingDriverPageView(),
               );
             },
-            AppRoutes.podPageRoute: (context) => const PodPageView(),
+            AppRoutes.podPageRoute: (context) {
+              return const PodPageView();
+            },
           },
         ),
       ),

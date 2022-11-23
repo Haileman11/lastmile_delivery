@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:lastmile_mobile/src/config/routes/app_routes.dart';
 import 'package:lastmile_mobile/src/config/themes/app_themes.dart';
-import 'package:lastmile_mobile/src/core/utils/navigations.dart';
 import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/order_cancellation/order_cancellation_bloc.dart';
+import 'package:lastmile_mobile/src/presentation/views/pod_page/pod_page_view.dart';
 
 class DriverOnTheWay extends StatelessWidget {
   const DriverOnTheWay(
@@ -18,8 +17,12 @@ class DriverOnTheWay extends StatelessWidget {
     return BlocListener<OrderCancellationBloc, OrderCancellationState>(
       listener: (context, state) {
         if (state is DriverIsHereState) {
-          NavigationService.instance
-              .navigateTo(AppRoutes.podPageRoute, context);
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => const PodPageView(
+                        isTransfer: true,
+                      )));
         }
       },
       child: Container(
@@ -129,24 +132,6 @@ class DriverOnTheWay extends StatelessWidget {
           title,
           style: TextStyle(color: AppColors.white),
         ),
-      ),
-    );
-  }
-
-  _buildInstructions() {
-    return Text(
-      '''
- Follow the instructions
- 1. This is an instruction
- 2. This is also an instruction
- 3. Follow them to the letter
- 4. Or you will regret it
-    ''',
-      style: TextStyle(
-        color: AppColors.appBlack,
-        fontSize: AppFontSizes.font_size_16,
-        fontWeight: FontWeight.w400,
-        height: 1.5,
       ),
     );
   }

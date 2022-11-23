@@ -20,7 +20,7 @@ class MapView extends StatefulWidget {
 class _MapViewState extends State<MapView> {
   BitmapDescriptor? icon;
   Set<Polyline> polyLines = {};
-  Set<Marker> polyLineMarkers = {};
+  Set<Marker> markers = {};
 
   @override
   void initState() {
@@ -43,7 +43,7 @@ class _MapViewState extends State<MapView> {
       builder: (context, state) {
         if (state is DecodingSuccess) {
           polyLines = state.polyLines;
-          polyLineMarkers = state.markers;
+          markers = state.markers;
           if (AppValues.mapController.isCompleted) {
             AppValues.controller!.animateCamera(
               CameraUpdate.newLatLngBounds(
@@ -60,6 +60,8 @@ class _MapViewState extends State<MapView> {
 
         if (state is ClearPolyLines) {
           polyLines.clear();
+          markers.removeWhere(
+              (element) => element.markerId.value != 'driver_marker');
         }
 
         return BlocBuilder<DriverLocationBloc, DriverLocationState>(
@@ -98,6 +100,18 @@ class _MapViewState extends State<MapView> {
                 );
               }
 
+              markers.add(Marker(
+                markerId: const MarkerId('driver_marker'),
+                icon: icon ?? BitmapDescriptor.defaultMarker,
+                position: LatLng(
+                  state.position.latitude,
+                  state.position.longitude,
+                ),
+                rotation: state.position.heading,
+                anchor: const Offset(0.5, 0.5),
+                consumeTapEvents: true,
+              ));
+
               /// RENDER GOOGLE MAP
               return GoogleMap(
                 key: const Key('GOOGLE_MAPS_WIDGET'),
@@ -111,16 +125,7 @@ class _MapViewState extends State<MapView> {
                 compassEnabled: false,
                 myLocationButtonEnabled: false,
                 polylines: polyLines,
-                markers: {
-                  Marker(
-                    markerId: const MarkerId('driver_marker'),
-                    icon: icon ?? BitmapDescriptor.defaultMarker,
-                    position: LatLng(
-                        state.position.latitude, state.position.longitude),
-                    rotation: state.position.heading,
-                    anchor: const Offset(0.5, 0.5),
-                  )
-                },
+                markers: markers,
                 initialCameraPosition: CameraPosition(
                   target:
                       LatLng(state.position.latitude, state.position.longitude),
