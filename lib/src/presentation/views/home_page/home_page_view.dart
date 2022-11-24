@@ -45,10 +45,6 @@ class _HomePageViewState extends State<HomePageView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: Icon(
-          PhosphorIcons.list_light,
-          color: AppColors.white,
-        ),
         elevation: 0.0,
         backgroundColor: AppColors.appBlack,
         title: Text(
