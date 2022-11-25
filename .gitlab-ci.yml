@@ -10,7 +10,7 @@ stages:
 dev_test:
   stage: test
   tags:
-    - flutter
+    - flutter-runner
     #- 2f-flutter-ssh
   before_script:
     - flutter clean
@@ -24,7 +24,7 @@ dev_test:
 android:debug:
   stage: build
   tags:
-    - flutter
+    - flutter-runner
     #- 2f-flutter-ssh
   script:
     - flutter doctor --android-licenses
@@ -41,7 +41,8 @@ android:debug:
 android:release:
   stage: build
   tags:
-    - 2f-flutter-ssh
+    - flutter-runner
+    #- 2f-flutter-ssh
   script:
     - flutter doctor --android-licenses
     - flutter build apk --release
