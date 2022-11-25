@@ -14,6 +14,7 @@ import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/update_lo
 import 'package:lastmile_mobile/src/presentation/views/home_page/cubits/select_cancel_reason_cubit.dart';
 import 'package:lastmile_mobile/src/presentation/views/home_page/home_page_view.dart';
 import 'package:lastmile_mobile/src/presentation/views/menu_page/menu_widget.dart';
+import 'package:lastmile_mobile/src/presentation/views/order_detail_page/order_detail_view.dart';
 import 'package:lastmile_mobile/src/presentation/views/order_history/order_history_page_view.dart';
 import 'package:lastmile_mobile/src/presentation/views/pod_page/pod_page_view.dart';
 import 'package:lastmile_mobile/src/presentation/views/splash_page/splash_page_view.dart';
@@ -98,6 +99,8 @@ class LastMile extends StatelessWidget {
             AppRoutes.homePageRoute: (context) => HomePageView(),
             AppRoutes.splashScreenRoute: (context) => const SplashPageView(),
             AppRoutes.menuPageRoute: (context) => const MenuPage(),
+            AppRoutes.orderDetailPageRoute: (context) =>
+                const OrderDetailView(),
             AppRoutes.orderHistoryPageRoute: (context) =>
                 BlocProvider<OrderHistoryBloc>(
                   create: (context) => injector()..add(const GetOrderHistory()),

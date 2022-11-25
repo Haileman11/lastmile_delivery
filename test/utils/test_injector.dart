@@ -1,4 +1,3 @@
-import 'package:lastmile_mobile/src/data/datasources/local/app_hive_service.dart';
 import 'package:lastmile_mobile/src/data/models/driver.dart';
 import 'package:lastmile_mobile/src/data/repositories/app_hive_repository.dart';
 import 'package:lastmile_mobile/src/data/repositories/base_location_repo_impl.dart';

@@ -42,7 +42,8 @@ Future<void> initializeDependencies() async {
           .disableAutoConnect()
           .build(),
     ))
-    ..registerSingleton<OrderHistoryApiService>(injector())
+    ..registerSingleton<OrderHistoryApiService>(
+        OrderHistoryApiService(injector()))
 
     /// REPOSITORIES
 
