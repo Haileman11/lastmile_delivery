@@ -1,6 +1,5 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:lastmile_mobile/src/data/datasources/local/app_hive_service.dart';
 import 'package:lastmile_mobile/src/data/models/order.dart';
 import 'package:lastmile_mobile/src/injector.dart';
 import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/order/order_bloc.dart';
@@ -8,7 +7,7 @@ import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/order/ord
 import '../../utils/test_injector.dart';
 
 Future<void> main() async {
-  final order = Order.fromMap({
+  final order = OrderModel.fromMap({
     'id': 'id',
     'businessCustomerName': "Boss burger",
     'orderCategory': 'singleToSingle',

@@ -15,27 +15,32 @@ class MenuPage extends StatelessWidget {
     return AnnotatedRegion(
       value: SystemUiOverlayStyle.light,
       child: Scaffold(
+        key: Key('MENU_PAGE'),
         backgroundColor: AppColors.backgroundGrey,
         body: Column(
           children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: AppPadding.padding_14,
-                vertical: AppPadding.padding_32,
-              ),
-              child: Align(
-                alignment: Alignment.topRight,
-                child: Icon(
-                  Icons.close,
-                  color: AppColors.black,
-                  size: 28.0,
+            GestureDetector(
+              onTap: () {
+                Navigator.pop(context);
+              },
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: AppPadding.padding_14,
+                  vertical: AppPadding.padding_40,
+                ),
+                child: Align(
+                  alignment: Alignment.topLeft,
+                  child: Icon(
+                    Icons.arrow_back,
+                    color: AppColors.black,
+                    size: 28.0,
+                  ),
                 ),
               ),
             ),
             const Padding(
               padding: EdgeInsets.symmetric(
                 horizontal: AppPadding.padding_14,
-                vertical: AppPadding.padding_16,
               ),
               child: DriverMenuProfile(),
             ),

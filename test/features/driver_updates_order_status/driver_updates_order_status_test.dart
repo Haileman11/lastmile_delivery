@@ -17,7 +17,7 @@ Future<void> main() async {
       injector.reset();
     });
 
-    var order = Order.fromMap({
+    var order = OrderModel.fromMap({
       'id': 'id',
       'businessCustomerName': "Boss burger",
       'orderCategory': 'singleToSingle',

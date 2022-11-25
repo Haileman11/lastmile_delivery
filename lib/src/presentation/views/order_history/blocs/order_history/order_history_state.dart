@@ -15,7 +15,7 @@ class OrderHistoryLoading extends OrderHistoryState {
 }
 
 class OrderHistoryDone extends OrderHistoryState {
-  final List<Order> orders;
+  final List<OrderModel> orders;
   const OrderHistoryDone(this.orders);
 }
 

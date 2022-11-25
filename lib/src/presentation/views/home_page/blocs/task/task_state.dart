@@ -2,7 +2,7 @@ part of 'task_bloc.dart';
 
 abstract class TaskState extends Equatable {
   const TaskState(this.task);
-  final Task? task;
+  final TaskModel? task;
 
   @override
   List<Object> get props => [];

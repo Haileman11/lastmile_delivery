@@ -20,7 +20,7 @@ class OrderDetailView extends StatelessWidget {
           statusBarBrightness: Brightness.light,
         ),
         title: Text(
-          'Order detail',
+          'OrderModel detail',
           style: TextStyle(
             color: AppColors.white,
           ),

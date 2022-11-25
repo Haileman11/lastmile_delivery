@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:lastmile_mobile/src/core/utils/constants.dart';
-import 'package:lastmile_mobile/src/data/datasources/local/order_history_api_service.dart';
+import 'package:lastmile_mobile/src/data/datasources/remote/order_history_api_service.dart';
 import 'package:lastmile_mobile/src/data/repositories/app_hive_repository.dart';
 import 'package:lastmile_mobile/src/data/repositories/base_location_repo_impl.dart';
 import 'package:lastmile_mobile/src/data/repositories/order_history_repo_impl.dart';

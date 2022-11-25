@@ -1,7 +1,7 @@
 part of 'order_bloc.dart';
 
 abstract class OrderState extends Equatable {
-  final Order? order;
+  final OrderModel? order;
 
   const OrderState(this.order);
 
@@ -18,7 +18,7 @@ class OrderAssigned extends OrderState {
 }
 
 class OrderHeadingForPickup extends OrderState {
-  final Task currentTask;
+  final TaskModel currentTask;
   const OrderHeadingForPickup(super.order, this.currentTask);
 }
 
@@ -27,7 +27,7 @@ class OrderPickedUp extends OrderState {
 }
 
 class OrderHeadingForDropoff extends OrderState {
-  final Task currentTask;
+  final TaskModel currentTask;
 
   const OrderHeadingForDropoff(super.order, this.currentTask);
 }

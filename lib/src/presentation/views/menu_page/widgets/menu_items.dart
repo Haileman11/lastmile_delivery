@@ -23,7 +23,10 @@ class MenuItems extends StatelessWidget {
   _buildMenuItems(BuildContext context) {
     return Column(
       children: [
-        _buildMenuItem('assets/images/menu_item_orders.png', 'Orders', () {
+        _buildMenuItem(
+            key: 'ORDERS_BUTTON',
+            'assets/images/menu_item_orders.png',
+            'Orders', () {
           NavigationService.instance
               .navigateTo(AppRoutes.orderHistoryPageRoute, context);
         }),
@@ -39,8 +42,10 @@ class MenuItems extends StatelessWidget {
     );
   }
 
-  _buildMenuItem(String imageAsset, String title, VoidCallback onTap) {
+  _buildMenuItem(String imageAsset, String title, VoidCallback onTap,
+      {String? key}) {
     return GestureDetector(
+      key: Key(key ?? ''),
       onTap: onTap,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,

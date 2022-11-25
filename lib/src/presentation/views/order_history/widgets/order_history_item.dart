@@ -2,19 +2,34 @@ import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
 import 'package:lastmile_mobile/src/config/routes/app_routes.dart';
 import 'package:lastmile_mobile/src/config/themes/app_themes.dart';
+import 'package:lastmile_mobile/src/core/utils/enums.dart';
 import 'package:lastmile_mobile/src/core/utils/navigations.dart';
+import 'package:lastmile_mobile/src/data/models/order.dart';
 
 class OrderListItem extends StatelessWidget {
-  const OrderListItem({Key? key}) : super(key: key);
+  const OrderListItem({Key? key, required this.orderModel}) : super(key: key);
+
+  final OrderModel orderModel;
 
   @override
   Widget build(BuildContext context) {
+    /// STATUS COLOR
+    Color statusColor;
+    if (orderModel.orderStatus == OrderStatus.cancelled) {
+      statusColor = AppColors.errorRed;
+    } else if (orderModel.orderStatus == OrderStatus.delivered) {
+      statusColor = AppColors.appGreen;
+    } else {
+      statusColor = AppColors.grey;
+    }
+
     return GestureDetector(
       onTap: () {
         NavigationService.instance
             .navigateTo(AppRoutes.orderDetailPageRoute, context);
       },
       child: Container(
+        key: Key('ORDER_HISTORY_ITEM'),
         padding: const EdgeInsets.all(15.0),
         margin: const EdgeInsets.only(bottom: 20.0),
         decoration: BoxDecoration(
@@ -39,9 +54,9 @@ class OrderListItem extends StatelessWidget {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text(
-                          'Angla Burgers',
-                          style: TextStyle(
+                        Text(
+                          orderModel.pickupTasks.first.address,
+                          style: const TextStyle(
                             fontSize: AppFontSizes.font_size_18,
                           ),
                         ),
@@ -62,13 +77,13 @@ class OrderListItem extends StatelessWidget {
                       horizontal: 6.0, vertical: 4.0),
                   decoration: BoxDecoration(
                     borderRadius: const BorderRadius.all(Radius.circular(5.0)),
-                    border: Border.all(color: AppColors.appGreen, width: 1.0),
+                    border: Border.all(color: statusColor, width: 1.0),
                   ),
                   child: Center(
                     child: Text(
-                      'Completed',
+                      orderModel.orderStatus.name,
                       style: TextStyle(
-                        color: AppColors.appGreen,
+                        color: statusColor,
                         fontSize: AppFontSizes.font_size_12,
                         fontWeight: FontWeight.w500,
                       ),
@@ -96,9 +111,9 @@ class OrderListItem extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
-                      'Sheger building 6th floor',
-                      style: TextStyle(
+                    Text(
+                      orderModel.dropoffTasks.last.address,
+                      style: const TextStyle(
                         fontSize: AppFontSizes.font_size_18,
                       ),
                     ),
@@ -124,9 +139,9 @@ class OrderListItem extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    const Text(
-                      '1,200 Birr',
-                      style: TextStyle(
+                    Text(
+                      '${orderModel.estimatedPrice} Birr',
+                      style: const TextStyle(
                         fontSize: AppFontSizes.font_size_16,
                         fontWeight: FontWeight.w400,
                       ),
@@ -138,9 +153,9 @@ class OrderListItem extends StatelessWidget {
                       decoration: BoxDecoration(
                           shape: BoxShape.circle, color: AppColors.appBlack),
                     ),
-                    const Text(
-                      '5.2 Km',
-                      style: TextStyle(
+                    Text(
+                      '${orderModel.estimatedTripDistance / 1000} Km',
+                      style: const TextStyle(
                         fontSize: AppFontSizes.font_size_16,
                         fontWeight: FontWeight.w400,
                       ),
@@ -161,9 +176,9 @@ class OrderListItem extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text(
-                  '6 pickups and 6 drop offs',
-                  style: TextStyle(
+                Text(
+                  '${orderModel.pickupTasks.length} pickups and ${orderModel.dropoffTasks.length} drop offs',
+                  style: const TextStyle(
                     fontSize: AppFontSizes.font_size_16,
                     fontWeight: FontWeight.w400,
                   ),

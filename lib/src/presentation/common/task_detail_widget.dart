@@ -15,8 +15,8 @@ class TaskDetailsWidget extends StatelessWidget {
     required this.task,
   }) : super(key: key);
 
-  final Order order;
-  final Task task;
+  final OrderModel order;
+  final TaskModel task;
 
   @override
   Widget build(BuildContext context) {

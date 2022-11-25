@@ -12,7 +12,7 @@ import '../../../common/information_widget.dart';
 import '../blocs/task/task_bloc.dart';
 
 class OrderRequest extends StatelessWidget {
-  final Order order;
+  final OrderModel order;
 
   const OrderRequest({required this.order, super.key});
 
@@ -33,7 +33,7 @@ class OrderRequest extends StatelessWidget {
                       padding: const EdgeInsets.all(16),
                       alignment: Alignment.center,
                       child: Text(
-                        'Order Request',
+                        'OrderModel Request',
                         style: Theme.of(context).textTheme.titleLarge,
                       ),
                     ),
@@ -133,7 +133,7 @@ class TimerWidget extends StatefulWidget {
     required this.order,
   }) : super(key: key);
 
-  final Order order;
+  final OrderModel order;
 
   @override
   State<TimerWidget> createState() => _TimerWidgetState();
@@ -164,7 +164,7 @@ class _TimerWidgetState extends State<TimerWidget> {
               SnackBar(
                 backgroundColor: AppColors.black,
                 content: Text(
-                  'Order timed out',
+                  'OrderModel timed out',
                   style: TextStyle(
                     color: AppColors.white,
                   ),

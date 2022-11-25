@@ -17,8 +17,8 @@ class PodPageView extends StatelessWidget {
       : super(key: key);
 
   final bool isTransfer;
-  final Task? task;
-  final Order? order;
+  final TaskModel? task;
+  final OrderModel? order;
 
   @override
   Widget build(BuildContext context) {
