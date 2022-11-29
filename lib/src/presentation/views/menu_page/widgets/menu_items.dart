@@ -34,10 +34,17 @@ class MenuItems extends StatelessWidget {
           margin: const EdgeInsets.symmetric(vertical: 10.0),
           child: const Divider(),
         ),
-        _buildMenuItem('assets/images/menu_item_support.png', 'Support', () {}),
+        _buildMenuItem(
+            key: 'SUPPORT_BUTTON',
+            'assets/images/menu_item_support.png',
+            'Support',
+            () {}),
         const SizedBox(height: 15.0),
         _buildMenuItem(
-            'assets/images/menu_item_settings.png', 'Settings', () {}),
+            key: 'SETTINGS_BUTTON',
+            'assets/images/menu_item_settings.png',
+            'Settings',
+            () {}),
       ],
     );
   }
@@ -46,6 +53,7 @@ class MenuItems extends StatelessWidget {
       {String? key}) {
     return GestureDetector(
       key: Key(key ?? ''),
+      behavior: HitTestBehavior.opaque,
       onTap: onTap,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
