@@ -8,6 +8,7 @@ stages:
   - deploy
 
 dev_test:
+  image: cirrusci/flutter
   stage: test
   tags:
     - flutter
@@ -23,6 +24,7 @@ dev_test:
     expire_in: 1 day
 
 android:debug:
+  image: cirrusci/flutter
   stage: build
   tags:
     - flutter
@@ -41,6 +43,7 @@ android:debug:
           - dev
 
 android:release:
+  image: cirrusci/flutter
   stage: build
   tags:
     - flutter
