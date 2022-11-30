@@ -43,6 +43,9 @@ dependencies:
   # dartz for managing data state
   dartz: ^0.10.1
 
+  #image picker
+  image_picker: ^0.8.5+3
+
   # colors, ui, icons, utils, fonts and more...
   cupertino_icons: ^1.0.2
   shimmer:
@@ -56,6 +59,7 @@ dependencies:
   dotted_line: ^3.1.0
   url_launcher: ^6.1.6
   pinput: ^1.2.0
+  country_code_picker: ^2.0.2
 
 dev_dependencies:
   flutter_test:

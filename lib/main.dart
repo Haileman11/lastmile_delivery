@@ -17,6 +17,7 @@ import 'package:lastmile_mobile/src/presentation/views/menu_page/menu_widget.dar
 import 'package:lastmile_mobile/src/presentation/views/order_detail_page/order_detail_view.dart';
 import 'package:lastmile_mobile/src/presentation/views/order_history/order_history_page_view.dart';
 import 'package:lastmile_mobile/src/presentation/views/pod_page/pod_page_view.dart';
+import 'package:lastmile_mobile/src/presentation/views/registration_page/registration_page_view.dart';
 import 'package:lastmile_mobile/src/presentation/views/splash_page/splash_page_view.dart';
 import 'package:lastmile_mobile/src/presentation/views/waiting_for_driver_page/waiting_for_driver_page.dart';
 
@@ -25,6 +26,7 @@ import 'src/data/datasources/local/app_hive_service.dart';
 import 'src/presentation/views/home_page/blocs/order_cancellation/order_cancellation_bloc.dart';
 import 'src/presentation/views/home_page/blocs/task/task_bloc.dart';
 import 'src/presentation/views/order_history/blocs/order_history/order_history_bloc.dart';
+import 'src/presentation/views/registration_page/bloc/cubits/image_pick_cubit.dart';
 
 Future<void> main() async {
   WidgetsBinding binding = WidgetsFlutterBinding.ensureInitialized();
@@ -119,6 +121,14 @@ class LastMile extends StatelessWidget {
             AppRoutes.podPageRoute: (context) {
               return const PodPageView();
             },
+            AppRoutes.registrationPage: (context) => MultiBlocProvider(
+                  providers: [
+                    BlocProvider<ImagePickCubit>(
+                      create: (context) => ImagePickCubit(),
+                    ),
+                  ],
+                  child: const RegistrationPageView(),
+                ),
           },
         ),
       ),

@@ -12,4 +12,5 @@ class AppRoutes {
   static const menuPageRoute = '/menu-page';
   static const orderHistoryPageRoute = '/order-history-page';
   static const orderDetailPageRoute = '/order-detail-page';
+  static const registrationPage = '/registration_page';
 }

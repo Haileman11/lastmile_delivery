@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:lastmile_mobile/src/config/routes/app_routes.dart';
 import 'package:lastmile_mobile/src/config/themes/app_themes.dart';
 import 'package:lastmile_mobile/src/core/utils/navigations.dart';
@@ -13,10 +12,16 @@ import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/task/task
 import 'package:lastmile_mobile/src/presentation/views/pod_page/widgets/app_pin_input.dart';
 
 class PodPageView extends StatelessWidget {
-  const PodPageView({Key? key, this.isTransfer = false, this.task, this.order})
-      : super(key: key);
+  const PodPageView({
+    Key? key,
+    this.isTransfer = false,
+    this.task,
+    this.order,
+    this.isOtp = false,
+  }) : super(key: key);
 
   final bool isTransfer;
+  final bool isOtp;
   final TaskModel? task;
   final OrderModel? order;
 
@@ -61,10 +66,7 @@ class PodPageView extends StatelessWidget {
         },
         child: Scaffold(
           appBar: AppBar(
-            leading: Icon(
-              PhosphorIcons.list_light,
-              color: AppColors.white,
-            ),
+            automaticallyImplyLeading: true,
             elevation: 0.0,
             backgroundColor: AppColors.appBlack,
             title: Text(
@@ -101,6 +103,7 @@ class PodPageView extends StatelessWidget {
                       if (isTransfer) {
                         BlocProvider.of<OrderCancellationBloc>(context)
                             .add(VerifyTransferEvent(pinInputController.text));
+                      } else if (isOtp) {
                       } else {
                         BlocProvider.of<TaskBloc>(context).add(
                             TaskDropOffVerifyEvent(
