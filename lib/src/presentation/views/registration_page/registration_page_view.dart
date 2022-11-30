@@ -8,7 +8,7 @@ import 'package:lastmile_mobile/src/core/utils/navigations.dart';
 import 'package:lastmile_mobile/src/presentation/common/app_dialog.dart';
 import 'package:lastmile_mobile/src/presentation/common/app_snack_bar.dart';
 import 'package:lastmile_mobile/src/presentation/common/app_text_field.dart';
-import 'package:lastmile_mobile/src/presentation/views/registration_page/bloc/cubits/image_pick_cubit.dart';
+import 'package:lastmile_mobile/src/presentation/views/registration_page/bloc/blocs/image_upload/image_upload_bloc.dart';
 import 'package:lastmile_mobile/src/presentation/views/registration_page/widgets/image_picker_widget.dart';
 
 import 'widgets/country_code_picker_modal.dart';
@@ -122,7 +122,7 @@ class _RegistrationPageViewState extends State<RegistrationPageView> {
   }
 
   _onSubmit() {
-    if (BlocProvider.of<ImagePickCubit>(context).state == null) {
+    if (BlocProvider.of<ImageUploadBloc>(context).state is! ImageUploadDone) {
       showDialog(
           context: context,
           builder: (context) {

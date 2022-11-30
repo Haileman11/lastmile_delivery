@@ -1,7 +1,9 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:lastmile_mobile/src/presentation/views/registration_page/bloc/cubits/image_pick_cubit.dart';
+import 'package:lastmile_mobile/src/presentation/views/registration_page/bloc/blocs/image_upload/image_upload_bloc.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class ImagePickOptions extends StatelessWidget {
@@ -28,7 +30,8 @@ class ImagePickOptions extends StatelessWidget {
               final XFile? image =
                   await _picker.pickImage(source: ImageSource.gallery);
               if (image != null) {
-                BlocProvider.of<ImagePickCubit>(globalContext).pickImage(image);
+                BlocProvider.of<ImageUploadBloc>(globalContext)
+                    .add(UploadImage(File(image.path)));
               }
               Navigator.pop(context);
             } else {
@@ -44,7 +47,8 @@ class ImagePickOptions extends StatelessWidget {
               final XFile? photo =
                   await _picker.pickImage(source: ImageSource.camera);
               if (photo != null) {
-                BlocProvider.of<ImagePickCubit>(globalContext).pickImage(photo);
+                BlocProvider.of<ImageUploadBloc>(globalContext)
+                    .add(UploadImage(File(photo.path)));
               }
               Navigator.pop(context);
             }

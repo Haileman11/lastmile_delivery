@@ -17,6 +17,7 @@ import 'package:lastmile_mobile/src/presentation/views/menu_page/menu_widget.dar
 import 'package:lastmile_mobile/src/presentation/views/order_detail_page/order_detail_view.dart';
 import 'package:lastmile_mobile/src/presentation/views/order_history/order_history_page_view.dart';
 import 'package:lastmile_mobile/src/presentation/views/pod_page/pod_page_view.dart';
+import 'package:lastmile_mobile/src/presentation/views/registration_page/bloc/blocs/image_upload/image_upload_bloc.dart';
 import 'package:lastmile_mobile/src/presentation/views/registration_page/registration_page_view.dart';
 import 'package:lastmile_mobile/src/presentation/views/splash_page/splash_page_view.dart';
 import 'package:lastmile_mobile/src/presentation/views/waiting_for_driver_page/waiting_for_driver_page.dart';
@@ -125,6 +126,9 @@ class LastMile extends StatelessWidget {
                   providers: [
                     BlocProvider<ImagePickCubit>(
                       create: (context) => ImagePickCubit(),
+                    ),
+                    BlocProvider<ImageUploadBloc>(
+                      create: (context) => injector(),
                     ),
                   ],
                   child: const RegistrationPageView(),
