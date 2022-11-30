@@ -8,11 +8,9 @@ stages:
   - deploy
 
 dev_test:
-  image: cirrusci/flutter
   stage: test
   tags:
-    - flutter
-    #- flutter-runner
+    - flutter-runner
     #- 2f-flutter-ssh
   before_script:
     - flutter clean
@@ -24,11 +22,9 @@ dev_test:
     expire_in: 1 day
 
 android:debug:
-  image: cirrusci/flutter
   stage: build
   tags:
-    - flutter
-    #- flutter-runner
+    - flutter-runner
     #- 2f-flutter-ssh
   script:
     - flutter doctor --android-licenses
@@ -43,11 +39,9 @@ android:debug:
           - dev
 
 android:release:
-  image: cirrusci/flutter
   stage: build
   tags:
-    - flutter
-    #-flutter-runner
+    - flutter-runner
     #- 2f-flutter-ssh
   script:
     - flutter doctor --android-licenses
