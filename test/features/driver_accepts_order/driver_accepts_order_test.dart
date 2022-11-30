@@ -8,7 +8,7 @@ import '../../utils/test_injector.dart';
 
 Future<void> main() async {
   group('''Driver accepts, rejects order''', () {
-    var order = Order.fromMap({
+    var order = OrderModel.fromMap({
       'id': 'id',
       'businessCustomerName': "Boss burger",
       'orderCategory': 'singleToSingle',

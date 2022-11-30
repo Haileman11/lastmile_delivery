@@ -16,7 +16,7 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
 
   OrderBloc(this.socket, this.driverModel) : super(const OrderUnassigned()) {
     socket.on('order_assignment:${driverModel.id}', (data) {
-      add(OrderAssignedEvent(Order.fromMap(data)));
+      add(OrderAssignedEvent(OrderModel.fromMap(data)));
     });
     on<OrderAssignedEvent>((event, emit) {
       HapticFeedback.vibrate();

@@ -9,12 +9,12 @@ import 'package:lastmile_mobile/src/presentation/views/pod_page/pod_page_view.da
 import '../../../../data/models/task.dart';
 
 class ConfirmDelivery extends StatelessWidget {
-  final Task task;
+  final TaskModel task;
   const ConfirmDelivery({required this.task, super.key});
 
   @override
   Widget build(BuildContext context) {
-    final Order order = BlocProvider.of<OrderBloc>(context).state.order!;
+    final OrderModel order = BlocProvider.of<OrderBloc>(context).state.order!;
     return SafeArea(
       child: Container(
         key: const Key('CONFIRM_DELIVERY'),

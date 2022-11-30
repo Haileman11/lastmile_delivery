@@ -11,12 +11,12 @@ import '../../../../data/models/task.dart';
 import '../blocs/task/task_bloc.dart';
 
 class WaitingForPackage extends StatelessWidget {
-  final Task task;
+  final TaskModel task;
   const WaitingForPackage({required this.task, super.key});
 
   @override
   Widget build(BuildContext context) {
-    final Order order = BlocProvider.of<OrderBloc>(context).state.order!;
+    final OrderModel order = BlocProvider.of<OrderBloc>(context).state.order!;
     return SafeArea(
       child: Container(
         key: const Key('WAITING_FOR_PACKAGE'),

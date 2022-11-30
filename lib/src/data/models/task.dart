@@ -2,11 +2,10 @@
 import 'dart:convert';
 
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-
 import 'package:lastmile_mobile/src/core/utils/enums.dart';
 import 'package:lastmile_mobile/src/core/utils/helpers.dart';
 
-class Task {
+class TaskModel {
   final String id;
   final LatLng location;
   final String address;
@@ -14,7 +13,7 @@ class Task {
   final String responsiblePersonPhone;
   final TaskType taskType;
   final TaskStatus status;
-  Task({
+  TaskModel({
     required this.id,
     required this.location,
     required this.address,
@@ -24,7 +23,7 @@ class Task {
     required this.status,
   });
 
-  Task copyWith({
+  TaskModel copyWith({
     String? id,
     LatLng? location,
     String? address,
@@ -33,7 +32,7 @@ class Task {
     TaskType? taskType,
     TaskStatus? status,
   }) {
-    return Task(
+    return TaskModel(
       id: id ?? this.id,
       location: location ?? this.location,
       address: address ?? this.address,
@@ -58,8 +57,8 @@ class Task {
     };
   }
 
-  factory Task.fromMap(Map<String, dynamic> map) {
-    return Task(
+  factory TaskModel.fromMap(Map<String, dynamic> map) {
+    return TaskModel(
       id: map['id'] as String,
       location: MapUtils.latLngFromMap(map['location'] as Map<String, dynamic>),
       address: map['address'] as String,
@@ -72,16 +71,16 @@ class Task {
 
   String toJson() => json.encode(toMap());
 
-  factory Task.fromJson(String source) =>
-      Task.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory TaskModel.fromJson(String source) =>
+      TaskModel.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
   String toString() {
-    return 'Task(id: $id, location: $location, address: $address, responsiblePersonName: $responsiblePersonName, responsiblePersonPhone: $responsiblePersonPhone, taskType: $taskType, status: $status)';
+    return 'TaskModel(id: $id, location: $location, address: $address, responsiblePersonName: $responsiblePersonName, responsiblePersonPhone: $responsiblePersonPhone, taskType: $taskType, status: $status)';
   }
 
   @override
-  bool operator ==(covariant Task other) {
+  bool operator ==(covariant TaskModel other) {
     if (identical(this, other)) return true;
 
     return other.id == id &&
