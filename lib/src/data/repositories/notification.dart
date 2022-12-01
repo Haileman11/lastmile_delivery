@@ -97,7 +97,6 @@ class AppNotificationServiceImpl {
     }
   }
 
-  @override
   static Future<void> showNotificationWithActions(Order order) async {
     AndroidNotificationDetails androidNotificationDetails =
         const AndroidNotificationDetails(

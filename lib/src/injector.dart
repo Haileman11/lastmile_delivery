@@ -50,7 +50,6 @@ Future<void> initializeDependencies() async {
     ..registerSingleton<GeoLocationRepository>(GeoLocationRepositoryImpl())
     ..registerSingleton<AppHiveRepository>(
         AppHiveRepositoryImpl(AppHiveService.instance))
-    ..registerSingleton<AppNotificationService>(AppNotificationServiceImpl())
 
     /// BLOCS
     ..registerFactory<TaskBloc>(() => TaskBloc(injector()))

@@ -41,46 +41,10 @@ Future<void> main() async {
   runApp(const LastMile());
 }
 
-class LastMile extends StatefulWidget {
+class LastMile extends StatelessWidget {
   const LastMile({super.key});
 
-  @override
-  State<LastMile> createState() => _LastMileState();
-}
-
-class _LastMileState extends State<LastMile> {
   // It is assumed that all messages contain a data field with the key 'type'
-  Future<void> setupInteractedMessage() async {
-    // Get any messages which caused the application to open from
-    // a terminated state.
-    RemoteMessage? initialMessage =
-        await FirebaseMessaging.instance.getInitialMessage();
-
-    // If the message also contains a data property with a "type" of "chat",
-    // navigate to a chat screen
-    if (initialMessage != null) {
-      _handleMessage(initialMessage);
-    }
-
-    // Also handle any interaction when the app is in the background via a
-    // Stream listener
-    FirebaseMessaging.onMessageOpenedApp.listen(_handleMessage);
-  }
-
-  void _handleMessage(RemoteMessage message) {
-    // if (message.data) {
-    Order order = Order.fromMap(message.data);
-    BlocProvider.of<OrderBloc>(context).add(OrderAssignedEvent(order));
-    // }
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    setupInteractedMessage();
-  }
-
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(

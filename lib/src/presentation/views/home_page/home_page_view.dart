@@ -1,3 +1,6 @@
+import 'dart:developer';
+
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
@@ -13,6 +16,7 @@ import 'package:lastmile_mobile/src/presentation/views/home_page/widgets/order_r
 import 'package:lastmile_mobile/src/presentation/views/home_page/widgets/status_switch_widget.dart';
 import 'package:lastmile_mobile/src/presentation/views/home_page/widgets/waiting_for_package.dart';
 
+import '../../../data/models/order.dart';
 import 'blocs/order/order_bloc.dart';
 import 'blocs/order_cancellation/order_cancellation_bloc.dart';
 import 'blocs/task/task_bloc.dart';
@@ -25,6 +29,30 @@ class HomePageView extends StatefulWidget {
 }
 
 class _HomePageViewState extends State<HomePageView> {
+  Future<void> setupInteractedMessage() async {
+    // Get any messages which caused the application to open from
+    // a terminated state.
+    RemoteMessage? initialMessage =
+        await FirebaseMessaging.instance.getInitialMessage();
+    // If the message also contains a data property with a "type" of "chat",
+    // navigate to a chat screen
+    if (initialMessage != null) {
+      _handleMessage(initialMessage);
+    }
+
+    // Also handle any interaction when the app is in the background via a
+    // Stream listener
+    FirebaseMessaging.onMessageOpenedApp.listen(_handleMessage);
+  }
+
+  void _handleMessage(RemoteMessage message) {
+    // if (message.data) {
+    log("message ${message.data}");
+    Order order = Order.fromJson(message.data['order']);
+    BlocProvider.of<OrderBloc>(context).add(OrderAssignedEvent(order));
+    // }
+  }
+
   late OrderState orderState;
   BitmapDescriptor? icon;
 
@@ -32,6 +60,7 @@ class _HomePageViewState extends State<HomePageView> {
   void initState() {
     getPickUpIcon();
     super.initState();
+    setupInteractedMessage();
   }
 
   Future getPickUpIcon() async {
