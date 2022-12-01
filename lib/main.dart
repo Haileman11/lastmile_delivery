@@ -5,6 +5,7 @@ import 'package:lastmile_mobile/src/config/routes/app_routes.dart';
 import 'package:lastmile_mobile/src/config/themes/app_themes.dart';
 import 'package:lastmile_mobile/src/core/utils/constants.dart';
 import 'package:lastmile_mobile/src/injector.dart';
+import 'package:lastmile_mobile/src/presentation/views/account_pending_page/account_pending_page.dart';
 import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/driver_location/driver_location_bloc.dart';
 import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/driver_profile/driver_profile_bloc.dart';
 import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/order/order_bloc.dart';
@@ -13,7 +14,14 @@ import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/socket/so
 import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/update_location/update_location_bloc.dart';
 import 'package:lastmile_mobile/src/presentation/views/home_page/cubits/select_cancel_reason_cubit.dart';
 import 'package:lastmile_mobile/src/presentation/views/home_page/home_page_view.dart';
+import 'package:lastmile_mobile/src/presentation/views/menu_page/menu_widget.dart';
+import 'package:lastmile_mobile/src/presentation/views/order_detail_page/order_detail_view.dart';
+import 'package:lastmile_mobile/src/presentation/views/order_history/order_history_page_view.dart';
 import 'package:lastmile_mobile/src/presentation/views/pod_page/pod_page_view.dart';
+import 'package:lastmile_mobile/src/presentation/views/registration_page/bloc/blocs/image_upload/image_upload_bloc.dart';
+import 'package:lastmile_mobile/src/presentation/views/registration_page/bloc/blocs/register/register_bloc.dart';
+import 'package:lastmile_mobile/src/presentation/views/registration_page/bloc/blocs/verify_phone/verify_phone_bloc.dart';
+import 'package:lastmile_mobile/src/presentation/views/registration_page/registration_page_view.dart';
 import 'package:lastmile_mobile/src/presentation/views/splash_page/splash_page_view.dart';
 import 'package:lastmile_mobile/src/presentation/views/waiting_for_driver_page/waiting_for_driver_page.dart';
 
@@ -21,6 +29,8 @@ import 'src/core/utils/scroll_behaviour.dart';
 import 'src/data/datasources/local/app_hive_service.dart';
 import 'src/presentation/views/home_page/blocs/order_cancellation/order_cancellation_bloc.dart';
 import 'src/presentation/views/home_page/blocs/task/task_bloc.dart';
+import 'src/presentation/views/order_history/blocs/order_history/order_history_bloc.dart';
+import 'src/presentation/views/registration_page/bloc/cubits/image_pick_cubit.dart';
 
 Future<void> main() async {
   WidgetsBinding binding = WidgetsFlutterBinding.ensureInitialized();
@@ -94,6 +104,16 @@ class LastMile extends StatelessWidget {
           routes: {
             AppRoutes.homePageRoute: (context) => HomePageView(),
             AppRoutes.splashScreenRoute: (context) => const SplashPageView(),
+            AppRoutes.menuPageRoute: (context) => const MenuPage(),
+            AppRoutes.orderDetailPageRoute: (context) =>
+                const OrderDetailView(),
+            AppRoutes.accountPendingPage: (context) =>
+                const AccountPendingPage(),
+            AppRoutes.orderHistoryPageRoute: (context) =>
+                BlocProvider<OrderHistoryBloc>(
+                  create: (context) => injector()..add(const GetOrderHistory()),
+                  child: const OrderHistoryPageView(),
+                ),
             AppRoutes.waitingForDriverPageRoute: (context) {
               final args =
                   ModalRoute.of(context)!.settings.arguments as ScreenArguments;
@@ -105,8 +125,27 @@ class LastMile extends StatelessWidget {
               );
             },
             AppRoutes.podPageRoute: (context) {
-              return const PodPageView();
+              final args =
+                  ModalRoute.of(context)!.settings.arguments as ScreenArguments;
+              return BlocProvider<VerifyPhoneBloc>(
+                create: (context) => injector(),
+                child: PodPageView(isOtp: args.args['isOtp'] ?? false),
+              );
             },
+            AppRoutes.registrationPage: (context) => MultiBlocProvider(
+                  providers: [
+                    BlocProvider<ImagePickCubit>(
+                      create: (context) => ImagePickCubit(),
+                    ),
+                    BlocProvider<ImageUploadBloc>(
+                      create: (context) => injector(),
+                    ),
+                    BlocProvider<RegisterBloc>(
+                      create: (context) => injector(),
+                    ),
+                  ],
+                  child: const RegistrationPageView(),
+                ),
           },
         ),
       ),

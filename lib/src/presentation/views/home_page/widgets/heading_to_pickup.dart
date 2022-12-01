@@ -12,12 +12,12 @@ import '../../../common/task_detail_widget.dart';
 import '../blocs/task/task_bloc.dart';
 
 class HeadingToPickup extends StatelessWidget {
-  final Task task;
+  final TaskModel task;
   const HeadingToPickup({required this.task, super.key});
 
   @override
   Widget build(BuildContext context) {
-    final Order order = BlocProvider.of<OrderBloc>(context).state.order!;
+    final OrderModel order = BlocProvider.of<OrderBloc>(context).state.order!;
     final taskIndex = order.pickupTasks.indexOf(task);
     return SafeArea(
       child: Container(

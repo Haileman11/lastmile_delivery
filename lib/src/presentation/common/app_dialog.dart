@@ -41,6 +41,7 @@ class AppDialog extends StatelessWidget {
                   fontSize: AppFontSizes.font_size_20,
                   fontWeight: FontWeight.w500,
                   color: AppColors.black,
+                  decoration: TextDecoration.none,
                 ),
               ),
             ),
@@ -54,6 +55,7 @@ class AppDialog extends StatelessWidget {
                 style: TextStyle(
                   fontSize: AppFontSizes.font_size_16,
                   color: AppColors.black,
+                  decoration: TextDecoration.none,
                 ),
               ),
             ),

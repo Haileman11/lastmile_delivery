@@ -1,7 +1,7 @@
 part of 'task_bloc.dart';
 
 abstract class TaskEvent extends Equatable {
-  final Task task;
+  final TaskModel task;
   const TaskEvent(this.task);
 
   @override

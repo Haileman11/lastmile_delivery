@@ -2,15 +2,11 @@
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
-
 import 'package:lastmile_mobile/src/core/utils/enums.dart';
 import 'package:lastmile_mobile/src/data/models/route.dart';
 import 'package:lastmile_mobile/src/data/models/task.dart';
 
-import '../../core/utils/helpers.dart';
-
-class Order {
+class OrderModel {
   final String id;
   final String businessCustomerName;
   final OrderCategory orderCategory;
@@ -20,10 +16,10 @@ class Order {
   final double estimatedTripDistance;
   final double estimatedPrice;
   final double estimatedTime;
-  final List<Task> pickupTasks;
-  final List<Task> dropoffTasks;
+  final List<TaskModel> pickupTasks;
+  final List<TaskModel> dropoffTasks;
   final Route route;
-  Order({
+  OrderModel({
     required this.id,
     required this.businessCustomerName,
     required this.orderCategory,
@@ -38,7 +34,7 @@ class Order {
     required this.route,
   });
 
-  Order copyWith({
+  OrderModel copyWith({
     String? id,
     String? businessCustomerName,
     OrderCategory? orderCategory,
@@ -48,11 +44,11 @@ class Order {
     double? estimatedTripDistance,
     double? estimatedPrice,
     double? estimatedTime,
-    List<Task>? pickupTasks,
-    List<Task>? dropoffTasks,
+    List<TaskModel>? pickupTasks,
+    List<TaskModel>? dropoffTasks,
     Route? route,
   }) {
-    return Order(
+    return OrderModel(
       id: id ?? this.id,
       businessCustomerName: businessCustomerName ?? this.businessCustomerName,
       orderCategory: orderCategory ?? this.orderCategory,
@@ -86,8 +82,8 @@ class Order {
     };
   }
 
-  factory Order.fromMap(Map<String, dynamic> map) {
-    return Order(
+  factory OrderModel.fromMap(Map<String, dynamic> map) {
+    return OrderModel(
       id: map['id'] as String,
       businessCustomerName: map['businessCustomerName'] as String,
       orderCategory: OrderCategory.fromMap(map['orderCategory'] as String),
@@ -97,14 +93,14 @@ class Order {
       estimatedTripDistance: map['estimatedTripDistance'] as double,
       estimatedPrice: map['estimatedPrice'] as double,
       estimatedTime: map['estimatedTime'] as double,
-      pickupTasks: List<Task>.from(
-        (map['pickupTasks'] as List<dynamic>).map<Task>(
-          (x) => Task.fromMap(x as Map<String, dynamic>),
+      pickupTasks: List<TaskModel>.from(
+        (map['pickupTasks'] as List<dynamic>).map<TaskModel>(
+          (x) => TaskModel.fromMap(x as Map<String, dynamic>),
         ),
       ),
-      dropoffTasks: List<Task>.from(
-        (map['dropoffTasks'] as List<dynamic>).map<Task>(
-          (x) => Task.fromMap(x as Map<String, dynamic>),
+      dropoffTasks: List<TaskModel>.from(
+        (map['dropoffTasks'] as List<dynamic>).map<TaskModel>(
+          (x) => TaskModel.fromMap(x as Map<String, dynamic>),
         ),
       ),
       route: Route.fromMap(map['route'] as Map<String, dynamic>),
@@ -113,16 +109,16 @@ class Order {
 
   String toJson() => json.encode(toMap());
 
-  factory Order.fromJson(String source) =>
-      Order.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory OrderModel.fromJson(String source) =>
+      OrderModel.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
   String toString() {
-    return 'Order(id: $id, businessCustomerName: $businessCustomerName, orderCategory: $orderCategory, orderStatus: $orderStatus, orderType: $orderType, serviceTypeName: $serviceTypeName, estimatedTripDistance: $estimatedTripDistance, estimatedPrice: $estimatedPrice, estimatedTime:$estimatedTime, pickupTasks: $pickupTasks, dropoffTasks: $dropoffTasks, route: $route)';
+    return 'OrderModel(id: $id, businessCustomerName: $businessCustomerName, orderCategory: $orderCategory, orderStatus: $orderStatus, orderType: $orderType, serviceTypeName: $serviceTypeName, estimatedTripDistance: $estimatedTripDistance, estimatedPrice: $estimatedPrice, estimatedTime:$estimatedTime, pickupTasks: $pickupTasks, dropoffTasks: $dropoffTasks, route: $route)';
   }
 
   @override
-  bool operator ==(covariant Order other) {
+  bool operator ==(covariant OrderModel other) {
     if (identical(this, other)) return true;
 
     return other.id == id &&
