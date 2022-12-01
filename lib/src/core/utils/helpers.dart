@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:lastmile_mobile/src/config/themes/app_themes.dart';
 
 class ScreenUtil {
   final BuildContext context;
@@ -26,4 +28,12 @@ class MapUtils {
   static LatLng latLngFromMap(Map<String, dynamic> json) {
     return LatLng(json['lat'], json['lng']);
   }
+}
+
+SystemUiOverlayStyle getStatusBarStyle() {
+  return SystemUiOverlayStyle(
+    statusBarBrightness: Brightness.light,
+    statusBarColor: AppColors.transparent,
+    statusBarIconBrightness: Brightness.dark,
+  );
 }

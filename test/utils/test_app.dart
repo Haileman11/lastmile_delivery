@@ -15,6 +15,12 @@ import 'package:lastmile_mobile/src/presentation/views/home_page/home_page_view.
 import 'package:lastmile_mobile/src/presentation/views/menu_page/menu_widget.dart';
 import 'package:lastmile_mobile/src/presentation/views/order_history/blocs/order_history/order_history_bloc.dart';
 import 'package:lastmile_mobile/src/presentation/views/order_history/order_history_page_view.dart';
+import 'package:lastmile_mobile/src/presentation/views/pod_page/pod_page_view.dart';
+import 'package:lastmile_mobile/src/presentation/views/registration_page/bloc/blocs/image_upload/image_upload_bloc.dart';
+import 'package:lastmile_mobile/src/presentation/views/registration_page/bloc/blocs/register/register_bloc.dart';
+import 'package:lastmile_mobile/src/presentation/views/registration_page/bloc/blocs/verify_phone/verify_phone_bloc.dart';
+import 'package:lastmile_mobile/src/presentation/views/registration_page/bloc/cubits/image_pick_cubit.dart';
+import 'package:lastmile_mobile/src/presentation/views/registration_page/registration_page_view.dart';
 import 'package:lastmile_mobile/src/presentation/views/splash_page/splash_page_view.dart';
 
 class TestApp extends StatelessWidget {
@@ -76,11 +82,33 @@ class TestApp extends StatelessWidget {
             AppRoutes.homePageRoute: (context) => HomePageView(),
             AppRoutes.splashScreenRoute: (context) => const SplashPageView(),
             AppRoutes.menuPageRoute: (context) => const MenuPage(),
+            AppRoutes.registrationPage: (context) => MultiBlocProvider(
+                  providers: [
+                    BlocProvider<ImagePickCubit>(
+                      create: (context) => injector(),
+                    ),
+                    BlocProvider<ImageUploadBloc>(
+                      create: (context) => injector()..add(UploadImage('')),
+                    ),
+                    BlocProvider<RegisterBloc>(
+                      create: (context) => injector(),
+                    ),
+                  ],
+                  child: const RegistrationPageView(),
+                ),
             AppRoutes.orderHistoryPageRoute: (context) =>
                 BlocProvider<OrderHistoryBloc>(
                   create: (context) => injector()..add(const GetOrderHistory()),
                   child: const OrderHistoryPageView(),
                 ),
+            AppRoutes.podPageRoute: (context) {
+              final args =
+                  ModalRoute.of(context)!.settings.arguments as ScreenArguments;
+              return BlocProvider<VerifyPhoneBloc>(
+                create: (context) => injector(),
+                child: PodPageView(isOtp: args.args['isOtp'] ?? false),
+              );
+            },
           },
           debugShowCheckedModeBanner: false,
         ),

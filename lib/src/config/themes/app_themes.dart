@@ -23,6 +23,7 @@ class AppColors {
   static Color lightGrey = const Color(0Xffdfe0e5);
   static Color transparent = Colors.transparent;
   static Color errorRed = Colors.redAccent;
+  static Color txtGrey = const Color(0xffa5a6ab);
 }
 
 class AppFontSizes {
