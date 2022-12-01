@@ -1,7 +1,8 @@
 part of 'image_upload_bloc.dart';
 
 abstract class ImageUploadState extends Equatable {
-  const ImageUploadState();
+  const ImageUploadState({this.imageUrl});
+  final String? imageUrl;
   @override
   List<Object> get props => [];
 }
@@ -13,9 +14,7 @@ class ImageUploadLoading extends ImageUploadState {
 }
 
 class ImageUploadDone extends ImageUploadState {
-  final String imageUrl;
-
-  const ImageUploadDone(this.imageUrl);
+  const ImageUploadDone(String imageUrl) : super(imageUrl: imageUrl);
 }
 
 class ImageUploadError extends ImageUploadState {

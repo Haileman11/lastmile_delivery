@@ -34,7 +34,7 @@ class UserImageWidget extends StatelessWidget {
                   ),
                   child: CircleAvatar(
                     backgroundImage: Image.network(
-                      state.imageUrl,
+                      state.imageUrl!,
                       fit: BoxFit.cover,
                     ).image,
                   ),

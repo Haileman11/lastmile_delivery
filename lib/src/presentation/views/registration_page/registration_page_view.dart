@@ -3,12 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lastmile_mobile/src/config/routes/app_routes.dart';
 import 'package:lastmile_mobile/src/config/themes/app_themes.dart';
+import 'package:lastmile_mobile/src/core/params/request_params.dart';
 import 'package:lastmile_mobile/src/core/utils/helpers.dart';
 import 'package:lastmile_mobile/src/core/utils/navigations.dart';
 import 'package:lastmile_mobile/src/presentation/common/app_dialog.dart';
 import 'package:lastmile_mobile/src/presentation/common/app_snack_bar.dart';
 import 'package:lastmile_mobile/src/presentation/common/app_text_field.dart';
+import 'package:lastmile_mobile/src/presentation/common/submit_button.dart';
 import 'package:lastmile_mobile/src/presentation/views/registration_page/bloc/blocs/image_upload/image_upload_bloc.dart';
+import 'package:lastmile_mobile/src/presentation/views/registration_page/bloc/blocs/register/register_bloc.dart';
 import 'package:lastmile_mobile/src/presentation/views/registration_page/widgets/image_picker_widget.dart';
 
 import 'widgets/country_code_picker_modal.dart';
@@ -34,87 +37,111 @@ class _RegistrationPageViewState extends State<RegistrationPageView> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        elevation: 0.0,
-        systemOverlayStyle: getStatusBarStyle().copyWith(
-          statusBarIconBrightness: Brightness.light,
-        ),
-        title: Text(
-          'Sign-up',
-          style: TextStyle(color: AppColors.white),
-        ),
-        automaticallyImplyLeading: true,
-        backgroundColor: AppColors.black,
-      ),
-      body: SingleChildScrollView(
-        child: Container(
-          padding: const EdgeInsets.symmetric(
-            horizontal: AppPadding.padding_14,
-            vertical: AppPadding.padding_18,
+    return BlocListener<RegisterBloc, RegisterState>(
+      listener: (context, state) {
+        if (state is RegisterDone) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            buildAppSnackBar(
+              bgColor: AppColors.black,
+              txtColor: AppColors.white,
+              msg: 'Confirm your phone number',
+              isFloating: false,
+            ),
+          );
+          NavigationService.instance.navigateToWithArgs(
+              AppRoutes.podPageRoute, context, {'isOtp': true});
+        }
+
+        if (state is RegisterError) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            buildAppSnackBar(
+              bgColor: AppColors.errorRed,
+              txtColor: AppColors.white,
+              msg: 'Registration failed, try again',
+              isFloating: false,
+            ),
+          );
+        }
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          elevation: 0.0,
+          systemOverlayStyle: getStatusBarStyle().copyWith(
+            statusBarIconBrightness: Brightness.light,
           ),
-          child: Column(
-            children: [
-              const UserImageWidget(),
-              const SizedBox(height: 28.0),
-              AppTextField(
-                  controller: firstNameController, labelText: 'First Name *'),
-              const SizedBox(height: 25.0),
-              AppTextField(
-                  controller: lastNameController, labelText: 'Last Name *'),
-              const SizedBox(height: 28.0),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  CountryPickerModal(
-                    onChangedCallback: (CountryCode? countryCode) {
-                      selectedCountryCode = countryCode!;
-                    },
-                  ),
-                  const SizedBox(width: 10.0),
-                  Expanded(
-                    child: AppTextField(
-                      controller: phoneNumberController,
-                      labelText: '9********',
-                      isNumber: true,
+          title: Text(
+            'Sign-up',
+            style: TextStyle(color: AppColors.white),
+          ),
+          automaticallyImplyLeading: true,
+          backgroundColor: AppColors.black,
+        ),
+        body: SingleChildScrollView(
+          child: Container(
+            padding: const EdgeInsets.symmetric(
+              horizontal: AppPadding.padding_14,
+              vertical: AppPadding.padding_18,
+            ),
+            child: Column(
+              children: [
+                const UserImageWidget(),
+                const SizedBox(height: 28.0),
+                AppTextField(
+                    controller: firstNameController, labelText: 'First Name *'),
+                const SizedBox(height: 25.0),
+                AppTextField(
+                    controller: lastNameController, labelText: 'Last Name *'),
+                const SizedBox(height: 28.0),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    CountryPickerModal(
+                      onChangedCallback: (CountryCode? countryCode) {
+                        selectedCountryCode = countryCode!;
+                      },
                     ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 28.0),
-              AppTextField(
-                controller: emailController,
-                labelText: 'Email *',
-                isEmail: true,
-              ),
-              const SizedBox(height: 25.0),
-              AppTextField(
-                controller: passwordController,
-                labelText: 'Password *',
-                isPassword: true,
-              ),
-              const SizedBox(height: 38.0),
-              GestureDetector(
-                onTap: _onSubmit,
-                child: Container(
-                  height: 50.0,
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                      color: AppColors.appGreen,
-                      borderRadius:
-                          const BorderRadius.all(Radius.circular(5.0))),
-                  child: Center(
-                    child: Text(
-                      'Sign-up',
-                      style: TextStyle(
-                        color: AppColors.white,
-                        fontSize: AppFontSizes.font_size_18,
+                    const SizedBox(width: 10.0),
+                    Expanded(
+                      child: AppTextField(
+                        controller: phoneNumberController,
+                        labelText: '9********',
+                        isNumber: true,
                       ),
                     ),
-                  ),
+                  ],
                 ),
-              ),
-            ],
+                const SizedBox(height: 28.0),
+                AppTextField(
+                  controller: emailController,
+                  labelText: 'Email *',
+                  isEmail: true,
+                ),
+                const SizedBox(height: 25.0),
+                AppTextField(
+                  controller: passwordController,
+                  labelText: 'Password *',
+                  isPassword: true,
+                ),
+                const SizedBox(height: 38.0),
+                BlocBuilder<RegisterBloc, RegisterState>(
+                  builder: (context, state) {
+                    if (state is RegisterLoading) {
+                      return AppSubmitButton(
+                        onTap: () {},
+                        title: 'Signing up...',
+                        isLoading: true,
+                      );
+                    }
+
+                    return AppSubmitButton(
+                      onTap: _onSubmit,
+                      title: 'Sign up',
+                      isLoading: false,
+                    );
+                  },
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -211,7 +238,16 @@ class _RegistrationPageViewState extends State<RegistrationPageView> {
         ),
       );
     } else {
-      NavigationService.instance.navigateTo(AppRoutes.podPageRoute, context);
+      BlocProvider.of<RegisterBloc>(context)
+          .add(RegisterDriver(RegisterDriverRequestParams(
+        imageUrl: BlocProvider.of<ImageUploadBloc>(context).state.imageUrl!,
+        firstName: firstNameController.text.trim(),
+        lastName: lastNameController.text.trim(),
+        phoneNumber: selectedCountryCode.dialCode!.replaceAll('+', '') +
+            phoneNumberController.text.trim(),
+        email: emailController.text.trim(),
+        password: passwordController.text.trim(),
+      )));
     }
   }
 }
