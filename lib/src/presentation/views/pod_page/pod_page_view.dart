@@ -93,6 +93,7 @@ class PodPageView extends StatelessWidget {
         }),
       ],
       child: Scaffold(
+        key: const Key('POD_PAGE_KEY'),
         appBar: AppBar(
           automaticallyImplyLeading: true,
           elevation: 0.0,

@@ -12,9 +12,9 @@ class ImageUploadRepoImpl implements ImageUploadRepository {
   ImageUploadRepoImpl(this._imageUploadApiService);
 
   @override
-  Future<Either<Failure, String>> uploadImageRepository(File imageFile) async {
+  Future<Either<Failure, String>> uploadImage(String imageFilePath) async {
     try {
-      final url = await _imageUploadApiService.uploadImage(imageFile);
+      final url = await _imageUploadApiService.uploadImage(File(imageFilePath));
       return Right(url);
     } on DioError catch (e) {
       return Left(ServerFailure());

@@ -26,12 +26,14 @@ class ImagePickOptions extends StatelessWidget {
           leading: const Icon(Icons.photo),
           title: const Text('Gallery'),
           onTap: () async {
-            if (await Permission.storage.request().isGranted) {
+            if (Platform.isIOS
+                ? await Permission.photos.request().isGranted
+                : await Permission.storage.request().isGranted) {
               final XFile? image =
                   await _picker.pickImage(source: ImageSource.gallery);
               if (image != null) {
                 BlocProvider.of<ImageUploadBloc>(globalContext)
-                    .add(UploadImage(File(image.path)));
+                    .add(UploadImage(image.path));
               }
               Navigator.pop(context);
             } else {
@@ -48,7 +50,7 @@ class ImagePickOptions extends StatelessWidget {
                   await _picker.pickImage(source: ImageSource.camera);
               if (photo != null) {
                 BlocProvider.of<ImageUploadBloc>(globalContext)
-                    .add(UploadImage(File(photo.path)));
+                    .add(UploadImage(photo.path));
               }
               Navigator.pop(context);
             }

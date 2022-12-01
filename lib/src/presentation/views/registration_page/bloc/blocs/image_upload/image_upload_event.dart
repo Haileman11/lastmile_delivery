@@ -7,6 +7,6 @@ abstract class ImageUploadEvent extends Equatable {
 }
 
 class UploadImage extends ImageUploadEvent {
-  final File file;
-  const UploadImage(this.file);
+  final String filePath;
+  const UploadImage(this.filePath);
 }

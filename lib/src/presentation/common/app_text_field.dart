@@ -38,7 +38,7 @@ class _AppTextFieldState extends State<AppTextField> {
       textAlignVertical: TextAlignVertical.center,
       autofocus: false,
       cursorColor: AppColors.appBlack,
-      onChanged: (key) {},
+      onChanged: (_) => setState(() {}),
       maxLength: widget.isNumber ? 9 : 40,
       readOnly: false,
       keyboardType: widget.isNumber
@@ -69,6 +69,18 @@ class _AppTextFieldState extends State<AppTextField> {
     );
   }
 
+  String? get validator {
+    // at any time, we can get the text from _controller.value.text
+    final text = widget.controller.value.text;
+    // Note: you can do your own custom validation here
+    // Move this logic this outside the widget for more testable code
+    if (text.isEmpty) {
+      return 'Can\'t be empty';
+    }
+    // return null if the text is valid
+    return null;
+  }
+
   InputDecoration fieldDecoration(String labelText) {
     return InputDecoration(
       contentPadding: const EdgeInsets.symmetric(
@@ -83,6 +95,7 @@ class _AppTextFieldState extends State<AppTextField> {
           fontWeight: FontWeight.w300,
         ),
       ),
+      errorText: validator,
       errorStyle: TextStyle(
         fontSize: AppFontSizes.font_size_12,
         color: AppColors.errorRed,
@@ -95,6 +108,12 @@ class _AppTextFieldState extends State<AppTextField> {
         borderSide: BorderSide(color: AppColors.appGreen, width: 0.8),
       ),
       errorBorder: OutlineInputBorder(
+        borderSide: BorderSide(color: AppColors.appGreen, width: 0.8),
+      ),
+      border: OutlineInputBorder(
+        borderSide: BorderSide(color: AppColors.appGreen, width: 0.8),
+      ),
+      focusedErrorBorder: OutlineInputBorder(
         borderSide: BorderSide(color: AppColors.appGreen, width: 0.8),
       ),
       enabledBorder: OutlineInputBorder(

@@ -87,10 +87,14 @@ class _RegistrationPageViewState extends State<RegistrationPageView> {
                 const UserImageWidget(),
                 const SizedBox(height: 28.0),
                 AppTextField(
-                    controller: firstNameController, labelText: 'First Name *'),
+                    key: const Key('first_name_field'),
+                    controller: firstNameController,
+                    labelText: 'First Name *'),
                 const SizedBox(height: 25.0),
                 AppTextField(
-                    controller: lastNameController, labelText: 'Last Name *'),
+                    key: const Key('last_name_field'),
+                    controller: lastNameController,
+                    labelText: 'Last Name *'),
                 const SizedBox(height: 28.0),
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -103,6 +107,7 @@ class _RegistrationPageViewState extends State<RegistrationPageView> {
                     const SizedBox(width: 10.0),
                     Expanded(
                       child: AppTextField(
+                        key: const Key('phone_number_field'),
                         controller: phoneNumberController,
                         labelText: '9********',
                         isNumber: true,
@@ -112,12 +117,14 @@ class _RegistrationPageViewState extends State<RegistrationPageView> {
                 ),
                 const SizedBox(height: 28.0),
                 AppTextField(
+                  key: const Key('email_field'),
                   controller: emailController,
                   labelText: 'Email *',
                   isEmail: true,
                 ),
                 const SizedBox(height: 25.0),
                 AppTextField(
+                  key: const Key('password_field'),
                   controller: passwordController,
                   labelText: 'Password *',
                   isPassword: true,
@@ -134,6 +141,7 @@ class _RegistrationPageViewState extends State<RegistrationPageView> {
                     }
 
                     return AppSubmitButton(
+                      key: const Key('REGISTER_BUTTON'),
                       onTap: _onSubmit,
                       title: 'Sign up',
                       isLoading: false,
