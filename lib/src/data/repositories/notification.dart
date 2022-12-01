@@ -2,8 +2,9 @@ import 'dart:async';
 import 'dart:developer';
 import 'dart:ui';
 
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_background_service/flutter_background_service.dart';
-import 'package:flutter_background_service_android/flutter_background_service_android.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get_it/get_it.dart';
 import 'package:lastmile_mobile/src/data/repositories/base_location_repo_impl.dart';
@@ -18,10 +19,35 @@ import '../models/order.dart';
 const accept_request_action_id = "accept_request_action_id";
 const reject_request_action_id = "reject_request_action_id";
 
-class AppNotificationServiceImpl implements AppNotificationService {
-  final flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
-  @override
-  Future<void> setup() async {
+final flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+
+class AppNotificationServiceImpl {
+  static Future<void> _firebaseMessagingBackgroundHandler(
+      RemoteMessage message) async {
+    // If you're going to use other Firebase services in the background, such as Firestore,
+    // make sure you call `initializeApp` before using other Firebase services.
+    await Firebase.initializeApp();
+    final data = message.data;
+    Order order = Order.fromJson(data['order']);
+    showNotificationWithActions(order);
+    print("Handling a background message: ${message.messageId}");
+  }
+
+  static Future<void> setup() async {
+    await Firebase.initializeApp();
+    FirebaseMessaging messaging = FirebaseMessaging.instance;
+    String? token = await messaging.getToken();
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      RemoteNotification? notification = message.notification;
+      AndroidNotification? android = message.notification?.android;
+      final data = message.data;
+      // If `onMessage` is triggered with a notification, construct our own
+      // local notification to show to users using the created channel.
+
+      Order order = Order.fromJson(data['order']);
+      showNotificationWithActions(order);
+    });
+    FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
     // #1
     const androidSetting = AndroidInitializationSettings('@mipmap/ic_launcher');
     const iosSetting = DarwinInitializationSettings();
@@ -38,7 +64,7 @@ class AppNotificationServiceImpl implements AppNotificationService {
     );
   }
 
-  void onDidReceiveNotificationResponse(
+  static void onDidReceiveNotificationResponse(
       NotificationResponse notificationResponse) async {
     final String? payload = notificationResponse.payload;
     final Order order = Order.fromJson(payload!);
@@ -72,7 +98,7 @@ class AppNotificationServiceImpl implements AppNotificationService {
   }
 
   @override
-  Future<void> showNotificationWithActions(Order order) async {
+  static Future<void> showNotificationWithActions(Order order) async {
     AndroidNotificationDetails androidNotificationDetails =
         const AndroidNotificationDetails(
       'order_request',
@@ -93,32 +119,10 @@ class AppNotificationServiceImpl implements AppNotificationService {
   }
 
   @pragma('vm:entry-point')
-  static void initializeService() async {
-    final service = FlutterBackgroundService();
-
-    await service.configure(
-      androidConfiguration: AndroidConfiguration(
-        // this will be executed when app is in foreground or background in separated isolate
-        onStart: onStart,
-
-        // auto start service
-        // autoStart: true,
-        isForegroundMode: false,
-
-        notificationChannelId:
-            "order_request", // this must match with notification channel you created above.
-        initialNotificationTitle: 'AWESOME SERVICE',
-        initialNotificationContent: 'Initializing',
-        foregroundServiceNotificationId: 0,
-      ),
-      iosConfiguration: IosConfiguration(),
-    );
-  }
-
-  @pragma('vm:entry-point')
   static void onStart(
-    ServiceInstance service,
-  ) async {
+      // ServiceInstance service,
+      ) async {
+    await initializeDependencies();
     // Only available for flutter 3.0.0 and later
     DartPluginRegistrant.ensureInitialized();
 
@@ -141,33 +145,5 @@ class AppNotificationServiceImpl implements AppNotificationService {
         'lon': event.longitude,
       });
     });
-    // Timer.periodic(const Duration(seconds: 1), (timer) async {
-    //   log("INSIDE BACKGROUND SERVICE");
-
-    // socket.on('order_assignment:3114c256-6cea-4582-9fe1-f51bb96554d6', (data) {
-    //   AppNotificationServiceImpl()
-    //       .showNotificationWithActions(Order.fromMap(data));
-    // });
-    // bring to foreground
-    // Timer.periodic(const Duration(seconds: 1), (timer) async {
-    //   if (service is AndroidServiceInstance) {
-    //     if (await service.isForegroundService()) {
-    //       flutterLocalNotificationsPlugin.show(
-    //         0,
-    //         'COOL SERVICE',
-    //         'Awesome ${DateTime.now()}',
-    //         const NotificationDetails(
-    //           android: AndroidNotificationDetails(
-    //             "order_request",
-    //             'MY FOREGROUND SERVICE',
-    //             icon: 'ic_bg_service_small',
-    //             ongoing: true,
-    //           ),
-    //         ),
-    //       );
-    //     }
-    //   }
-    // });
-    // });
   }
 }
