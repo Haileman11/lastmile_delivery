@@ -14,4 +14,6 @@ class AppRoutes {
   static const orderDetailPageRoute = '/order-detail-page';
   static const registrationPage = '/registration-page';
   static const accountPendingPage = '/account-pending-page';
+  static const loginPageRoute = '/login-page';
+  static const verificationPageRoute = '/verification-page';
 }

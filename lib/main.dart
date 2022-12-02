@@ -14,6 +14,7 @@ import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/socket/so
 import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/update_location/update_location_bloc.dart';
 import 'package:lastmile_mobile/src/presentation/views/home_page/cubits/select_cancel_reason_cubit.dart';
 import 'package:lastmile_mobile/src/presentation/views/home_page/home_page_view.dart';
+import 'package:lastmile_mobile/src/presentation/views/login_page/login_page_view.dart';
 import 'package:lastmile_mobile/src/presentation/views/menu_page/menu_widget.dart';
 import 'package:lastmile_mobile/src/presentation/views/order_detail_page/order_detail_view.dart';
 import 'package:lastmile_mobile/src/presentation/views/order_history/order_history_page_view.dart';
@@ -132,6 +133,7 @@ class LastMile extends StatelessWidget {
                 child: PodPageView(isOtp: args.args['isOtp'] ?? false),
               );
             },
+            AppRoutes.loginPageRoute: (context) => const LoginPageView(),
             AppRoutes.registrationPage: (context) => MultiBlocProvider(
                   providers: [
                     BlocProvider<ImagePickCubit>(
