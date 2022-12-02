@@ -20,18 +20,6 @@ class AppHiveService {
     await initHiveAdapters();
 
     driverBox = await Hive.openBox<dynamic>(AppValues.driverBoxKey);
-
-    /// ADD MOCK USER DATA FOR NOW
-    driverBox.put(
-      AppValues.driverBoxKey,
-      DriverModel(
-        id: "3114c256-6cea-4582-9fe1-f51bb96554d6",
-        name: "name",
-        phoneNumber: "phoneNumber",
-        isAvailable: false,
-        status: "status",
-      ),
-    );
   }
 
   Future<void> initHiveAdapters() async {

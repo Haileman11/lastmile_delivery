@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:lastmile_mobile/src/config/routes/app_routes.dart';
+import 'package:lastmile_mobile/src/core/utils/auth_utils.dart';
 
 class SplashPageView extends StatefulWidget {
   const SplashPageView({Key? key}) : super(key: key);
@@ -24,8 +25,13 @@ class _SplashPageViewState extends State<SplashPageView> {
     return Container();
   }
 
-  void checkIfUserLoggedIn() {
+  void checkIfUserLoggedIn() async {
+    bool isUserLoggedIn = await AuthenticationUtils.isUserLoggedIn();
     FlutterNativeSplash.remove();
-    Navigator.popAndPushNamed(context, AppRoutes.loginPageRoute);
+    if (isUserLoggedIn) {
+      Navigator.popAndPushNamed(context, AppRoutes.homePageRoute);
+    } else {
+      Navigator.popAndPushNamed(context, AppRoutes.loginPageRoute);
+    }
   }
 }

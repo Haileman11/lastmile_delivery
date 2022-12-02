@@ -106,7 +106,7 @@ class TestApp extends StatelessWidget {
                   ModalRoute.of(context)!.settings.arguments as ScreenArguments;
               return BlocProvider<VerifyPhoneBloc>(
                 create: (context) => injector(),
-                child: PodPageView(isOtp: args.args['isOtp'] ?? false),
+                child: PodPageView(isRegister: args.args['isOtp'] ?? false),
               );
             },
           },

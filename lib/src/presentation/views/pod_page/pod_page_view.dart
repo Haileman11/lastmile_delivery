@@ -10,6 +10,7 @@ import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/order/ord
 import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/order_cancellation/order_cancellation_bloc.dart';
 import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/polylines/polyline_bloc.dart';
 import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/task/task_bloc.dart';
+import 'package:lastmile_mobile/src/presentation/views/login_page/blocs/login/login_bloc.dart';
 import 'package:lastmile_mobile/src/presentation/views/pod_page/widgets/app_pin_input.dart';
 import 'package:lastmile_mobile/src/presentation/views/registration_page/bloc/blocs/verify_phone/verify_phone_bloc.dart';
 
@@ -19,13 +20,17 @@ class PodPageView extends StatelessWidget {
     this.isTransfer = false,
     this.task,
     this.order,
-    this.isOtp = false,
+    this.isRegister = false,
+    this.isLogin = false,
+    this.phoneNumber,
   }) : super(key: key);
 
   final bool isTransfer;
-  final bool isOtp;
+  final bool isRegister;
+  final bool isLogin;
   final TaskModel? task;
   final OrderModel? order;
+  final String? phoneNumber;
 
   @override
   Widget build(BuildContext context) {
@@ -66,10 +71,21 @@ class PodPageView extends StatelessWidget {
             }
 
             if (state is VerifyPhoneDone) {
-              NavigationService.instance.navigateNamedAndRemoveUntil(
+              if (isRegister) {
+                NavigationService.instance.navigateNamedAndRemoveUntil(
                   AppRoutes.accountPendingPage,
                   AppRoutes.registrationPage,
-                  context);
+                  context,
+                );
+              } else if (isLogin) {
+                BlocProvider.of<LoginBloc>(context)
+                    .add(LoginDriver(phoneNumber!));
+                NavigationService.instance.navigateToWithArgs(
+                  AppRoutes.signingInPageRoute,
+                  context,
+                  {'phoneNumber': phoneNumber},
+                );
+              }
             }
           },
         ),
@@ -111,9 +127,9 @@ class PodPageView extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const SizedBox(height: 130.0),
-              Text(
-                isOtp ? 'Insert code' : 'Insert POD',
-                style: const TextStyle(
+              const Text(
+                'Insert Code',
+                style: TextStyle(
                   fontSize: AppFontSizes.font_size_18,
                   fontWeight: FontWeight.w600,
                 ),
@@ -132,7 +148,7 @@ class PodPageView extends StatelessWidget {
                     if (isTransfer) {
                       BlocProvider.of<OrderCancellationBloc>(context)
                           .add(VerifyTransferEvent(pinInputController.text));
-                    } else if (isOtp) {
+                    } else if (isRegister || isLogin) {
                       BlocProvider.of<VerifyPhoneBloc>(context)
                           .add(VerifyPhone(pinInputController.text));
                     } else {

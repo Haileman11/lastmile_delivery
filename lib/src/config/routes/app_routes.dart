@@ -16,4 +16,5 @@ class AppRoutes {
   static const accountPendingPage = '/account-pending-page';
   static const loginPageRoute = '/login-page';
   static const verificationPageRoute = '/verification-page';
+  static const signingInPageRoute = '/signing-in-page';
 }

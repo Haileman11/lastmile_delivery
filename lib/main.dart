@@ -14,6 +14,7 @@ import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/socket/so
 import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/update_location/update_location_bloc.dart';
 import 'package:lastmile_mobile/src/presentation/views/home_page/cubits/select_cancel_reason_cubit.dart';
 import 'package:lastmile_mobile/src/presentation/views/home_page/home_page_view.dart';
+import 'package:lastmile_mobile/src/presentation/views/login_page/blocs/login/login_bloc.dart';
 import 'package:lastmile_mobile/src/presentation/views/login_page/login_page_view.dart';
 import 'package:lastmile_mobile/src/presentation/views/menu_page/menu_widget.dart';
 import 'package:lastmile_mobile/src/presentation/views/order_detail_page/order_detail_view.dart';
@@ -23,6 +24,7 @@ import 'package:lastmile_mobile/src/presentation/views/registration_page/bloc/bl
 import 'package:lastmile_mobile/src/presentation/views/registration_page/bloc/blocs/register/register_bloc.dart';
 import 'package:lastmile_mobile/src/presentation/views/registration_page/bloc/blocs/verify_phone/verify_phone_bloc.dart';
 import 'package:lastmile_mobile/src/presentation/views/registration_page/registration_page_view.dart';
+import 'package:lastmile_mobile/src/presentation/views/signing_in_page/signing_in_page.dart';
 import 'package:lastmile_mobile/src/presentation/views/splash_page/splash_page_view.dart';
 import 'package:lastmile_mobile/src/presentation/views/waiting_for_driver_page/waiting_for_driver_page.dart';
 
@@ -73,6 +75,9 @@ class LastMile extends StatelessWidget {
         ),
         BlocProvider<PolyLineBloc>(
           create: (context) => PolyLineBloc(),
+        ),
+        BlocProvider<LoginBloc>(
+          create: (context) => injector(),
         ),
         BlocProvider(create: (context) => SelectCancelReasonCubit(''))
       ],
@@ -125,15 +130,26 @@ class LastMile extends StatelessWidget {
                 child: const WaitingDriverPageView(),
               );
             },
+            AppRoutes.signingInPageRoute: (context) {
+              final args =
+                  ModalRoute.of(context)!.settings.arguments as ScreenArguments;
+              return SigningInPage(
+                phoneNumber: args.args['phoneNumber'],
+              );
+            },
             AppRoutes.podPageRoute: (context) {
               final args =
                   ModalRoute.of(context)!.settings.arguments as ScreenArguments;
               return BlocProvider<VerifyPhoneBloc>(
                 create: (context) => injector(),
-                child: PodPageView(isOtp: args.args['isOtp'] ?? false),
+                child: PodPageView(
+                  isRegister: args.args['isOtp'] ?? false,
+                  isLogin: args.args['isLogin'] ?? false,
+                  phoneNumber: args.args['phoneNumber'],
+                ),
               );
             },
-            AppRoutes.loginPageRoute: (context) => const LoginPageView(),
+            AppRoutes.loginPageRoute: (context) => LoginPageView(),
             AppRoutes.registrationPage: (context) => MultiBlocProvider(
                   providers: [
                     BlocProvider<ImagePickCubit>(

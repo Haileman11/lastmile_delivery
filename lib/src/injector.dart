@@ -19,6 +19,7 @@ import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/driver_pr
 import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/order/order_bloc.dart';
 import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/socket/socket_bloc.dart';
 import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/update_location/update_location_bloc.dart';
+import 'package:lastmile_mobile/src/presentation/views/login_page/blocs/login/login_bloc.dart';
 import 'package:lastmile_mobile/src/presentation/views/registration_page/bloc/blocs/image_upload/image_upload_bloc.dart';
 import 'package:lastmile_mobile/src/presentation/views/registration_page/bloc/blocs/register/register_bloc.dart';
 import 'package:lastmile_mobile/src/presentation/views/registration_page/bloc/blocs/verify_phone/verify_phone_bloc.dart';
@@ -82,5 +83,6 @@ Future<void> initializeDependencies() async {
     ..registerFactory<OrderHistoryBloc>(() => OrderHistoryBloc(injector()))
     ..registerFactory<ImageUploadBloc>(() => ImageUploadBloc(injector()))
     ..registerFactory<RegisterBloc>(() => RegisterBloc(injector()))
-    ..registerFactory<VerifyPhoneBloc>(() => VerifyPhoneBloc(injector()));
+    ..registerFactory<VerifyPhoneBloc>(() => VerifyPhoneBloc(injector()))
+    ..registerFactory<LoginBloc>(() => LoginBloc(injector()));
 }
