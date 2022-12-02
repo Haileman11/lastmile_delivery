@@ -16,6 +16,7 @@ import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/order/ord
 import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/polylines/polyline_bloc.dart';
 import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/socket/socket_bloc.dart';
 import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/update_location/update_location_bloc.dart';
+import 'package:lastmile_mobile/src/presentation/views/login_page/blocs/login/login_bloc.dart';
 import 'package:lastmile_mobile/src/presentation/views/order_history/blocs/order_history/order_history_bloc.dart';
 import 'package:lastmile_mobile/src/presentation/views/registration_page/bloc/blocs/image_upload/image_upload_bloc.dart';
 import 'package:lastmile_mobile/src/presentation/views/registration_page/bloc/blocs/register/register_bloc.dart';
@@ -77,5 +78,6 @@ Future<void> initializeTestDependencies() async {
     ..registerFactory<OrderHistoryBloc>(() => OrderHistoryBloc(injector()))
     ..registerFactory<ImageUploadBloc>(() => ImageUploadBloc(injector()))
     ..registerFactory<VerifyPhoneBloc>(() => VerifyPhoneBloc(injector()))
-    ..registerFactory<RegisterBloc>(() => RegisterBloc(injector()));
+    ..registerFactory<RegisterBloc>(() => RegisterBloc(injector()))
+    ..registerFactory<LoginBloc>(() => LoginBloc(injector()));
 }

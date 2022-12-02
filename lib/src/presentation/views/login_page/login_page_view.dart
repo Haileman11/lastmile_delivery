@@ -82,10 +82,12 @@ class _LoginPageViewState extends State<LoginPageView> {
                           ),
                           const SizedBox(height: 35.0),
                           AppSubmitButton(
+                            key: const Key('LOGIN_BUTTON'),
                             onTap: () {
                               if (phoneNumberController.text.trim().isEmpty) {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   buildAppSnackBar(
+                                    key: 'error_message',
                                     bgColor: AppColors.errorRed,
                                     txtColor: AppColors.white,
                                     msg: 'Please enter your phone number',

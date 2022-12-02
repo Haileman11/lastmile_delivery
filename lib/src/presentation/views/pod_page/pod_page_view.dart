@@ -162,6 +162,7 @@ class PodPageView extends StatelessWidget {
                   }
                 },
                 child: Container(
+                  key: const Key('VERIFY_BUTTON'),
                   color: AppColors.appBlack,
                   margin: const EdgeInsets.symmetric(horizontal: 10.0),
                   height: 50.0,

@@ -46,6 +46,7 @@ class _HomePageViewState extends State<HomePageView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: const Key('HOME_PAGE'),
       appBar: AppBar(
         elevation: 0.0,
         backgroundColor: AppColors.appBlack,

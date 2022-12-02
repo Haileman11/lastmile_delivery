@@ -12,6 +12,7 @@ import 'package:lastmile_mobile/src/core/params/request_params.dart' as _i21;
 import 'package:lastmile_mobile/src/core/resources/failure.dart' as _i14;
 import 'package:lastmile_mobile/src/data/datasources/local/app_hive_service.dart'
     as _i8;
+import 'package:lastmile_mobile/src/data/models/driver.dart' as _i22;
 import 'package:lastmile_mobile/src/data/models/order.dart' as _i15;
 import 'package:lastmile_mobile/src/data/repositories/app_hive_repository.dart'
     as _i18;
@@ -1365,4 +1366,31 @@ class MockAuthRepoImpl extends _i1.Mock implements _i20.AuthRepoImpl {
           ),
         )),
       ) as _i11.Future<_i2.Either<String, String>>);
+  @override
+  _i11.Future<_i2.Either<_i14.Failure, _i22.DriverModel>> loginDriver(
+          String? phoneNumber) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #loginDriver,
+          [phoneNumber],
+        ),
+        returnValue:
+            _i11.Future<_i2.Either<_i14.Failure, _i22.DriverModel>>.value(
+                _FakeEither_0<_i14.Failure, _i22.DriverModel>(
+          this,
+          Invocation.method(
+            #loginDriver,
+            [phoneNumber],
+          ),
+        )),
+        returnValueForMissingStub:
+            _i11.Future<_i2.Either<_i14.Failure, _i22.DriverModel>>.value(
+                _FakeEither_0<_i14.Failure, _i22.DriverModel>(
+          this,
+          Invocation.method(
+            #loginDriver,
+            [phoneNumber],
+          ),
+        )),
+      ) as _i11.Future<_i2.Either<_i14.Failure, _i22.DriverModel>>);
 }

@@ -6,8 +6,10 @@ SnackBar buildAppSnackBar({
   required String msg,
   required Color txtColor,
   bool isFloating = true,
+  String key = '',
 }) {
   return SnackBar(
+    key: Key(key),
     content: Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [

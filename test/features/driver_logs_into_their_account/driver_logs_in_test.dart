@@ -19,44 +19,29 @@ void main() {
     await cleanUp(tester);
   }
   group('''Driver logs into their account''', () {
-    testWidgets('''Outline: Driver fails to login ('909525760', '', 'please fill in password')''', (tester) async {
-      try {
-        await bddSetUp(tester);
-        await theAppIsOnPage(tester, '/registration-page');
-        await iSee(tester, 'phone_number_field');
-        await iSee(tester, 'password_field');
-        await iEnterIntoInputField(tester, '909525760', 'phone_number_field');
-        await iEnterIntoInputField(tester, '', 'password_field');
-        await iTap(tester, 'LOGIN_BUTTON');
-        await iSee(tester, 'please fill in password');
-      } finally {
-        await bddTearDown(tester);
-      }
-    });
-    testWidgets('''Outline: Driver fails to login ('', 'helloWorld@101', 'please fill in phone number')''', (tester) async {
-      try {
-        await bddSetUp(tester);
-        await theAppIsOnPage(tester, '/registration-page');
-        await iSee(tester, 'phone_number_field');
-        await iSee(tester, 'password_field');
-        await iEnterIntoInputField(tester, '', 'phone_number_field');
-        await iEnterIntoInputField(tester, 'helloWorld@101', 'password_field');
-        await iTap(tester, 'LOGIN_BUTTON');
-        await iSee(tester, 'please fill in phone number');
-      } finally {
-        await bddTearDown(tester);
-      }
-    });
-    testWidgets('''Outline: Driver successfully logs in ('909525760', 'helloWorld@101')''', (tester) async {
+    testWidgets('''Outline: Driver fails to login ('', 'error_message')''', (tester) async {
       try {
         await bddSetUp(tester);
         await theAppIsOnPage(tester, '/login-page');
         await iSee(tester, 'phone_number_field');
-        await iSee(tester, 'password_field');
-        await iEnterIntoInputField(tester, '909525760', 'phone_number_field');
-        await iEnterIntoInputField(tester, 'helloWorld@101', 'password_field');
+        await iEnterIntoInputField(tester, '', 'phone_number_field');
         await iTap(tester, 'LOGIN_BUTTON');
-        await iSee(tester, 'VERIFICATION_PAGE_KEY');
+        await iSee(tester, 'error_message');
+      } finally {
+        await bddTearDown(tester);
+      }
+    });
+    testWidgets('''Outline: Driver successfully logs in ('909525760')''', (tester) async {
+      try {
+        await bddSetUp(tester);
+        await theAppIsOnPage(tester, '/login-page');
+        await iSee(tester, 'phone_number_field');
+        await iEnterIntoInputField(tester, '909525760', 'phone_number_field');
+        await iTap(tester, 'LOGIN_BUTTON');
+        await iSee(tester, 'POD_PAGE_KEY');
+        await iEnterIntoInputField(tester, '1234', 'PIN_INPUT');
+        await iTap(tester, 'VERIFY_BUTTON');
+        await iSee(tester, 'HOME_PAGE');
       } finally {
         await bddTearDown(tester);
       }

@@ -15,6 +15,7 @@ class SigningInPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: const Key('SIGNING_IN_PAGE'),
       backgroundColor: AppColors.white,
       body: BlocListener<LoginBloc, LoginState>(
         listener: (context, state) {

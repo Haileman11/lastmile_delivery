@@ -149,7 +149,7 @@ class LastMile extends StatelessWidget {
                 ),
               );
             },
-            AppRoutes.loginPageRoute: (context) => LoginPageView(),
+            AppRoutes.loginPageRoute: (context) => const LoginPageView(),
             AppRoutes.registrationPage: (context) => MultiBlocProvider(
                   providers: [
                     BlocProvider<ImagePickCubit>(
