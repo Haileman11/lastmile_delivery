@@ -28,7 +28,7 @@ class AppNotificationServiceImpl {
     // make sure you call `initializeApp` before using other Firebase services.
     await Firebase.initializeApp();
     final data = message.data;
-    Order order = Order.fromJson(data['order']);
+    OrderModel order = OrderModel.fromJson(data['order']);
     showNotificationWithActions(order);
     print("Handling a background message: ${message.messageId}");
   }
@@ -44,7 +44,7 @@ class AppNotificationServiceImpl {
       // If `onMessage` is triggered with a notification, construct our own
       // local notification to show to users using the created channel.
 
-      Order order = Order.fromJson(data['order']);
+      OrderModel order = OrderModel.fromJson(data['order']);
       showNotificationWithActions(order);
     });
     FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
@@ -67,7 +67,7 @@ class AppNotificationServiceImpl {
   static void onDidReceiveNotificationResponse(
       NotificationResponse notificationResponse) async {
     final String? payload = notificationResponse.payload;
-    final Order order = Order.fromJson(payload!);
+    final OrderModel order = OrderModel.fromJson(payload!);
     final orderBloc = injector<OrderBloc>();
     if (notificationResponse.actionId == accept_request_action_id) {
       orderBloc.add(OrderAcceptedEvent(order));
@@ -84,7 +84,7 @@ class AppNotificationServiceImpl {
       NotificationResponse notificationResponse) async {
     // handle action
     final String? payload = notificationResponse.payload;
-    final Order order = Order.fromJson(payload!);
+    final OrderModel order = OrderModel.fromJson(payload!);
     await initializeDependencies();
     final orderBloc = GetIt.instance<OrderBloc>();
     if (notificationResponse.actionId == accept_request_action_id) {
@@ -97,7 +97,7 @@ class AppNotificationServiceImpl {
     }
   }
 
-  static Future<void> showNotificationWithActions(Order order) async {
+  static Future<void> showNotificationWithActions(OrderModel order) async {
     AndroidNotificationDetails androidNotificationDetails =
         const AndroidNotificationDetails(
       'order_request',

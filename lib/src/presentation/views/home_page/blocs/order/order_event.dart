@@ -8,19 +8,19 @@ abstract class OrderEvent extends Equatable {
 }
 
 class OrderAssignedEvent extends OrderEvent {
-  final Order order;
+  final OrderModel order;
 
   const OrderAssignedEvent(this.order);
 }
 
 class OrderAcceptedEvent extends OrderEvent {
-  final Order order;
+  final OrderModel order;
 
   const OrderAcceptedEvent(this.order);
 }
 
 class OrderRejectedEvent extends OrderEvent {
-  final Order order;
+  final OrderModel order;
 
   const OrderRejectedEvent(this.order);
 }
@@ -30,31 +30,31 @@ class OrderCancelledEvent extends OrderEvent {
 }
 
 class OrderHeadingForPickupEvent extends OrderEvent {
-  final Order order;
-  final Task currentTask;
+  final OrderModel order;
+  final TaskModel currentTask;
   const OrderHeadingForPickupEvent(this.order, this.currentTask);
 }
 
 class OrderHeadingForDropoffEvent extends OrderEvent {
-  final Order order;
-  final Task currentTask;
+  final OrderModel order;
+  final TaskModel currentTask;
   const OrderHeadingForDropoffEvent(this.order, this.currentTask);
 }
 
 class OrderDropoffCompleteEvent extends OrderEvent {
-  final Order order;
-  final Task task;
+  final OrderModel order;
+  final TaskModel task;
   const OrderDropoffCompleteEvent(this.order, this.task);
 }
 
 class OrderPickUpCompleteEvent extends OrderEvent {
-  final Order order;
-  final Task task;
+  final OrderModel order;
+  final TaskModel task;
   const OrderPickUpCompleteEvent(this.order, this.task);
 }
 
 class OrderCompleteEvent extends OrderEvent {
-  final Order order;
+  final OrderModel order;
   const OrderCompleteEvent(this.order);
 }
 

@@ -5,7 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:lastmile_mobile/src/config/routes/app_routes.dart';
 import 'package:lastmile_mobile/src/config/themes/app_themes.dart';
+import 'package:lastmile_mobile/src/core/utils/navigations.dart';
 import 'package:lastmile_mobile/src/presentation/common/app_dialog.dart';
 import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/polylines/polyline_bloc.dart';
 import 'package:lastmile_mobile/src/presentation/views/home_page/widgets/confirm_delivery.dart';
@@ -48,7 +50,7 @@ class _HomePageViewState extends State<HomePageView> {
   void _handleMessage(RemoteMessage message) {
     // if (message.data) {
     log("message ${message.data}");
-    Order order = Order.fromJson(message.data['order']);
+    OrderModel order = OrderModel.fromJson(message.data['order']);
     BlocProvider.of<OrderBloc>(context).add(OrderAssignedEvent(order));
     // }
   }
@@ -73,13 +75,21 @@ class _HomePageViewState extends State<HomePageView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: const Key('HOME_PAGE'),
       appBar: AppBar(
-        leading: Icon(
-          PhosphorIcons.list_light,
-          color: AppColors.white,
-        ),
         elevation: 0.0,
         backgroundColor: AppColors.appBlack,
+        leading: GestureDetector(
+          key: Key('MENU_BUTTON'),
+          onTap: () {
+            NavigationService.instance
+                .navigateTo(AppRoutes.menuPageRoute, context);
+          },
+          child: Icon(
+            PhosphorIcons.list_light,
+            color: AppColors.white,
+          ),
+        ),
         title: Text(
           'Delivery',
           style: TextStyle(
@@ -109,7 +119,7 @@ class _HomePageViewState extends State<HomePageView> {
                   SnackBar(
                     backgroundColor: AppColors.appBlack,
                     content: Text(
-                      'Order cancelled',
+                      'OrderModel cancelled',
                       style: TextStyle(color: AppColors.white),
                     ),
                   ),
@@ -131,7 +141,7 @@ class _HomePageViewState extends State<HomePageView> {
                       context: context,
                       builder: (_) {
                         return AppDialog(
-                          message: 'Order completed successfully',
+                          message: 'OrderModel completed successfully',
                           onTap: () {
                             BlocProvider.of<OrderBloc>(context)
                                 .add(OrderCompleteEvent(state.order!));

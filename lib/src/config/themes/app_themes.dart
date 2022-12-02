@@ -23,6 +23,7 @@ class AppColors {
   static Color lightGrey = const Color(0Xffdfe0e5);
   static Color transparent = Colors.transparent;
   static Color errorRed = Colors.redAccent;
+  static Color txtGrey = const Color(0xffa5a6ab);
 }
 
 class AppFontSizes {
@@ -54,6 +55,7 @@ class AppPadding {
   static const double padding_26 = 26;
   static const double padding_28 = 28;
   static const double padding_32 = 32;
+  static const double padding_40 = 40;
   static const double padding_12 = 12;
   static const double padding_14 = 14;
   static const double padding_4 = 4;

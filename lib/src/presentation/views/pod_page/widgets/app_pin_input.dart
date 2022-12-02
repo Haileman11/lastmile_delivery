@@ -21,6 +21,7 @@ class AppPinInput extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: AppPadding.padding_16),
       child: PinPut(
+        key: const Key('PIN_INPUT'),
         eachFieldWidth: 50.0,
         eachFieldHeight: 50.0,
         eachFieldMargin: const EdgeInsets.symmetric(horizontal: 7.0),

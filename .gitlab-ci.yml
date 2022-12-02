@@ -28,7 +28,7 @@ android:debug:
     #- 2f-flutter-ssh
   script:
     - flutter doctor --android-licenses
-    - flutter build apk --debug
+    # - flutter build apk --debug
   artifacts:
     paths:
       - "**/**/**/**/**/**/*.apk"
@@ -45,7 +45,7 @@ android:release:
     #- 2f-flutter-ssh
   script:
     - flutter doctor --android-licenses
-    - flutter build apk --release
+    # - flutter build apk --release
   artifacts:
     paths:
       - "**/**/**/**/**/**/*.apk"

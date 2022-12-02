@@ -11,12 +11,12 @@ import '../../../../data/models/task.dart';
 import '../blocs/task/task_bloc.dart';
 
 class HeadingToDropoff extends StatelessWidget {
-  final Task task;
+  final TaskModel task;
   const HeadingToDropoff({required this.task, super.key});
 
   @override
   Widget build(BuildContext context) {
-    final Order order = BlocProvider.of<OrderBloc>(context).state.order!;
+    final OrderModel order = BlocProvider.of<OrderBloc>(context).state.order!;
     return SafeArea(
       child: Container(
         key: const Key('HEADING_TO_DROPOFF'),

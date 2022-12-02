@@ -43,6 +43,9 @@ dependencies:
   # dartz for managing data state
   dartz: ^0.10.1
 
+  #image picker
+  image_picker: ^0.8.5+3
+
   # colors, ui, icons, utils, fonts and more...
   cupertino_icons: ^1.0.2
   shimmer:
@@ -59,7 +62,9 @@ dependencies:
   flutter_local_notifications: ^12.0.3+1
   firebase_messaging: ^14.1.2
   firebase_core: ^2.3.0
-  
+  country_code_picker: ^2.0.2
+  lottie: ^2.0.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -82,3 +87,4 @@ flutter:
   # Assets
   assets:
     - assets/images/
+    - assets/lottie/
