@@ -28,6 +28,17 @@ class MapUtils {
   static LatLng latLngFromMap(Map<String, dynamic> json) {
     return LatLng(json['lat'], json['lng']);
   }
+
+  static Object latLngToMap(LatLng latLng) {
+    return {'lat': latLng.latitude, 'lng': latLng.longitude};
+  }
+
+  static Object latLngBoundToMap(LatLngBounds latLngBounds) {
+    return {
+      'southwest': latLngToMap(latLngBounds.southwest),
+      'northeast': latLngToMap(latLngBounds.northeast)
+    };
+  }
 }
 
 SystemUiOverlayStyle getStatusBarStyle() {

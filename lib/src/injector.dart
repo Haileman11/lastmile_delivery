@@ -10,6 +10,7 @@ import 'package:lastmile_mobile/src/data/repositories/base_location_repo_impl.da
 import 'package:lastmile_mobile/src/data/repositories/image_upload_repo_impl.dart';
 import 'package:lastmile_mobile/src/data/repositories/order_history_repo_impl.dart';
 import 'package:lastmile_mobile/src/domain/repositories/app_hive_repository.dart';
+import 'package:lastmile_mobile/src/data/repositories/notification.dart';
 import 'package:lastmile_mobile/src/domain/repositories/auth_repository.dart';
 import 'package:lastmile_mobile/src/domain/repositories/base_geolocation_repo.dart';
 import 'package:lastmile_mobile/src/domain/repositories/image_upload_repository.dart';
@@ -28,6 +29,7 @@ import 'package:socket_io_client/socket_io_client.dart';
 import 'data/datasources/local/app_hive_service.dart';
 import 'data/models/driver.dart';
 import 'presentation/views/home_page/blocs/order_cancellation/order_cancellation_bloc.dart';
+import 'domain/repositories/notification.dart';
 import 'presentation/views/home_page/blocs/polylines/polyline_bloc.dart';
 import 'presentation/views/home_page/blocs/task/task_bloc.dart';
 import 'presentation/views/order_history/blocs/order_history/order_history_bloc.dart';

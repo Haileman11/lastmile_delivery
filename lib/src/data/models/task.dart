@@ -48,7 +48,7 @@ class TaskModel {
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'id': id,
-      'location': location.toJson(),
+      'location': MapUtils.latLngToMap(location),
       'address': address,
       'responsiblePersonName': responsiblePersonName,
       'responsiblePersonPhone': responsiblePersonPhone,
