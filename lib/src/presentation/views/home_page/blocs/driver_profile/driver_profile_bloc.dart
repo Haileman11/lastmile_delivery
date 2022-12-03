@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:lastmile_mobile/src/core/utils/constants.dart';
 import 'package:lastmile_mobile/src/data/datasources/local/app_hive_service.dart';
 import 'package:lastmile_mobile/src/data/models/driver.dart';
@@ -31,8 +32,11 @@ class DriverProfileBloc extends Bloc<DriverProfileEvent, DriverProfileState> {
       },
     );
     on<UpdateDriverAvailabilityEvent>((event, emit) async {
-      socket.emit('driver_availability',
-          {"driver_id": driverId, "visibility": event.isAvailable});
+      socket.emit('driver_availability', {
+        "driver_id": driverId,
+        "visibility": event.isAvailable,
+        "fcmToken": await FirebaseMessaging.instance.getToken()
+      });
     });
     on<UpdateDriverProfileEvent>((event, emit) async {
       /// ADD DRIVER MODEL TO HIVE

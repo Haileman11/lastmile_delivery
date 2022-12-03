@@ -24,7 +24,7 @@ class Route {
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'encodedPolyline': encodedPolyline,
-      'bounds': bounds.toJson(),
+      'bounds': MapUtils.latLngBoundToMap(bounds),
     };
   }
 
