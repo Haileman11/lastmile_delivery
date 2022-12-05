@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:lastmile_mobile/src/config/themes/app_themes.dart';
-import 'package:lastmile_mobile/src/presentation/views/profile_page/widgets/log_out_button.dart';
 import 'package:lastmile_mobile/src/presentation/views/profile_page/widgets/profile_menu_items.dart';
 
 import 'widgets/profile_info.dart';
@@ -32,8 +31,6 @@ class ProfilePageView extends StatelessWidget {
         children: const [
           ProfileInfo(),
           ProfileMenuItems(),
-          Expanded(child: SizedBox()),
-          LogOutButton(),
         ],
       ),
     );

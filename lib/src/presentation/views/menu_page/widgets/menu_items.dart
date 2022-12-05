@@ -27,7 +27,10 @@ class MenuItems extends StatelessWidget {
           key: 'PROFILE_BUTTON',
           'assets/images/menu_item_profile.png',
           'Profile',
-          () {},
+          () {
+            NavigationService.instance
+                .navigateTo(AppRoutes.profilePageRoute, context);
+          },
         ),
         const SizedBox(height: 15.0),
         _buildMenuItem(

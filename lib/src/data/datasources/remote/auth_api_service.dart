@@ -6,6 +6,7 @@ abstract class AuthApiService {
   Future<String> registerDriver(RegisterDriverRequestParams params);
   Future<DriverModel> loginDriver(String phoneNumber);
   Future<String> verifyPhoneNumber(String code);
+  Future<String> changePassword(String oldPassword, String newPassword);
 }
 
 class AuthApiServiceImpl implements AuthApiService {
@@ -65,5 +66,18 @@ class AuthApiServiceImpl implements AuthApiService {
       );
     });
     return result!;
+  }
+
+  @override
+  Future<String> changePassword(String oldPassword, String newPassword) async {
+    // try {
+    //   final result =
+    //       await _dio.post('/path', data: {'oldPassword': oldPassword, 'newPassword': newPassword});
+    //   return result.data;
+    // } on DioError catch (e) {
+    //   print(e);
+    //   throw ServerFailure();
+    // }
+    return 'done';
   }
 }

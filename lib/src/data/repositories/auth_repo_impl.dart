@@ -46,4 +46,16 @@ class AuthRepoImpl implements AuthRepository {
       return Left(ServerFailure());
     }
   }
+
+  @override
+  Future<Either<Failure, String>> changePassword(
+      String oldPassword, String newPassword) async {
+    try {
+      final String result =
+          await _authApiService.changePassword(oldPassword, newPassword);
+      return Right(result);
+    } on DioError catch (e) {
+      return Left(ServerFailure());
+    }
+  }
 }

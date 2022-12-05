@@ -8,4 +8,7 @@ abstract class AuthRepository {
       RegisterDriverRequestParams params);
   Future<Either<Failure, DriverModel>> loginDriver(String phoneNumber);
   Future<Either<String, String>> verifyPhoneNumber(String code);
+
+  Future<Either<Failure, String>> changePassword(
+      String oldPassword, String newPassword);
 }

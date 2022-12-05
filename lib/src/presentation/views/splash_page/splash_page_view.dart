@@ -29,7 +29,7 @@ class _SplashPageViewState extends State<SplashPageView> {
     bool isUserLoggedIn = await AuthenticationUtils.isUserLoggedIn();
     FlutterNativeSplash.remove();
     if (isUserLoggedIn) {
-      Navigator.popAndPushNamed(context, AppRoutes.profilePageRoute);
+      Navigator.popAndPushNamed(context, AppRoutes.homePageRoute);
     } else {
       Navigator.popAndPushNamed(context, AppRoutes.loginPageRoute);
     }

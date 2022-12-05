@@ -18,4 +18,5 @@ class AppRoutes {
   static const verificationPageRoute = '/verification-page';
   static const signingInPageRoute = '/signing-in-page';
   static const profilePageRoute = '/profile-page';
+  static const changePasswordPageRoute = '/change-password-page';
 }

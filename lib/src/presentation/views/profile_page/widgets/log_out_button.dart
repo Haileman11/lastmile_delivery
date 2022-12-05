@@ -8,7 +8,7 @@ class LogOutButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(10.0),
-      margin: const EdgeInsets.all(10.0),
+      //margin: const EdgeInsets.all(10.0),
       decoration: BoxDecoration(
         border: Border.all(color: AppColors.appBlack),
         borderRadius: const BorderRadius.all(Radius.circular(5.0)),
