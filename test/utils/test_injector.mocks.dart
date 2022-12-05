@@ -1430,4 +1430,56 @@ class MockAuthRepoImpl extends _i1.Mock implements _i20.AuthRepoImpl {
           ),
         )),
       ) as _i11.Future<_i2.Either<_i14.Failure, String>>);
+  @override
+  _i11.Future<_i2.Either<_i14.Failure, String>> sendResetLink(
+          String? driverId) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #sendResetLink,
+          [driverId],
+        ),
+        returnValue: _i11.Future<_i2.Either<_i14.Failure, String>>.value(
+            _FakeEither_0<_i14.Failure, String>(
+          this,
+          Invocation.method(
+            #sendResetLink,
+            [driverId],
+          ),
+        )),
+        returnValueForMissingStub:
+            _i11.Future<_i2.Either<_i14.Failure, String>>.value(
+                _FakeEither_0<_i14.Failure, String>(
+          this,
+          Invocation.method(
+            #sendResetLink,
+            [driverId],
+          ),
+        )),
+      ) as _i11.Future<_i2.Either<_i14.Failure, String>>);
+  @override
+  _i11.Future<_i2.Either<_i14.Failure, String>> resetPassword(
+          String? newPassword) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #resetPassword,
+          [newPassword],
+        ),
+        returnValue: _i11.Future<_i2.Either<_i14.Failure, String>>.value(
+            _FakeEither_0<_i14.Failure, String>(
+          this,
+          Invocation.method(
+            #resetPassword,
+            [newPassword],
+          ),
+        )),
+        returnValueForMissingStub:
+            _i11.Future<_i2.Either<_i14.Failure, String>>.value(
+                _FakeEither_0<_i14.Failure, String>(
+          this,
+          Invocation.method(
+            #resetPassword,
+            [newPassword],
+          ),
+        )),
+      ) as _i11.Future<_i2.Either<_i14.Failure, String>>);
 }

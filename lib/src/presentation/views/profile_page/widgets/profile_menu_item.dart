@@ -6,10 +6,12 @@ class ProfileMenuItem extends StatelessWidget {
     Key? key,
     required this.title,
     required this.onTap,
+    required this.icon,
   }) : super(key: key);
 
   final String title;
   final VoidCallback onTap;
+  final IconData icon;
 
   @override
   Widget build(BuildContext context) {
@@ -27,14 +29,14 @@ class ProfileMenuItem extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Row(
-              children: const [
-                Icon(Icons.person),
-                SizedBox(
+              children: [
+                Icon(icon),
+                const SizedBox(
                   width: 20.0,
                 ),
                 Text(
-                  'Change Password',
-                  style: TextStyle(
+                  title,
+                  style: const TextStyle(
                     fontWeight: FontWeight.w600,
                     fontSize: AppFontSizes.font_size_16,
                   ),

@@ -22,13 +22,14 @@ class DriverModelAdapter extends TypeAdapter<DriverModel> {
       phoneNumber: fields[2] as String,
       isAvailable: fields[3] as bool,
       status: fields[4] as String,
+      email: fields[5] as String,
     );
   }
 
   @override
   void write(BinaryWriter writer, DriverModel obj) {
     writer
-      ..writeByte(5)
+      ..writeByte(6)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -38,7 +39,9 @@ class DriverModelAdapter extends TypeAdapter<DriverModel> {
       ..writeByte(3)
       ..write(obj.isAvailable)
       ..writeByte(4)
-      ..write(obj.status);
+      ..write(obj.status)
+      ..writeByte(5)
+      ..write(obj.email);
   }
 
   @override

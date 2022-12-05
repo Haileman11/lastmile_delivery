@@ -5,7 +5,6 @@ import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:lastmile_mobile/src/config/routes/app_routes.dart';
 import 'package:lastmile_mobile/src/config/themes/app_themes.dart';
 import 'package:lastmile_mobile/src/core/utils/constants.dart';
-import 'package:lastmile_mobile/src/domain/repositories/notification.dart';
 import 'package:lastmile_mobile/src/injector.dart';
 import 'package:lastmile_mobile/src/presentation/views/account_pending_page/account_pending_page.dart';
 import 'package:lastmile_mobile/src/presentation/views/change_password_page/blocs/change_password/change_password_bloc.dart';
@@ -29,15 +28,18 @@ import 'package:lastmile_mobile/src/presentation/views/registration_page/bloc/bl
 import 'package:lastmile_mobile/src/presentation/views/registration_page/bloc/blocs/register/register_bloc.dart';
 import 'package:lastmile_mobile/src/presentation/views/registration_page/bloc/blocs/verify_phone/verify_phone_bloc.dart';
 import 'package:lastmile_mobile/src/presentation/views/registration_page/registration_page_view.dart';
+import 'package:lastmile_mobile/src/presentation/views/reset_password_page/blocs/send_reset_link/send_reset_link_bloc.dart';
+import 'package:lastmile_mobile/src/presentation/views/reset_password_page/reset_password_page.dart';
+import 'package:lastmile_mobile/src/presentation/views/reset_password_page/widgets/send_reset_link_view.dart';
 import 'package:lastmile_mobile/src/presentation/views/signing_in_page/signing_in_page.dart';
 import 'package:lastmile_mobile/src/presentation/views/splash_page/splash_page_view.dart';
 import 'package:lastmile_mobile/src/presentation/views/waiting_for_driver_page/waiting_for_driver_page.dart';
 
 import 'src/core/utils/scroll_behaviour.dart';
-import 'src/data/models/order.dart';
 import 'src/data/datasources/local/app_hive_service.dart';
-import 'src/presentation/views/home_page/blocs/order_cancellation/order_cancellation_bloc.dart';
+import 'src/data/models/driver.dart';
 import 'src/data/repositories/notification.dart';
+import 'src/presentation/views/home_page/blocs/order_cancellation/order_cancellation_bloc.dart';
 import 'src/presentation/views/home_page/blocs/task/task_bloc.dart';
 import 'src/presentation/views/order_history/blocs/order_history/order_history_bloc.dart';
 import 'src/presentation/views/registration_page/bloc/cubits/image_pick_cubit.dart';
@@ -121,6 +123,15 @@ class LastMile extends StatelessWidget {
             AppRoutes.splashScreenRoute: (context) => const SplashPageView(),
             AppRoutes.menuPageRoute: (context) => const MenuPage(),
             AppRoutes.profilePageRoute: (context) => const ProfilePageView(),
+            AppRoutes.resetPasswordPageRoute: (context) =>
+                const ResetPasswordPageView(),
+            AppRoutes.sendResetLinkPageRoute: (context) {
+              final driverId = injector<DriverModel>().id;
+              return BlocProvider<SendResetLinkBloc>(
+                create: (context) => injector()..add(SendResetLink(driverId)),
+                child: const SendResetLinkView(),
+              );
+            },
             AppRoutes.changePasswordPageRoute: (context) =>
                 BlocProvider<ChangePasswordBloc>(
                   create: (context) => injector(),

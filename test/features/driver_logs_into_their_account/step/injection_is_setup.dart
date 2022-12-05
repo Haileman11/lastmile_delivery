@@ -22,6 +22,7 @@ Future<void> injectionIsSetup(WidgetTester tester) async {
         phoneNumber: "phoneNumber",
         isAvailable: false,
         status: "status",
+        email: "abc@example.com",
       );
     });
     return Right(driverModel!);

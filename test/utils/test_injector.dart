@@ -53,6 +53,7 @@ Future<void> initializeTestDependencies() async {
           name: 'Abebaw Butako',
           status: 'status',
           phoneNumber: '0909525760',
+          email: "abc@example.com",
         ))
 
     /// REPOSITORY DEPENDENCIES

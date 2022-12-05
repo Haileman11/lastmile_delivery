@@ -7,6 +7,8 @@ abstract class AuthApiService {
   Future<DriverModel> loginDriver(String phoneNumber);
   Future<String> verifyPhoneNumber(String code);
   Future<String> changePassword(String oldPassword, String newPassword);
+  Future<String> sendResetLink(String driverId);
+  Future<String> resetPassword(String newPassword);
 }
 
 class AuthApiServiceImpl implements AuthApiService {
@@ -63,6 +65,7 @@ class AuthApiServiceImpl implements AuthApiService {
         phoneNumber: "phoneNumber",
         isAvailable: false,
         status: "status",
+        email: "abc@example.com",
       );
     });
     return result!;
@@ -79,5 +82,37 @@ class AuthApiServiceImpl implements AuthApiService {
     //   throw ServerFailure();
     // }
     return 'done';
+  }
+
+  @override
+  Future<String> sendResetLink(String driverId) async {
+    // try {
+    //   final result = await _dio.post('/path', data: {'driverId', driverId});
+    //   return result.data;
+    // } on DioError catch(e) {
+    //   print(e);
+    //   throw ServerFailure();
+    // }
+    String result = '';
+    await Future.delayed(Duration(seconds: 3), () {
+      result = 'done';
+    });
+    return result;
+  }
+
+  @override
+  Future<String> resetPassword(String newPassword) async {
+    // try {
+    //   final result = await _dio.post('/path', data: {'new_password', newPassword});
+    //   return result.data;
+    // } on DioError catch(e) {
+    //   print(e);
+    //   throw ServerFailure();
+    // }
+    String result = '';
+    await Future.delayed(Duration(seconds: 3), () {
+      result = 'done';
+    });
+    return result;
   }
 }
