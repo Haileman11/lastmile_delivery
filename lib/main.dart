@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -5,7 +7,6 @@ import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:lastmile_mobile/src/config/routes/app_routes.dart';
 import 'package:lastmile_mobile/src/config/themes/app_themes.dart';
 import 'package:lastmile_mobile/src/core/utils/constants.dart';
-import 'package:lastmile_mobile/src/domain/repositories/notification.dart';
 import 'package:lastmile_mobile/src/injector.dart';
 import 'package:lastmile_mobile/src/presentation/views/account_pending_page/account_pending_page.dart';
 import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/driver_location/driver_location_bloc.dart';
@@ -31,13 +32,14 @@ import 'package:lastmile_mobile/src/presentation/views/splash_page/splash_page_v
 import 'package:lastmile_mobile/src/presentation/views/waiting_for_driver_page/waiting_for_driver_page.dart';
 
 import 'src/core/utils/scroll_behaviour.dart';
-import 'src/data/models/order.dart';
 import 'src/data/datasources/local/app_hive_service.dart';
 import 'src/presentation/views/home_page/blocs/order_cancellation/order_cancellation_bloc.dart';
 import 'src/data/repositories/notification.dart';
 import 'src/presentation/views/home_page/blocs/task/task_bloc.dart';
 import 'src/presentation/views/order_history/blocs/order_history/order_history_bloc.dart';
 import 'src/presentation/views/registration_page/bloc/cubits/image_pick_cubit.dart';
+import 'src/presentation/views/transaction_history/bloc/transaction_history_bloc.dart';
+import 'src/presentation/views/transaction_history/pages/transaction_history_page.dart';
 
 Future<void> main() async {
   WidgetsBinding binding = WidgetsFlutterBinding.ensureInitialized();
@@ -49,8 +51,10 @@ Future<void> main() async {
 
   ///INIT HIVE BOXES
   await AppHiveService.instance.initHiveBoxes();
-  await AppNotificationServiceImpl.setup();
-  print(await FirebaseMessaging.instance.getToken());
+  if (Platform.isAndroid) {
+    await AppNotificationServiceImpl.setup();
+    print(await FirebaseMessaging.instance.getToken());
+  }
   runApp(const LastMile());
 }
 
@@ -125,6 +129,12 @@ class LastMile extends StatelessWidget {
                 BlocProvider<OrderHistoryBloc>(
                   create: (context) => injector()..add(const GetOrderHistory()),
                   child: const OrderHistoryPageView(),
+                ),
+            AppRoutes.transactionHistoryPageRoute: (context) =>
+                BlocProvider<TransactionHistoryBloc>(
+                  create: (context) =>
+                      injector()..add(const GetTransactionHistoryEvent()),
+                  child: const TransactionHistoryPageView(),
                 ),
             AppRoutes.waitingForDriverPageRoute: (context) {
               final args =
