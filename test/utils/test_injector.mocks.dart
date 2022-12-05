@@ -1393,4 +1393,41 @@ class MockAuthRepoImpl extends _i1.Mock implements _i20.AuthRepoImpl {
           ),
         )),
       ) as _i11.Future<_i2.Either<_i14.Failure, _i22.DriverModel>>);
+  @override
+  _i11.Future<_i2.Either<_i14.Failure, String>> changePassword(
+    String? oldPassword,
+    String? newPassword,
+  ) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #changePassword,
+          [
+            oldPassword,
+            newPassword,
+          ],
+        ),
+        returnValue: _i11.Future<_i2.Either<_i14.Failure, String>>.value(
+            _FakeEither_0<_i14.Failure, String>(
+          this,
+          Invocation.method(
+            #changePassword,
+            [
+              oldPassword,
+              newPassword,
+            ],
+          ),
+        )),
+        returnValueForMissingStub:
+            _i11.Future<_i2.Either<_i14.Failure, String>>.value(
+                _FakeEither_0<_i14.Failure, String>(
+          this,
+          Invocation.method(
+            #changePassword,
+            [
+              oldPassword,
+              newPassword,
+            ],
+          ),
+        )),
+      ) as _i11.Future<_i2.Either<_i14.Failure, String>>);
 }

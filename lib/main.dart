@@ -8,6 +8,8 @@ import 'package:lastmile_mobile/src/core/utils/constants.dart';
 import 'package:lastmile_mobile/src/domain/repositories/notification.dart';
 import 'package:lastmile_mobile/src/injector.dart';
 import 'package:lastmile_mobile/src/presentation/views/account_pending_page/account_pending_page.dart';
+import 'package:lastmile_mobile/src/presentation/views/change_password_page/blocs/change_password/change_password_bloc.dart';
+import 'package:lastmile_mobile/src/presentation/views/change_password_page/change_password_page_view.dart';
 import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/driver_location/driver_location_bloc.dart';
 import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/driver_profile/driver_profile_bloc.dart';
 import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/order/order_bloc.dart';
@@ -22,6 +24,7 @@ import 'package:lastmile_mobile/src/presentation/views/menu_page/menu_widget.dar
 import 'package:lastmile_mobile/src/presentation/views/order_detail_page/order_detail_view.dart';
 import 'package:lastmile_mobile/src/presentation/views/order_history/order_history_page_view.dart';
 import 'package:lastmile_mobile/src/presentation/views/pod_page/pod_page_view.dart';
+import 'package:lastmile_mobile/src/presentation/views/profile_page/profile_page_view.dart';
 import 'package:lastmile_mobile/src/presentation/views/registration_page/bloc/blocs/image_upload/image_upload_bloc.dart';
 import 'package:lastmile_mobile/src/presentation/views/registration_page/bloc/blocs/register/register_bloc.dart';
 import 'package:lastmile_mobile/src/presentation/views/registration_page/bloc/blocs/verify_phone/verify_phone_bloc.dart';
@@ -117,6 +120,12 @@ class LastMile extends StatelessWidget {
             AppRoutes.homePageRoute: (context) => HomePageView(),
             AppRoutes.splashScreenRoute: (context) => const SplashPageView(),
             AppRoutes.menuPageRoute: (context) => const MenuPage(),
+            AppRoutes.profilePageRoute: (context) => const ProfilePageView(),
+            AppRoutes.changePasswordPageRoute: (context) =>
+                BlocProvider<ChangePasswordBloc>(
+                  create: (context) => injector(),
+                  child: const ChangePasswordView(),
+                ),
             AppRoutes.orderDetailPageRoute: (context) =>
                 const OrderDetailView(),
             AppRoutes.accountPendingPage: (context) =>

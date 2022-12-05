@@ -9,9 +9,6 @@ class MenuPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-      statusBarColor: AppColors.backgroundGrey,
-    ));
     return AnnotatedRegion(
       value: SystemUiOverlayStyle.light,
       child: Scaffold(
@@ -41,6 +38,7 @@ class MenuPage extends StatelessWidget {
             const Padding(
               padding: EdgeInsets.symmetric(
                 horizontal: AppPadding.padding_14,
+                vertical: AppPadding.padding_14,
               ),
               child: DriverMenuProfile(),
             ),
