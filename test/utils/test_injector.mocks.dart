@@ -3,27 +3,32 @@
 // Do not manually edit this file.
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i11;
+import 'dart:async' as _i12;
 
-import 'package:bloc/bloc.dart' as _i16;
+import 'package:bloc/bloc.dart' as _i17;
 import 'package:dartz/dartz.dart' as _i2;
-import 'package:geolocator/geolocator.dart' as _i12;
-import 'package:lastmile_mobile/src/core/params/request_params.dart' as _i21;
-import 'package:lastmile_mobile/src/core/resources/failure.dart' as _i14;
+import 'package:geolocator/geolocator.dart' as _i13;
+import 'package:lastmile_mobile/src/core/params/request_params.dart' as _i22;
+import 'package:lastmile_mobile/src/core/resources/failure.dart' as _i15;
 import 'package:lastmile_mobile/src/data/datasources/local/app_hive_service.dart'
     as _i8;
-import 'package:lastmile_mobile/src/data/models/driver.dart' as _i22;
-import 'package:lastmile_mobile/src/data/models/order.dart' as _i15;
-import 'package:lastmile_mobile/src/data/repositories/app_hive_repository.dart'
-    as _i18;
-import 'package:lastmile_mobile/src/data/repositories/auth_repo_impl.dart'
-    as _i20;
-import 'package:lastmile_mobile/src/data/repositories/base_location_repo_impl.dart'
+import 'package:lastmile_mobile/src/data/datasources/remote/transaction_history_datasource.dart'
     as _i10;
-import 'package:lastmile_mobile/src/data/repositories/image_upload_repo_impl.dart'
+import 'package:lastmile_mobile/src/data/models/driver.dart' as _i23;
+import 'package:lastmile_mobile/src/data/models/order.dart' as _i16;
+import 'package:lastmile_mobile/src/data/models/transaction.dart' as _i25;
+import 'package:lastmile_mobile/src/data/repositories/app_hive_repository.dart'
     as _i19;
+import 'package:lastmile_mobile/src/data/repositories/auth_repo_impl.dart'
+    as _i21;
+import 'package:lastmile_mobile/src/data/repositories/base_location_repo_impl.dart'
+    as _i11;
+import 'package:lastmile_mobile/src/data/repositories/image_upload_repo_impl.dart'
+    as _i20;
 import 'package:lastmile_mobile/src/data/repositories/order_history_repo_impl.dart'
-    as _i13;
+    as _i14;
+import 'package:lastmile_mobile/src/data/repositories/transaction_history_repository_impl.dart'
+    as _i24;
 import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/driver_location/driver_location_bloc.dart'
     as _i3;
 import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/socket/socket_bloc.dart'
@@ -35,7 +40,7 @@ import 'package:lastmile_mobile/src/presentation/views/registration_page/bloc/bl
 import 'package:mockito/mockito.dart' as _i1;
 import 'package:socket_io_client/socket_io_client.dart' as _i5;
 import 'package:socket_io_client/src/manager.dart' as _i4;
-import 'package:socket_io_common/src/util/event_emitter.dart' as _i17;
+import 'package:socket_io_common/src/util/event_emitter.dart' as _i18;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values
@@ -132,39 +137,50 @@ class _FakeImageUploadState_7 extends _i1.SmartFake
         );
 }
 
+class _FakeTransactionHistoryDatasource_8 extends _i1.SmartFake
+    implements _i10.TransactionHistoryDatasource {
+  _FakeTransactionHistoryDatasource_8(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
 /// A class which mocks [GeoLocationRepositoryImpl].
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockGeoLocationRepositoryImpl extends _i1.Mock
-    implements _i10.GeoLocationRepositoryImpl {
+    implements _i11.GeoLocationRepositoryImpl {
   @override
-  _i11.Stream<_i12.Position?> getCurrentLocation() => (super.noSuchMethod(
+  _i12.Stream<_i13.Position?> getCurrentLocation() => (super.noSuchMethod(
         Invocation.method(
           #getCurrentLocation,
           [],
         ),
-        returnValue: _i11.Stream<_i12.Position?>.empty(),
-        returnValueForMissingStub: _i11.Stream<_i12.Position?>.empty(),
-      ) as _i11.Stream<_i12.Position?>);
+        returnValue: _i12.Stream<_i13.Position?>.empty(),
+        returnValueForMissingStub: _i12.Stream<_i13.Position?>.empty(),
+      ) as _i12.Stream<_i13.Position?>);
 }
 
 /// A class which mocks [OrderHistoryRepoImpl].
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockOrderHistoryRepoImpl extends _i1.Mock
-    implements _i13.OrderHistoryRepoImpl {
+    implements _i14.OrderHistoryRepoImpl {
   @override
-  _i11.Future<
+  _i12.Future<
       _i2
-          .Either<_i14.Failure, List<_i15.OrderModel>>> getOrderHistory() =>
+          .Either<_i15.Failure, List<_i16.OrderModel>>> getOrderHistory() =>
       (super.noSuchMethod(
         Invocation.method(
           #getOrderHistory,
           [],
         ),
         returnValue:
-            _i11.Future<_i2.Either<_i14.Failure, List<_i15.OrderModel>>>.value(
-                _FakeEither_0<_i14.Failure, List<_i15.OrderModel>>(
+            _i12.Future<_i2.Either<_i15.Failure, List<_i16.OrderModel>>>.value(
+                _FakeEither_0<_i15.Failure, List<_i16.OrderModel>>(
           this,
           Invocation.method(
             #getOrderHistory,
@@ -172,15 +188,15 @@ class MockOrderHistoryRepoImpl extends _i1.Mock
           ),
         )),
         returnValueForMissingStub:
-            _i11.Future<_i2.Either<_i14.Failure, List<_i15.OrderModel>>>.value(
-                _FakeEither_0<_i14.Failure, List<_i15.OrderModel>>(
+            _i12.Future<_i2.Either<_i15.Failure, List<_i16.OrderModel>>>.value(
+                _FakeEither_0<_i15.Failure, List<_i16.OrderModel>>(
           this,
           Invocation.method(
             #getOrderHistory,
             [],
           ),
         )),
-      ) as _i11.Future<_i2.Either<_i14.Failure, List<_i15.OrderModel>>>);
+      ) as _i12.Future<_i2.Either<_i15.Failure, List<_i16.OrderModel>>>);
 }
 
 /// A class which mocks [DriverLocationBloc].
@@ -201,11 +217,11 @@ class MockDriverLocationBloc extends _i1.Mock
         ),
       ) as _i3.DriverLocationState);
   @override
-  _i11.Stream<_i3.DriverLocationState> get stream => (super.noSuchMethod(
+  _i12.Stream<_i3.DriverLocationState> get stream => (super.noSuchMethod(
         Invocation.getter(#stream),
-        returnValue: _i11.Stream<_i3.DriverLocationState>.empty(),
-        returnValueForMissingStub: _i11.Stream<_i3.DriverLocationState>.empty(),
-      ) as _i11.Stream<_i3.DriverLocationState>);
+        returnValue: _i12.Stream<_i3.DriverLocationState>.empty(),
+        returnValueForMissingStub: _i12.Stream<_i3.DriverLocationState>.empty(),
+      ) as _i12.Stream<_i3.DriverLocationState>);
   @override
   bool get isClosed => (super.noSuchMethod(
         Invocation.getter(#isClosed),
@@ -213,14 +229,14 @@ class MockDriverLocationBloc extends _i1.Mock
         returnValueForMissingStub: false,
       ) as bool);
   @override
-  _i11.Future<void> close() => (super.noSuchMethod(
+  _i12.Future<void> close() => (super.noSuchMethod(
         Invocation.method(
           #close,
           [],
         ),
-        returnValue: _i11.Future<void>.value(),
-        returnValueForMissingStub: _i11.Future<void>.value(),
-      ) as _i11.Future<void>);
+        returnValue: _i12.Future<void>.value(),
+        returnValueForMissingStub: _i12.Future<void>.value(),
+      ) as _i12.Future<void>);
   @override
   void add(_i3.DriverLocationEvent? event) => super.noSuchMethod(
         Invocation.method(
@@ -247,8 +263,8 @@ class MockDriverLocationBloc extends _i1.Mock
       );
   @override
   void on<E extends _i3.DriverLocationEvent>(
-    _i16.EventHandler<E, _i3.DriverLocationState>? handler, {
-    _i16.EventTransformer<E>? transformer,
+    _i17.EventHandler<E, _i3.DriverLocationState>? handler, {
+    _i17.EventTransformer<E>? transformer,
   }) =>
       super.noSuchMethod(
         Invocation.method(
@@ -260,7 +276,7 @@ class MockDriverLocationBloc extends _i1.Mock
       );
   @override
   void onTransition(
-          _i16.Transition<_i3.DriverLocationEvent, _i3.DriverLocationState>?
+          _i17.Transition<_i3.DriverLocationEvent, _i3.DriverLocationState>?
               transition) =>
       super.noSuchMethod(
         Invocation.method(
@@ -270,7 +286,7 @@ class MockDriverLocationBloc extends _i1.Mock
         returnValueForMissingStub: null,
       );
   @override
-  void onChange(_i16.Change<_i3.DriverLocationState>? change) =>
+  void onChange(_i17.Change<_i3.DriverLocationState>? change) =>
       super.noSuchMethod(
         Invocation.method(
           #onChange,
@@ -777,7 +793,7 @@ class MockSocket extends _i1.Mock implements _i5.Socket {
   @override
   void on(
     String? event,
-    _i17.EventHandler<dynamic>? handler,
+    _i18.EventHandler<dynamic>? handler,
   ) =>
       super.noSuchMethod(
         Invocation.method(
@@ -792,7 +808,7 @@ class MockSocket extends _i1.Mock implements _i5.Socket {
   @override
   void once(
     String? event,
-    _i17.EventHandler<dynamic>? handler,
+    _i18.EventHandler<dynamic>? handler,
   ) =>
       super.noSuchMethod(
         Invocation.method(
@@ -807,7 +823,7 @@ class MockSocket extends _i1.Mock implements _i5.Socket {
   @override
   void off(
     String? event, [
-    _i17.EventHandler<dynamic>? handler,
+    _i18.EventHandler<dynamic>? handler,
   ]) =>
       super.noSuchMethod(
         Invocation.method(
@@ -855,11 +871,11 @@ class MockSocketBloc extends _i1.Mock implements _i6.SocketBloc {
         ),
       ) as _i6.SocketState);
   @override
-  _i11.Stream<_i6.SocketState> get stream => (super.noSuchMethod(
+  _i12.Stream<_i6.SocketState> get stream => (super.noSuchMethod(
         Invocation.getter(#stream),
-        returnValue: _i11.Stream<_i6.SocketState>.empty(),
-        returnValueForMissingStub: _i11.Stream<_i6.SocketState>.empty(),
-      ) as _i11.Stream<_i6.SocketState>);
+        returnValue: _i12.Stream<_i6.SocketState>.empty(),
+        returnValueForMissingStub: _i12.Stream<_i6.SocketState>.empty(),
+      ) as _i12.Stream<_i6.SocketState>);
   @override
   bool get isClosed => (super.noSuchMethod(
         Invocation.getter(#isClosed),
@@ -867,14 +883,14 @@ class MockSocketBloc extends _i1.Mock implements _i6.SocketBloc {
         returnValueForMissingStub: false,
       ) as bool);
   @override
-  _i11.Future<void> close() => (super.noSuchMethod(
+  _i12.Future<void> close() => (super.noSuchMethod(
         Invocation.method(
           #close,
           [],
         ),
-        returnValue: _i11.Future<void>.value(),
-        returnValueForMissingStub: _i11.Future<void>.value(),
-      ) as _i11.Future<void>);
+        returnValue: _i12.Future<void>.value(),
+        returnValueForMissingStub: _i12.Future<void>.value(),
+      ) as _i12.Future<void>);
   @override
   void add(_i6.SocketEvent? event) => super.noSuchMethod(
         Invocation.method(
@@ -901,8 +917,8 @@ class MockSocketBloc extends _i1.Mock implements _i6.SocketBloc {
       );
   @override
   void on<E extends _i6.SocketEvent>(
-    _i16.EventHandler<E, _i6.SocketState>? handler, {
-    _i16.EventTransformer<E>? transformer,
+    _i17.EventHandler<E, _i6.SocketState>? handler, {
+    _i17.EventTransformer<E>? transformer,
   }) =>
       super.noSuchMethod(
         Invocation.method(
@@ -914,7 +930,7 @@ class MockSocketBloc extends _i1.Mock implements _i6.SocketBloc {
       );
   @override
   void onTransition(
-          _i16.Transition<_i6.SocketEvent, _i6.SocketState>? transition) =>
+          _i17.Transition<_i6.SocketEvent, _i6.SocketState>? transition) =>
       super.noSuchMethod(
         Invocation.method(
           #onTransition,
@@ -923,7 +939,7 @@ class MockSocketBloc extends _i1.Mock implements _i6.SocketBloc {
         returnValueForMissingStub: null,
       );
   @override
-  void onChange(_i16.Change<_i6.SocketState>? change) => super.noSuchMethod(
+  void onChange(_i17.Change<_i6.SocketState>? change) => super.noSuchMethod(
         Invocation.method(
           #onChange,
           [change],
@@ -992,11 +1008,11 @@ class MockUpdateLocationBloc extends _i1.Mock
         ),
       ) as _i7.UpdateLocationState);
   @override
-  _i11.Stream<_i7.UpdateLocationState> get stream => (super.noSuchMethod(
+  _i12.Stream<_i7.UpdateLocationState> get stream => (super.noSuchMethod(
         Invocation.getter(#stream),
-        returnValue: _i11.Stream<_i7.UpdateLocationState>.empty(),
-        returnValueForMissingStub: _i11.Stream<_i7.UpdateLocationState>.empty(),
-      ) as _i11.Stream<_i7.UpdateLocationState>);
+        returnValue: _i12.Stream<_i7.UpdateLocationState>.empty(),
+        returnValueForMissingStub: _i12.Stream<_i7.UpdateLocationState>.empty(),
+      ) as _i12.Stream<_i7.UpdateLocationState>);
   @override
   bool get isClosed => (super.noSuchMethod(
         Invocation.getter(#isClosed),
@@ -1029,8 +1045,8 @@ class MockUpdateLocationBloc extends _i1.Mock
       );
   @override
   void on<E extends _i7.UpdateLocationEvent>(
-    _i16.EventHandler<E, _i7.UpdateLocationState>? handler, {
-    _i16.EventTransformer<E>? transformer,
+    _i17.EventHandler<E, _i7.UpdateLocationState>? handler, {
+    _i17.EventTransformer<E>? transformer,
   }) =>
       super.noSuchMethod(
         Invocation.method(
@@ -1042,7 +1058,7 @@ class MockUpdateLocationBloc extends _i1.Mock
       );
   @override
   void onTransition(
-          _i16.Transition<_i7.UpdateLocationEvent, _i7.UpdateLocationState>?
+          _i17.Transition<_i7.UpdateLocationEvent, _i7.UpdateLocationState>?
               transition) =>
       super.noSuchMethod(
         Invocation.method(
@@ -1052,16 +1068,16 @@ class MockUpdateLocationBloc extends _i1.Mock
         returnValueForMissingStub: null,
       );
   @override
-  _i11.Future<void> close() => (super.noSuchMethod(
+  _i12.Future<void> close() => (super.noSuchMethod(
         Invocation.method(
           #close,
           [],
         ),
-        returnValue: _i11.Future<void>.value(),
-        returnValueForMissingStub: _i11.Future<void>.value(),
-      ) as _i11.Future<void>);
+        returnValue: _i12.Future<void>.value(),
+        returnValueForMissingStub: _i12.Future<void>.value(),
+      ) as _i12.Future<void>);
   @override
-  void onChange(_i16.Change<_i7.UpdateLocationState>? change) =>
+  void onChange(_i17.Change<_i7.UpdateLocationState>? change) =>
       super.noSuchMethod(
         Invocation.method(
           #onChange,
@@ -1105,7 +1121,7 @@ class MockUpdateLocationBloc extends _i1.Mock
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockAppHiveRepositoryImpl extends _i1.Mock
-    implements _i18.AppHiveRepositoryImpl {
+    implements _i19.AppHiveRepositoryImpl {
   @override
   _i8.AppHiveService get hiveService => (super.noSuchMethod(
         Invocation.getter(#hiveService),
@@ -1127,7 +1143,7 @@ class MockAppHiveRepositoryImpl extends _i1.Mock
         returnValueForMissingStub: null,
       );
   @override
-  _i11.Future<void> putData(
+  _i12.Future<void> putData(
     String? key,
     dynamic value,
   ) =>
@@ -1139,9 +1155,9 @@ class MockAppHiveRepositoryImpl extends _i1.Mock
             value,
           ],
         ),
-        returnValue: _i11.Future<void>.value(),
-        returnValueForMissingStub: _i11.Future<void>.value(),
-      ) as _i11.Future<void>);
+        returnValue: _i12.Future<void>.value(),
+        returnValueForMissingStub: _i12.Future<void>.value(),
+      ) as _i12.Future<void>);
   @override
   dynamic getData(String? key) => super.noSuchMethod(
         Invocation.method(
@@ -1156,17 +1172,17 @@ class MockAppHiveRepositoryImpl extends _i1.Mock
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockImageUploadRepoImpl extends _i1.Mock
-    implements _i19.ImageUploadRepoImpl {
+    implements _i20.ImageUploadRepoImpl {
   @override
-  _i11.Future<_i2.Either<_i14.Failure, String>> uploadImage(
+  _i12.Future<_i2.Either<_i15.Failure, String>> uploadImage(
           String? imageFilePath) =>
       (super.noSuchMethod(
         Invocation.method(
           #uploadImage,
           [imageFilePath],
         ),
-        returnValue: _i11.Future<_i2.Either<_i14.Failure, String>>.value(
-            _FakeEither_0<_i14.Failure, String>(
+        returnValue: _i12.Future<_i2.Either<_i15.Failure, String>>.value(
+            _FakeEither_0<_i15.Failure, String>(
           this,
           Invocation.method(
             #uploadImage,
@@ -1174,15 +1190,15 @@ class MockImageUploadRepoImpl extends _i1.Mock
           ),
         )),
         returnValueForMissingStub:
-            _i11.Future<_i2.Either<_i14.Failure, String>>.value(
-                _FakeEither_0<_i14.Failure, String>(
+            _i12.Future<_i2.Either<_i15.Failure, String>>.value(
+                _FakeEither_0<_i15.Failure, String>(
           this,
           Invocation.method(
             #uploadImage,
             [imageFilePath],
           ),
         )),
-      ) as _i11.Future<_i2.Either<_i14.Failure, String>>);
+      ) as _i12.Future<_i2.Either<_i15.Failure, String>>);
 }
 
 /// A class which mocks [ImageUploadBloc].
@@ -1202,11 +1218,11 @@ class MockImageUploadBloc extends _i1.Mock implements _i9.ImageUploadBloc {
         ),
       ) as _i9.ImageUploadState);
   @override
-  _i11.Stream<_i9.ImageUploadState> get stream => (super.noSuchMethod(
+  _i12.Stream<_i9.ImageUploadState> get stream => (super.noSuchMethod(
         Invocation.getter(#stream),
-        returnValue: _i11.Stream<_i9.ImageUploadState>.empty(),
-        returnValueForMissingStub: _i11.Stream<_i9.ImageUploadState>.empty(),
-      ) as _i11.Stream<_i9.ImageUploadState>);
+        returnValue: _i12.Stream<_i9.ImageUploadState>.empty(),
+        returnValueForMissingStub: _i12.Stream<_i9.ImageUploadState>.empty(),
+      ) as _i12.Stream<_i9.ImageUploadState>);
   @override
   bool get isClosed => (super.noSuchMethod(
         Invocation.getter(#isClosed),
@@ -1239,8 +1255,8 @@ class MockImageUploadBloc extends _i1.Mock implements _i9.ImageUploadBloc {
       );
   @override
   void on<E extends _i9.ImageUploadEvent>(
-    _i16.EventHandler<E, _i9.ImageUploadState>? handler, {
-    _i16.EventTransformer<E>? transformer,
+    _i17.EventHandler<E, _i9.ImageUploadState>? handler, {
+    _i17.EventTransformer<E>? transformer,
   }) =>
       super.noSuchMethod(
         Invocation.method(
@@ -1252,7 +1268,7 @@ class MockImageUploadBloc extends _i1.Mock implements _i9.ImageUploadBloc {
       );
   @override
   void onTransition(
-          _i16.Transition<_i9.ImageUploadEvent, _i9.ImageUploadState>?
+          _i17.Transition<_i9.ImageUploadEvent, _i9.ImageUploadState>?
               transition) =>
       super.noSuchMethod(
         Invocation.method(
@@ -1262,16 +1278,16 @@ class MockImageUploadBloc extends _i1.Mock implements _i9.ImageUploadBloc {
         returnValueForMissingStub: null,
       );
   @override
-  _i11.Future<void> close() => (super.noSuchMethod(
+  _i12.Future<void> close() => (super.noSuchMethod(
         Invocation.method(
           #close,
           [],
         ),
-        returnValue: _i11.Future<void>.value(),
-        returnValueForMissingStub: _i11.Future<void>.value(),
-      ) as _i11.Future<void>);
+        returnValue: _i12.Future<void>.value(),
+        returnValueForMissingStub: _i12.Future<void>.value(),
+      ) as _i12.Future<void>);
   @override
-  void onChange(_i16.Change<_i9.ImageUploadState>? change) =>
+  void onChange(_i17.Change<_i9.ImageUploadState>? change) =>
       super.noSuchMethod(
         Invocation.method(
           #onChange,
@@ -1314,17 +1330,17 @@ class MockImageUploadBloc extends _i1.Mock implements _i9.ImageUploadBloc {
 /// A class which mocks [AuthRepoImpl].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockAuthRepoImpl extends _i1.Mock implements _i20.AuthRepoImpl {
+class MockAuthRepoImpl extends _i1.Mock implements _i21.AuthRepoImpl {
   @override
-  _i11.Future<_i2.Either<_i14.Failure, String>> registerDriver(
-          _i21.RegisterDriverRequestParams? params) =>
+  _i12.Future<_i2.Either<_i15.Failure, String>> registerDriver(
+          _i22.RegisterDriverRequestParams? params) =>
       (super.noSuchMethod(
         Invocation.method(
           #registerDriver,
           [params],
         ),
-        returnValue: _i11.Future<_i2.Either<_i14.Failure, String>>.value(
-            _FakeEither_0<_i14.Failure, String>(
+        returnValue: _i12.Future<_i2.Either<_i15.Failure, String>>.value(
+            _FakeEither_0<_i15.Failure, String>(
           this,
           Invocation.method(
             #registerDriver,
@@ -1332,23 +1348,23 @@ class MockAuthRepoImpl extends _i1.Mock implements _i20.AuthRepoImpl {
           ),
         )),
         returnValueForMissingStub:
-            _i11.Future<_i2.Either<_i14.Failure, String>>.value(
-                _FakeEither_0<_i14.Failure, String>(
+            _i12.Future<_i2.Either<_i15.Failure, String>>.value(
+                _FakeEither_0<_i15.Failure, String>(
           this,
           Invocation.method(
             #registerDriver,
             [params],
           ),
         )),
-      ) as _i11.Future<_i2.Either<_i14.Failure, String>>);
+      ) as _i12.Future<_i2.Either<_i15.Failure, String>>);
   @override
-  _i11.Future<_i2.Either<String, String>> verifyPhoneNumber(String? code) =>
+  _i12.Future<_i2.Either<String, String>> verifyPhoneNumber(String? code) =>
       (super.noSuchMethod(
         Invocation.method(
           #verifyPhoneNumber,
           [code],
         ),
-        returnValue: _i11.Future<_i2.Either<String, String>>.value(
+        returnValue: _i12.Future<_i2.Either<String, String>>.value(
             _FakeEither_0<String, String>(
           this,
           Invocation.method(
@@ -1357,7 +1373,7 @@ class MockAuthRepoImpl extends _i1.Mock implements _i20.AuthRepoImpl {
           ),
         )),
         returnValueForMissingStub:
-            _i11.Future<_i2.Either<String, String>>.value(
+            _i12.Future<_i2.Either<String, String>>.value(
                 _FakeEither_0<String, String>(
           this,
           Invocation.method(
@@ -1365,9 +1381,9 @@ class MockAuthRepoImpl extends _i1.Mock implements _i20.AuthRepoImpl {
             [code],
           ),
         )),
-      ) as _i11.Future<_i2.Either<String, String>>);
+      ) as _i12.Future<_i2.Either<String, String>>);
   @override
-  _i11.Future<_i2.Either<_i14.Failure, _i22.DriverModel>> loginDriver(
+  _i12.Future<_i2.Either<_i15.Failure, _i23.DriverModel>> loginDriver(
           String? phoneNumber) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -1375,8 +1391,8 @@ class MockAuthRepoImpl extends _i1.Mock implements _i20.AuthRepoImpl {
           [phoneNumber],
         ),
         returnValue:
-            _i11.Future<_i2.Either<_i14.Failure, _i22.DriverModel>>.value(
-                _FakeEither_0<_i14.Failure, _i22.DriverModel>(
+            _i12.Future<_i2.Either<_i15.Failure, _i23.DriverModel>>.value(
+                _FakeEither_0<_i15.Failure, _i23.DriverModel>(
           this,
           Invocation.method(
             #loginDriver,
@@ -1384,13 +1400,61 @@ class MockAuthRepoImpl extends _i1.Mock implements _i20.AuthRepoImpl {
           ),
         )),
         returnValueForMissingStub:
-            _i11.Future<_i2.Either<_i14.Failure, _i22.DriverModel>>.value(
-                _FakeEither_0<_i14.Failure, _i22.DriverModel>(
+            _i12.Future<_i2.Either<_i15.Failure, _i23.DriverModel>>.value(
+                _FakeEither_0<_i15.Failure, _i23.DriverModel>(
           this,
           Invocation.method(
             #loginDriver,
             [phoneNumber],
           ),
         )),
-      ) as _i11.Future<_i2.Either<_i14.Failure, _i22.DriverModel>>);
+      ) as _i12.Future<_i2.Either<_i15.Failure, _i23.DriverModel>>);
+}
+
+/// A class which mocks [TransactionHistoryRepositoryImpl].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockTransactionHistoryRepositoryImpl extends _i1.Mock
+    implements _i24.TransactionHistoryRepositoryImpl {
+  @override
+  _i10.TransactionHistoryDatasource get transactionHistoryDatasource =>
+      (super.noSuchMethod(
+        Invocation.getter(#transactionHistoryDatasource),
+        returnValue: _FakeTransactionHistoryDatasource_8(
+          this,
+          Invocation.getter(#transactionHistoryDatasource),
+        ),
+        returnValueForMissingStub: _FakeTransactionHistoryDatasource_8(
+          this,
+          Invocation.getter(#transactionHistoryDatasource),
+        ),
+      ) as _i10.TransactionHistoryDatasource);
+  @override
+  _i12.Future<
+      _i2.Either<_i15.Failure,
+          List<_i25.TransactionModel>>> getTransactionsHistory() =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #getTransactionsHistory,
+          [],
+        ),
+        returnValue: _i12.Future<
+                _i2.Either<_i15.Failure, List<_i25.TransactionModel>>>.value(
+            _FakeEither_0<_i15.Failure, List<_i25.TransactionModel>>(
+          this,
+          Invocation.method(
+            #getTransactionsHistory,
+            [],
+          ),
+        )),
+        returnValueForMissingStub: _i12.Future<
+                _i2.Either<_i15.Failure, List<_i25.TransactionModel>>>.value(
+            _FakeEither_0<_i15.Failure, List<_i25.TransactionModel>>(
+          this,
+          Invocation.method(
+            #getTransactionsHistory,
+            [],
+          ),
+        )),
+      ) as _i12.Future<_i2.Either<_i15.Failure, List<_i25.TransactionModel>>>);
 }

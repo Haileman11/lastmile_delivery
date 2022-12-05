@@ -3,14 +3,14 @@ import 'dart:convert';
 
 import '../../core/utils/enums.dart';
 
-class Transaction {
+class TransactionModel {
   final String id;
   final TransactionType transactionType;
   final double amount;
   final String from;
   final String to;
   final DateTime createdAt;
-  Transaction({
+  TransactionModel({
     required this.id,
     required this.transactionType,
     required this.amount,
@@ -29,21 +29,21 @@ class Transaction {
     };
   }
 
-  factory Transaction.fromMap(Map<String, dynamic> map) {
-    return Transaction(
+  factory TransactionModel.fromMap(Map<String, dynamic> map) {
+    return TransactionModel(
       id: map['id'] as String,
       transactionType: TransactionType.fromMap(map['transactionType']),
       amount: map['amount'] as double,
       from: map['from'] as String,
       to: map['to'] as String,
-      createdAt: DateTime.fromMillisecondsSinceEpoch(map['createdAt'] as int),
+      createdAt: DateTime.parse(map['createdAt']),
     );
   }
 
   String toJson() => json.encode(toMap());
 
-  factory Transaction.fromJson(String source) =>
-      Transaction.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory TransactionModel.fromJson(String source) =>
+      TransactionModel.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
   String toString() {
@@ -51,7 +51,7 @@ class Transaction {
   }
 
   @override
-  bool operator ==(covariant Transaction other) {
+  bool operator ==(covariant TransactionModel other) {
     if (identical(this, other)) return true;
 
     return other.id == id &&
@@ -72,7 +72,7 @@ class Transaction {
         createdAt.hashCode;
   }
 
-  Transaction copyWith({
+  TransactionModel copyWith({
     String? id,
     TransactionType? transactionType,
     double? amount,
@@ -80,7 +80,7 @@ class Transaction {
     String? to,
     DateTime? createdAt,
   }) {
-    return Transaction(
+    return TransactionModel(
       id: id ?? this.id,
       transactionType: transactionType ?? this.transactionType,
       amount: amount ?? this.amount,

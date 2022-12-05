@@ -25,6 +25,8 @@ import 'package:lastmile_mobile/src/presentation/views/registration_page/bloc/cu
 import 'package:lastmile_mobile/src/presentation/views/registration_page/registration_page_view.dart';
 import 'package:lastmile_mobile/src/presentation/views/signing_in_page/signing_in_page.dart';
 import 'package:lastmile_mobile/src/presentation/views/splash_page/splash_page_view.dart';
+import 'package:lastmile_mobile/src/presentation/views/transaction_history/bloc/transaction_history_bloc.dart';
+import 'package:lastmile_mobile/src/presentation/views/transaction_history/pages/transaction_history_page.dart';
 
 class TestApp extends StatelessWidget {
   const TestApp({Key? key, required this.initialRoute}) : super(key: key);
@@ -113,6 +115,12 @@ class TestApp extends StatelessWidget {
                 BlocProvider<OrderHistoryBloc>(
                   create: (context) => injector()..add(const GetOrderHistory()),
                   child: const OrderHistoryPageView(),
+                ),
+            AppRoutes.transactionHistoryPageRoute: (context) =>
+                BlocProvider<TransactionHistoryBloc>(
+                  create: (context) =>
+                      injector()..add(const GetTransactionHistoryEvent()),
+                  child: const TransactionHistoryPageView(),
                 ),
             AppRoutes.loginPageRoute: (context) => const LoginPageView(),
             AppRoutes.podPageRoute: (context) {

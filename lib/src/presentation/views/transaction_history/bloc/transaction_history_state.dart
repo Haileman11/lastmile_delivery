@@ -9,7 +9,7 @@ abstract class TransactionHistoryState extends Equatable {
 }
 
 class TransactionHistoryLoaded extends TransactionHistoryState {
-  final List<Transaction> transactions;
+  final List<TransactionModel> transactions;
   const TransactionHistoryLoaded({
     required this.transactions,
   });

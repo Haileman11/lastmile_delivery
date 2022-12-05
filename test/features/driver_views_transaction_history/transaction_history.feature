@@ -7,6 +7,6 @@ So that I can keep track of my finances.
     Given injection is setup
 
   Scenario: Driver navigates to transaction history page
-    Given the app is on {'/transactions-history-page'}
+    Given the app is on {'/transaction-history-page'}
     Then I see {'TRANSACTION_HISTORY_PAGE'}
     

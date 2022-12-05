@@ -17,11 +17,6 @@ class TransactionHistoryPageView extends StatelessWidget {
         elevation: 0.0,
         backgroundColor: AppColors.appBlack,
         automaticallyImplyLeading: true,
-        systemOverlayStyle: SystemUiOverlayStyle(
-          statusBarColor: AppColors.black,
-          statusBarIconBrightness: Brightness.light,
-          statusBarBrightness: Brightness.light,
-        ),
         title: Text(
           'Transaction history',
           style: TextStyle(

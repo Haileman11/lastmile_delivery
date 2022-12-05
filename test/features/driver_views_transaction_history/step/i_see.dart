@@ -1,5 +1,6 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-Future<void> iSee(WidgetTester tester, dynamic param1) async {
-  throw UnimplementedError();
+Future<void> iSee(WidgetTester tester, String key) async {
+  await expectLater(find.byKey(Key(key), skipOffstage: false), findsWidgets);
 }

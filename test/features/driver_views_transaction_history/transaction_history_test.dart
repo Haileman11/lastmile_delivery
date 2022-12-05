@@ -12,10 +12,12 @@ void main() {
   Future<void> bddSetUp(WidgetTester tester) async {
     await injectionIsSetup(tester);
   }
+
   group('''Driver views transaction history''', () {
-    testWidgets('''Driver navigates to transaction history page''', (tester) async {
+    testWidgets('''Driver navigates to transaction history page''',
+        (tester) async {
       await bddSetUp(tester);
-      await theAppIsOn(tester, '/transactions-history-page');
+      await theAppIsOn(tester, '/transaction-history-page');
       await iSee(tester, 'TRANSACTION_HISTORY_PAGE');
     });
   });
