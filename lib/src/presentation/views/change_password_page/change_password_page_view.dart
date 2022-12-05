@@ -44,6 +44,7 @@ class _ChangePasswordViewState extends State<ChangePasswordView> {
           if (state is ChangePasswordDone) {
             ScaffoldMessenger.of(context).showSnackBar(
               buildAppSnackBar(
+                key: 'PASSWORD_UPDATED',
                 bgColor: AppColors.appBlack,
                 txtColor: AppColors.white,
                 msg: 'Password updated successfully',
@@ -115,6 +116,7 @@ class _ChangePasswordViewState extends State<ChangePasswordView> {
                     }
 
                     return AppSubmitButton(
+                        key: Key('UPDATE_PASSWORD_BUTTON'),
                         onTap: () {
                           if (oldPasswordController.text.trim().isEmpty ||
                               newPasswordController.text.trim().isEmpty ||
@@ -126,7 +128,7 @@ class _ChangePasswordViewState extends State<ChangePasswordView> {
                                 key: 'error_message',
                                 bgColor: AppColors.errorRed,
                                 txtColor: AppColors.white,
-                                msg: 'Please fill all required fields',
+                                msg: 'please fill all required fields',
                                 isFloating: false,
                               ),
                             );
@@ -137,7 +139,8 @@ class _ChangePasswordViewState extends State<ChangePasswordView> {
                                 key: 'error_message',
                                 bgColor: AppColors.errorRed,
                                 txtColor: AppColors.white,
-                                msg: 'Confirm doesn\'t match new password',
+                                msg:
+                                    'confirmed password doesn\'t match new password',
                                 isFloating: false,
                               ),
                             );

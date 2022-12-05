@@ -10,6 +10,7 @@ import 'package:lastmile_mobile/src/domain/repositories/base_geolocation_repo.da
 import 'package:lastmile_mobile/src/domain/repositories/image_upload_repository.dart';
 import 'package:lastmile_mobile/src/domain/repositories/order_history_repo.dart';
 import 'package:lastmile_mobile/src/injector.dart';
+import 'package:lastmile_mobile/src/presentation/views/change_password_page/blocs/change_password/change_password_bloc.dart';
 import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/driver_location/driver_location_bloc.dart';
 import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/driver_profile/driver_profile_bloc.dart';
 import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/order/order_bloc.dart';
@@ -79,5 +80,6 @@ Future<void> initializeTestDependencies() async {
     ..registerFactory<ImageUploadBloc>(() => ImageUploadBloc(injector()))
     ..registerFactory<VerifyPhoneBloc>(() => VerifyPhoneBloc(injector()))
     ..registerFactory<RegisterBloc>(() => RegisterBloc(injector()))
-    ..registerFactory<LoginBloc>(() => LoginBloc(injector()));
+    ..registerFactory<LoginBloc>(() => LoginBloc(injector()))
+    ..registerFactory<ChangePasswordBloc>(() => ChangePasswordBloc(injector()));
 }

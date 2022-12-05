@@ -11,6 +11,7 @@ class ProfilePageView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: const Key('PROFILE_PAGE'),
       appBar: AppBar(
         elevation: 0.0,
         backgroundColor: AppColors.appBlack,

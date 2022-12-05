@@ -23,6 +23,7 @@ class ProfileMenuItems extends StatelessWidget {
           mainAxisSize: MainAxisSize.max,
           children: [
             ProfileMenuItem(
+                key: const Key('UPDATE_PASSWORD'),
                 title: 'Change Password',
                 onTap: () {
                   NavigationService.instance
