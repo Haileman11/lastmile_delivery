@@ -22,6 +22,7 @@ import 'package:lastmile_mobile/src/presentation/views/order_history/blocs/order
 import 'package:lastmile_mobile/src/presentation/views/registration_page/bloc/blocs/image_upload/image_upload_bloc.dart';
 import 'package:lastmile_mobile/src/presentation/views/registration_page/bloc/blocs/register/register_bloc.dart';
 import 'package:lastmile_mobile/src/presentation/views/registration_page/bloc/blocs/verify_phone/verify_phone_bloc.dart';
+import 'package:lastmile_mobile/src/presentation/views/reset_password_page/blocs/reset_password/reset_password_bloc.dart';
 import 'package:mockito/annotations.dart';
 import 'package:socket_io_client/socket_io_client.dart';
 
@@ -51,8 +52,9 @@ Future<void> initializeTestDependencies() async {
           id: '1',
           isAvailable: true,
           name: 'Abebaw Butako',
-          status: 'status',
           phoneNumber: '0909525760',
+          status: 'status',
+          email: "abc@example.com",
         ))
 
     /// REPOSITORY DEPENDENCIES
@@ -81,5 +83,6 @@ Future<void> initializeTestDependencies() async {
     ..registerFactory<VerifyPhoneBloc>(() => VerifyPhoneBloc(injector()))
     ..registerFactory<RegisterBloc>(() => RegisterBloc(injector()))
     ..registerFactory<LoginBloc>(() => LoginBloc(injector()))
-    ..registerFactory<ChangePasswordBloc>(() => ChangePasswordBloc(injector()));
+    ..registerFactory<ChangePasswordBloc>(() => ChangePasswordBloc(injector()))
+    ..registerFactory<ResetPasswordBloc>(() => ResetPasswordBloc(injector()));
 }

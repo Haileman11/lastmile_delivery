@@ -26,6 +26,8 @@ import 'package:lastmile_mobile/src/presentation/views/registration_page/bloc/bl
 import 'package:lastmile_mobile/src/presentation/views/registration_page/bloc/blocs/verify_phone/verify_phone_bloc.dart';
 import 'package:lastmile_mobile/src/presentation/views/registration_page/bloc/cubits/image_pick_cubit.dart';
 import 'package:lastmile_mobile/src/presentation/views/registration_page/registration_page_view.dart';
+import 'package:lastmile_mobile/src/presentation/views/reset_password_page/blocs/reset_password/reset_password_bloc.dart';
+import 'package:lastmile_mobile/src/presentation/views/reset_password_page/reset_password_page.dart';
 import 'package:lastmile_mobile/src/presentation/views/signing_in_page/signing_in_page.dart';
 import 'package:lastmile_mobile/src/presentation/views/splash_page/splash_page_view.dart';
 
@@ -124,6 +126,11 @@ class TestApp extends StatelessWidget {
                   child: const OrderHistoryPageView(),
                 ),
             AppRoutes.loginPageRoute: (context) => const LoginPageView(),
+            AppRoutes.resetPasswordPageRoute: (context) =>
+                BlocProvider<ResetPasswordBloc>(
+                  create: (context) => injector(),
+                  child: const ResetPasswordPageView(),
+                ),
             AppRoutes.podPageRoute: (context) {
               final args =
                   ModalRoute.of(context)!.settings.arguments as ScreenArguments;
