@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -62,7 +63,7 @@ class _HomePageViewState extends State<HomePageView> {
   void initState() {
     getPickUpIcon();
     super.initState();
-    setupInteractedMessage();
+    if (Platform.isAndroid) setupInteractedMessage();
   }
 
   Future getPickUpIcon() async {

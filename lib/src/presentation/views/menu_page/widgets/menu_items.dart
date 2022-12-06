@@ -40,6 +40,14 @@ class MenuItems extends StatelessWidget {
           NavigationService.instance
               .navigateTo(AppRoutes.orderHistoryPageRoute, context);
         }),
+        const SizedBox(height: 15.0),
+        _buildMenuItem(
+            key: 'TRANSACTIONS_BUTTON',
+            'assets/images/menu_item_transactions.png',
+            'Transaction', () {
+          NavigationService.instance
+              .navigateTo(AppRoutes.transactionHistoryPageRoute, context);
+        }),
         Container(
           margin: const EdgeInsets.symmetric(vertical: 10.0),
           child: const Divider(),

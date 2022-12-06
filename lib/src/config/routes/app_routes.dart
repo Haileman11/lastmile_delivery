@@ -12,6 +12,8 @@ class AppRoutes {
   static const menuPageRoute = '/menu-page';
   static const orderHistoryPageRoute = '/order-history-page';
   static const orderDetailPageRoute = '/order-detail-page';
+  static const transactionHistoryPageRoute = '/transaction-history-page';
+  static const transactionDetailPageRoute = '/transaction-detail-page';
   static const registrationPage = '/registration-page';
   static const accountPendingPage = '/account-pending-page';
   static const loginPageRoute = '/login-page';
