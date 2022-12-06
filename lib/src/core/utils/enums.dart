@@ -48,3 +48,11 @@ enum TaskType {
   String toMap() => name;
   static TaskType fromMap(String json) => values.byName(json);
 }
+
+enum TransactionType {
+  withdrawal,
+  deposit;
+
+  String toMap() => name;
+  static TransactionType fromMap(String json) => values.byName(json);
+}
