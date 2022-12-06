@@ -71,8 +71,8 @@ void main() {
         await iEnterIntoInputField(tester, 'oldPassword@101', 'new_password_field');
         await iEnterIntoInputField(tester, 'oldPassword@101', 'confirm_password_field');
         await iTap(tester, 'RESET_PASSWORD');
-        await iSee(tester, 'PROFILE_PAGE');
-        await iSeeText(tester, 'Password reset successfully');
+        await iSee(tester, 'HOME_PAGE');
+        await iSeeText(tester, 'Password reset Successful');
       } finally {
         await bddTearDown(tester);
       }

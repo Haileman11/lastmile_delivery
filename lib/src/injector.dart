@@ -24,6 +24,7 @@ import 'package:lastmile_mobile/src/presentation/views/login_page/blocs/login/lo
 import 'package:lastmile_mobile/src/presentation/views/registration_page/bloc/blocs/image_upload/image_upload_bloc.dart';
 import 'package:lastmile_mobile/src/presentation/views/registration_page/bloc/blocs/register/register_bloc.dart';
 import 'package:lastmile_mobile/src/presentation/views/registration_page/bloc/blocs/verify_phone/verify_phone_bloc.dart';
+import 'package:lastmile_mobile/src/presentation/views/reset_password_page/blocs/reset_password/reset_password_bloc.dart';
 import 'package:lastmile_mobile/src/presentation/views/reset_password_page/blocs/send_reset_link/send_reset_link_bloc.dart';
 import 'package:socket_io_client/socket_io_client.dart';
 
@@ -88,5 +89,6 @@ Future<void> initializeDependencies() async {
     ..registerFactory<VerifyPhoneBloc>(() => VerifyPhoneBloc(injector()))
     ..registerFactory<LoginBloc>(() => LoginBloc(injector()))
     ..registerFactory<ChangePasswordBloc>(() => ChangePasswordBloc(injector()))
-    ..registerFactory<SendResetLinkBloc>(() => SendResetLinkBloc(injector()));
+    ..registerFactory<SendResetLinkBloc>(() => SendResetLinkBloc(injector()))
+    ..registerFactory<ResetPasswordBloc>(() => ResetPasswordBloc(injector()));
 }

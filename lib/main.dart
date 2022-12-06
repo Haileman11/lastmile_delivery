@@ -28,6 +28,7 @@ import 'package:lastmile_mobile/src/presentation/views/registration_page/bloc/bl
 import 'package:lastmile_mobile/src/presentation/views/registration_page/bloc/blocs/register/register_bloc.dart';
 import 'package:lastmile_mobile/src/presentation/views/registration_page/bloc/blocs/verify_phone/verify_phone_bloc.dart';
 import 'package:lastmile_mobile/src/presentation/views/registration_page/registration_page_view.dart';
+import 'package:lastmile_mobile/src/presentation/views/reset_password_page/blocs/reset_password/reset_password_bloc.dart';
 import 'package:lastmile_mobile/src/presentation/views/reset_password_page/blocs/send_reset_link/send_reset_link_bloc.dart';
 import 'package:lastmile_mobile/src/presentation/views/reset_password_page/reset_password_page.dart';
 import 'package:lastmile_mobile/src/presentation/views/reset_password_page/widgets/send_reset_link_view.dart';
@@ -124,7 +125,10 @@ class LastMile extends StatelessWidget {
             AppRoutes.menuPageRoute: (context) => const MenuPage(),
             AppRoutes.profilePageRoute: (context) => const ProfilePageView(),
             AppRoutes.resetPasswordPageRoute: (context) =>
-                const ResetPasswordPageView(),
+                BlocProvider<ResetPasswordBloc>(
+                  create: (context) => injector(),
+                  child: const ResetPasswordPageView(),
+                ),
             AppRoutes.sendResetLinkPageRoute: (context) {
               final driverId = injector<DriverModel>().id;
               return BlocProvider<SendResetLinkBloc>(

@@ -26,8 +26,8 @@ Feature: Driver resets password
     When I enter <new_password> into {'new_password_field'} input field
     And I enter <confirm_password> into {'confirm_password_field'} input field
     And I tap {'RESET_PASSWORD'}
-    Then I see {'PROFILE_PAGE'}
-    And I see {'Password reset successfully'} text
+    Then I see {'HOME_PAGE'}
+    And I see {'Password reset Successful'} text
     Examples:
-      | new_password      | confirm_password      |
+      | new_password      | confirm_password  |
       | 'oldPassword@101' | 'oldPassword@101' |
