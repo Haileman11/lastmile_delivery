@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -46,6 +48,8 @@ import 'src/presentation/views/home_page/blocs/task/task_bloc.dart';
 import 'src/presentation/views/order_history/blocs/order_history/order_history_bloc.dart';
 import 'src/presentation/views/registration_page/bloc/cubits/image_pick_cubit.dart';
 import 'src/presentation/views/wallet_page/blocs/cubits/date_filter/date_filter_cubit.dart';
+import 'src/presentation/views/transaction_history/bloc/transaction_history_bloc.dart';
+import 'src/presentation/views/transaction_history/pages/transaction_history_page.dart';
 
 Future<void> main() async {
   WidgetsBinding binding = WidgetsFlutterBinding.ensureInitialized();
@@ -57,8 +61,10 @@ Future<void> main() async {
 
   ///INIT HIVE BOXES
   await AppHiveService.instance.initHiveBoxes();
-  await AppNotificationServiceImpl.setup();
-  print(await FirebaseMessaging.instance.getToken());
+  if (Platform.isAndroid) {
+    await AppNotificationServiceImpl.setup();
+    print(await FirebaseMessaging.instance.getToken());
+  }
   runApp(const LastMile());
 }
 
@@ -156,6 +162,12 @@ class LastMile extends StatelessWidget {
                 BlocProvider<OrderHistoryBloc>(
                   create: (context) => injector()..add(const GetOrderHistory()),
                   child: const OrderHistoryPageView(),
+                ),
+            AppRoutes.transactionHistoryPageRoute: (context) =>
+                BlocProvider<TransactionHistoryBloc>(
+                  create: (context) =>
+                      injector()..add(const GetTransactionHistoryEvent()),
+                  child: const TransactionHistoryPageView(),
                 ),
             AppRoutes.waitingForDriverPageRoute: (context) {
               final args =
