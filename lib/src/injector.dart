@@ -10,7 +10,6 @@ import 'package:lastmile_mobile/src/data/repositories/base_location_repo_impl.da
 import 'package:lastmile_mobile/src/data/repositories/image_upload_repo_impl.dart';
 import 'package:lastmile_mobile/src/data/repositories/order_history_repo_impl.dart';
 import 'package:lastmile_mobile/src/domain/repositories/app_hive_repository.dart';
-import 'package:lastmile_mobile/src/data/repositories/notification.dart';
 import 'package:lastmile_mobile/src/domain/repositories/auth_repository.dart';
 import 'package:lastmile_mobile/src/domain/repositories/base_geolocation_repo.dart';
 import 'package:lastmile_mobile/src/domain/repositories/image_upload_repository.dart';
@@ -25,12 +24,13 @@ import 'package:lastmile_mobile/src/presentation/views/login_page/blocs/login/lo
 import 'package:lastmile_mobile/src/presentation/views/registration_page/bloc/blocs/image_upload/image_upload_bloc.dart';
 import 'package:lastmile_mobile/src/presentation/views/registration_page/bloc/blocs/register/register_bloc.dart';
 import 'package:lastmile_mobile/src/presentation/views/registration_page/bloc/blocs/verify_phone/verify_phone_bloc.dart';
+import 'package:lastmile_mobile/src/presentation/views/reset_password_page/blocs/reset_password/reset_password_bloc.dart';
+import 'package:lastmile_mobile/src/presentation/views/reset_password_page/blocs/send_reset_link/send_reset_link_bloc.dart';
 import 'package:socket_io_client/socket_io_client.dart';
 
 import 'data/datasources/local/app_hive_service.dart';
 import 'data/models/driver.dart';
 import 'presentation/views/home_page/blocs/order_cancellation/order_cancellation_bloc.dart';
-import 'domain/repositories/notification.dart';
 import 'presentation/views/home_page/blocs/polylines/polyline_bloc.dart';
 import 'presentation/views/home_page/blocs/task/task_bloc.dart';
 import 'presentation/views/order_history/blocs/order_history/order_history_bloc.dart';
@@ -88,5 +88,7 @@ Future<void> initializeDependencies() async {
     ..registerFactory<RegisterBloc>(() => RegisterBloc(injector()))
     ..registerFactory<VerifyPhoneBloc>(() => VerifyPhoneBloc(injector()))
     ..registerFactory<LoginBloc>(() => LoginBloc(injector()))
-    ..registerFactory<ChangePasswordBloc>(() => ChangePasswordBloc(injector()));
+    ..registerFactory<ChangePasswordBloc>(() => ChangePasswordBloc(injector()))
+    ..registerFactory<SendResetLinkBloc>(() => SendResetLinkBloc(injector()))
+    ..registerFactory<ResetPasswordBloc>(() => ResetPasswordBloc(injector()));
 }

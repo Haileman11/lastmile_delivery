@@ -1,6 +1,5 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:lastmile_mobile/src/data/datasources/local/app_hive_service.dart';
 import 'package:lastmile_mobile/src/data/models/driver.dart';
 import 'package:lastmile_mobile/src/injector.dart';
 import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/driver_profile/driver_profile_bloc.dart';
@@ -14,6 +13,7 @@ Future<void> main() async {
     'phoneNumber': 'phoneNumber',
     'isAvailable': true,
     'status': "true",
+    'email': 'abc@example.com',
   });
 
   final DriverModel driverModelUnavailable = DriverModel.fromMap({
@@ -22,6 +22,7 @@ Future<void> main() async {
     'phoneNumber': 'phoneNumber',
     'isAvailable': false,
     'status': "true",
+    'email': 'abc@example.com',
   });
 
   group('Driver updates availability', () {

@@ -106,17 +106,6 @@ class _LoginPageViewState extends State<LoginPageView> {
                             },
                             title: 'Login',
                           ),
-                          const SizedBox(height: 15.0),
-                          Align(
-                            alignment: Alignment.centerRight,
-                            child: Text(
-                              'Forgot Password',
-                              style: TextStyle(
-                                color: AppColors.appGreen,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
                           const SizedBox(height: 25.0),
                           const CreateAccountButton(),
                         ],
