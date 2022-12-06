@@ -12,12 +12,12 @@ import 'package:lastmile_mobile/src/data/repositories/image_upload_repo_impl.dar
 import 'package:lastmile_mobile/src/data/repositories/order_history_repo_impl.dart';
 import 'package:lastmile_mobile/src/data/repositories/transaction_history_repository_impl.dart';
 import 'package:lastmile_mobile/src/domain/repositories/app_hive_repository.dart';
-import 'package:lastmile_mobile/src/data/repositories/notification.dart';
 import 'package:lastmile_mobile/src/domain/repositories/auth_repository.dart';
 import 'package:lastmile_mobile/src/domain/repositories/base_geolocation_repo.dart';
 import 'package:lastmile_mobile/src/domain/repositories/image_upload_repository.dart';
 import 'package:lastmile_mobile/src/domain/repositories/order_history_repo.dart';
 import 'package:lastmile_mobile/src/domain/repositories/transaction_history_repository.dart';
+import 'package:lastmile_mobile/src/presentation/views/change_password_page/blocs/change_password/change_password_bloc.dart';
 import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/driver_location/driver_location_bloc.dart';
 import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/driver_profile/driver_profile_bloc.dart';
 import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/order/order_bloc.dart';
@@ -28,12 +28,13 @@ import 'package:lastmile_mobile/src/presentation/views/registration_page/bloc/bl
 import 'package:lastmile_mobile/src/presentation/views/registration_page/bloc/blocs/register/register_bloc.dart';
 import 'package:lastmile_mobile/src/presentation/views/registration_page/bloc/blocs/verify_phone/verify_phone_bloc.dart';
 import 'package:lastmile_mobile/src/presentation/views/transaction_history/bloc/transaction_history_bloc.dart';
+import 'package:lastmile_mobile/src/presentation/views/reset_password_page/blocs/reset_password/reset_password_bloc.dart';
+import 'package:lastmile_mobile/src/presentation/views/reset_password_page/blocs/send_reset_link/send_reset_link_bloc.dart';
 import 'package:socket_io_client/socket_io_client.dart';
 
 import 'data/datasources/local/app_hive_service.dart';
 import 'data/models/driver.dart';
 import 'presentation/views/home_page/blocs/order_cancellation/order_cancellation_bloc.dart';
-import 'domain/repositories/notification.dart';
 import 'presentation/views/home_page/blocs/polylines/polyline_bloc.dart';
 import 'presentation/views/home_page/blocs/task/task_bloc.dart';
 import 'presentation/views/order_history/blocs/order_history/order_history_bloc.dart';
@@ -96,5 +97,8 @@ Future<void> initializeDependencies() async {
     ..registerFactory<VerifyPhoneBloc>(() => VerifyPhoneBloc(injector()))
     ..registerFactory<LoginBloc>(() => LoginBloc(injector()))
     ..registerFactory<TransactionHistoryBloc>(
-        () => TransactionHistoryBloc(injector()));
+        () => TransactionHistoryBloc(injector()))
+    ..registerFactory<ChangePasswordBloc>(() => ChangePasswordBloc(injector()))
+    ..registerFactory<SendResetLinkBloc>(() => SendResetLinkBloc(injector()))
+    ..registerFactory<ResetPasswordBloc>(() => ResetPasswordBloc(injector()));
 }

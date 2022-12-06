@@ -12,6 +12,7 @@ import 'package:lastmile_mobile/src/domain/repositories/image_upload_repository.
 import 'package:lastmile_mobile/src/domain/repositories/order_history_repo.dart';
 import 'package:lastmile_mobile/src/domain/repositories/transaction_history_repository.dart';
 import 'package:lastmile_mobile/src/injector.dart';
+import 'package:lastmile_mobile/src/presentation/views/change_password_page/blocs/change_password/change_password_bloc.dart';
 import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/driver_location/driver_location_bloc.dart';
 import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/driver_profile/driver_profile_bloc.dart';
 import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/order/order_bloc.dart';
@@ -24,6 +25,7 @@ import 'package:lastmile_mobile/src/presentation/views/registration_page/bloc/bl
 import 'package:lastmile_mobile/src/presentation/views/registration_page/bloc/blocs/register/register_bloc.dart';
 import 'package:lastmile_mobile/src/presentation/views/registration_page/bloc/blocs/verify_phone/verify_phone_bloc.dart';
 import 'package:lastmile_mobile/src/presentation/views/transaction_history/bloc/transaction_history_bloc.dart';
+import 'package:lastmile_mobile/src/presentation/views/reset_password_page/blocs/reset_password/reset_password_bloc.dart';
 import 'package:mockito/annotations.dart';
 import 'package:socket_io_client/socket_io_client.dart';
 
@@ -54,8 +56,9 @@ Future<void> initializeTestDependencies() async {
           id: '1',
           isAvailable: true,
           name: 'Abebaw Butako',
-          status: 'status',
           phoneNumber: '0909525760',
+          status: 'status',
+          email: "abc@example.com",
         ))
 
     /// REPOSITORY DEPENDENCIES
@@ -87,5 +90,7 @@ Future<void> initializeTestDependencies() async {
     ..registerFactory<RegisterBloc>(() => RegisterBloc(injector()))
     ..registerFactory<LoginBloc>(() => LoginBloc(injector()))
     ..registerFactory<TransactionHistoryBloc>(
-        () => TransactionHistoryBloc(injector()));
+        () => TransactionHistoryBloc(injector()))
+    ..registerFactory<ChangePasswordBloc>(() => ChangePasswordBloc(injector()))
+    ..registerFactory<ResetPasswordBloc>(() => ResetPasswordBloc(injector()));
 }

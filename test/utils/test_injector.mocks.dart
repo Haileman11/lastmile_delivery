@@ -1409,6 +1409,95 @@ class MockAuthRepoImpl extends _i1.Mock implements _i21.AuthRepoImpl {
           ),
         )),
       ) as _i12.Future<_i2.Either<_i15.Failure, _i23.DriverModel>>);
+  @override
+  _i12.Future<_i2.Either<_i15.Failure, String>> changePassword(
+    String? oldPassword,
+    String? newPassword,
+  ) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #changePassword,
+          [
+            oldPassword,
+            newPassword,
+          ],
+        ),
+        returnValue: _i12.Future<_i2.Either<_i15.Failure, String>>.value(
+            _FakeEither_0<_i15.Failure, String>(
+          this,
+          Invocation.method(
+            #changePassword,
+            [
+              oldPassword,
+              newPassword,
+            ],
+          ),
+        )),
+        returnValueForMissingStub:
+            _i12.Future<_i2.Either<_i15.Failure, String>>.value(
+                _FakeEither_0<_i15.Failure, String>(
+          this,
+          Invocation.method(
+            #changePassword,
+            [
+              oldPassword,
+              newPassword,
+            ],
+          ),
+        )),
+      ) as _i12.Future<_i2.Either<_i15.Failure, String>>);
+  @override
+  _i12.Future<_i2.Either<_i15.Failure, String>> sendResetLink(
+          String? driverId) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #sendResetLink,
+          [driverId],
+        ),
+        returnValue: _i12.Future<_i2.Either<_i15.Failure, String>>.value(
+            _FakeEither_0<_i15.Failure, String>(
+          this,
+          Invocation.method(
+            #sendResetLink,
+            [driverId],
+          ),
+        )),
+        returnValueForMissingStub:
+            _i12.Future<_i2.Either<_i15.Failure, String>>.value(
+                _FakeEither_0<_i15.Failure, String>(
+          this,
+          Invocation.method(
+            #sendResetLink,
+            [driverId],
+          ),
+        )),
+      ) as _i12.Future<_i2.Either<_i15.Failure, String>>);
+  @override
+  _i12.Future<_i2.Either<_i15.Failure, String>> resetPassword(
+          String? newPassword) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #resetPassword,
+          [newPassword],
+        ),
+        returnValue: _i12.Future<_i2.Either<_i15.Failure, String>>.value(
+            _FakeEither_0<_i15.Failure, String>(
+          this,
+          Invocation.method(
+            #resetPassword,
+            [newPassword],
+          ),
+        )),
+        returnValueForMissingStub:
+            _i12.Future<_i2.Either<_i15.Failure, String>>.value(
+                _FakeEither_0<_i15.Failure, String>(
+          this,
+          Invocation.method(
+            #resetPassword,
+            [newPassword],
+          ),
+        )),
+      ) as _i12.Future<_i2.Either<_i15.Failure, String>>);
 }
 
 /// A class which mocks [TransactionHistoryRepositoryImpl].

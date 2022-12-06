@@ -17,6 +17,8 @@ class DriverModel {
   final bool isAvailable;
   @HiveField(4)
   final String status;
+  @HiveField(5)
+  final String email;
 
   DriverModel({
     required this.id,
@@ -24,6 +26,7 @@ class DriverModel {
     required this.phoneNumber,
     required this.isAvailable,
     required this.status,
+    required this.email,
   });
 
   Map<String, dynamic> toMap() {
@@ -33,6 +36,7 @@ class DriverModel {
       'phoneNumber': phoneNumber,
       'isAvailable': isAvailable,
       'status': status,
+      'email': email,
     };
   }
 
@@ -43,6 +47,7 @@ class DriverModel {
       phoneNumber: map['phoneNumber'] as String,
       isAvailable: map['isAvailable'] as bool,
       status: map['status'] as String,
+      email: map['email'] as String,
     );
   }
 
@@ -57,6 +62,7 @@ class DriverModel {
     String? phoneNumber,
     bool? isAvailable,
     String? status,
+    String? email,
   }) {
     return DriverModel(
       id: id ?? this.id,
@@ -64,12 +70,13 @@ class DriverModel {
       phoneNumber: phoneNumber ?? this.phoneNumber,
       isAvailable: isAvailable ?? this.isAvailable,
       status: status ?? this.status,
+      email: email ?? this.email,
     );
   }
 
   @override
   String toString() {
-    return 'DriverModel(id: $id, name: $name, phoneNumber: $phoneNumber, isAvailable: $isAvailable, status: $status)';
+    return 'DriverModel(id: $id, name: $name, phoneNumber: $phoneNumber, isAvailable: $isAvailable, status: $status, email: $email)';
   }
 
   @override
@@ -80,7 +87,8 @@ class DriverModel {
         other.name == name &&
         other.phoneNumber == phoneNumber &&
         other.isAvailable == isAvailable &&
-        other.status == status;
+        other.status == status &&
+        other.email == email;
   }
 
   @override
@@ -89,6 +97,7 @@ class DriverModel {
         name.hashCode ^
         phoneNumber.hashCode ^
         isAvailable.hashCode ^
-        status.hashCode;
+        status.hashCode ^
+        email.hashCode;
   }
 }

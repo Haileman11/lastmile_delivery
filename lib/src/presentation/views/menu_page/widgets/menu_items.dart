@@ -24,6 +24,16 @@ class MenuItems extends StatelessWidget {
     return Column(
       children: [
         _buildMenuItem(
+          key: 'PROFILE_BUTTON',
+          'assets/images/menu_item_profile.png',
+          'Profile',
+          () {
+            NavigationService.instance
+                .navigateTo(AppRoutes.profilePageRoute, context);
+          },
+        ),
+        const SizedBox(height: 15.0),
+        _buildMenuItem(
             key: 'ORDERS_BUTTON',
             'assets/images/menu_item_orders.png',
             'Orders', () {
