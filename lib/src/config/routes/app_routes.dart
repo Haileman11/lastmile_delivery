@@ -21,4 +21,5 @@ class AppRoutes {
   static const changePasswordPageRoute = '/change-password-page';
   static const resetPasswordPageRoute = '/reset-password-page';
   static const sendResetLinkPageRoute = '/send-reset-link-page';
+  static const walletPageRoute = '/wallet-page';
 }

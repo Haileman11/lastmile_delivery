@@ -34,6 +34,16 @@ class MenuItems extends StatelessWidget {
         ),
         const SizedBox(height: 15.0),
         _buildMenuItem(
+          key: 'VIEW_WALLET',
+          'assets/images/menu_item_balance.png',
+          'Balance',
+          () {
+            NavigationService.instance
+                .navigateTo(AppRoutes.walletPageRoute, context);
+          },
+        ),
+        const SizedBox(height: 15.0),
+        _buildMenuItem(
             key: 'ORDERS_BUTTON',
             'assets/images/menu_item_orders.png',
             'Orders', () {
