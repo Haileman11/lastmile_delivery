@@ -1,11 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lastmile_mobile/src/config/themes/app_themes.dart';
-import 'package:lastmile_mobile/src/presentation/views/wallet_page/blocs/cubits/date_filter/date_filter_cubit.dart';
+import 'package:lastmile_mobile/src/presentation/views/wallet_page/bloc/cubits/date_filter/date_filter_cubit.dart';
 import 'package:lastmile_mobile/src/presentation/views/wallet_page/widgets/date_filter.dart';
 
 class WalletHeaderInfo extends StatelessWidget {
-  const WalletHeaderInfo({Key? key}) : super(key: key);
+  const WalletHeaderInfo({
+    Key? key,
+    required this.walletId,
+    required this.currentBalance,
+    required this.filteredBalance,
+  }) : super(key: key);
+
+  final String walletId;
+  final String currentBalance;
+  final String filteredBalance;
 
   @override
   Widget build(BuildContext context) {
@@ -21,13 +30,13 @@ class WalletHeaderInfo extends StatelessWidget {
                 const Text(
                   'Abebaw Butako',
                   style: TextStyle(
-                    fontSize: AppFontSizes.font_size_28,
+                    fontSize: AppFontSizes.font_size_24,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
                 const SizedBox(height: 5.0),
                 Text(
-                  '#03909097',
+                  '#$walletId',
                   style: TextStyle(
                     fontSize: AppFontSizes.font_size_16,
                     color: AppColors.grey,
@@ -39,7 +48,7 @@ class WalletHeaderInfo extends StatelessWidget {
           const Divider(),
           Padding(
             padding: const EdgeInsets.all(15.0),
-            child: _buildBalance('Current Balance', '5,000,000'),
+            child: _buildBalance('Current Balance', currentBalance),
           ),
           const Divider(),
           Padding(
@@ -51,7 +60,9 @@ class WalletHeaderInfo extends StatelessWidget {
                 BlocBuilder<DateFilterCubit, Map<String, dynamic>>(
                   builder: (context, state) {
                     return _buildBalance(
-                        '${state['label']}\'s earnings', '2,000');
+                      '${state['label']}\'s earnings',
+                      filteredBalance,
+                    );
                   },
                 ),
                 const DateFilter(),
@@ -67,8 +78,8 @@ class WalletHeaderInfo extends StatelessWidget {
     return Row(
       children: [
         Container(
-          height: 50,
-          width: 50,
+          height: 40,
+          width: 40,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
             image: DecorationImage(
@@ -94,7 +105,7 @@ class WalletHeaderInfo extends StatelessWidget {
             Text(
               '$balance ETB',
               style: const TextStyle(
-                fontSize: AppFontSizes.font_size_28,
+                fontSize: AppFontSizes.font_size_24,
                 fontWeight: FontWeight.w600,
               ),
             ),

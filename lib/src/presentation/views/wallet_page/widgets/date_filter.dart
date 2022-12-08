@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:lastmile_mobile/src/config/themes/app_themes.dart';
-import 'package:lastmile_mobile/src/presentation/views/wallet_page/blocs/cubits/date_filter/date_filter_cubit.dart';
+import 'package:lastmile_mobile/src/presentation/views/wallet_page/bloc/cubits/date_filter/date_filter_cubit.dart';
 
 class DateFilter extends StatelessWidget {
   const DateFilter({Key? key}) : super(key: key);
