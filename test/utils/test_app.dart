@@ -32,6 +32,9 @@ import 'package:lastmile_mobile/src/presentation/views/signing_in_page/signing_i
 import 'package:lastmile_mobile/src/presentation/views/splash_page/splash_page_view.dart';
 import 'package:lastmile_mobile/src/presentation/views/transaction_history/bloc/transaction_history_bloc.dart';
 import 'package:lastmile_mobile/src/presentation/views/transaction_history/pages/transaction_history_page.dart';
+import 'package:lastmile_mobile/src/presentation/views/wallet_page/bloc/blocs/wallet_info/wallet_info_bloc.dart';
+import 'package:lastmile_mobile/src/presentation/views/wallet_page/bloc/cubits/date_filter/date_filter_cubit.dart';
+import 'package:lastmile_mobile/src/presentation/views/wallet_page/wallet_page_view.dart';
 
 class TestApp extends StatelessWidget {
   const TestApp({Key? key, required this.initialRoute}) : super(key: key);
@@ -95,6 +98,18 @@ class TestApp extends StatelessWidget {
             AppRoutes.homePageRoute: (context) => HomePageView(),
             AppRoutes.splashScreenRoute: (context) => const SplashPageView(),
             AppRoutes.menuPageRoute: (context) => const MenuPage(),
+            AppRoutes.walletPageRoute: (context) => MultiBlocProvider(
+                  providers: [
+                    BlocProvider<DateFilterCubit>(
+                      create: (context) => DateFilterCubit(),
+                    ),
+                    BlocProvider<WalletInfoBloc>(
+                      create: (context) =>
+                          injector()..add(const GetWalletInfo()),
+                    ),
+                  ],
+                  child: const WalletPageView(),
+                ),
             AppRoutes.registrationPage: (context) => MultiBlocProvider(
                   providers: [
                     BlocProvider<ImagePickCubit>(

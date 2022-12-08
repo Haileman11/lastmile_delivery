@@ -51,7 +51,8 @@ enum TaskType {
 
 enum TransactionType {
   withdrawal,
-  deposit;
+  deposit,
+  earned;
 
   String toMap() => name;
   static TransactionType fromMap(String json) => values.byName(json);

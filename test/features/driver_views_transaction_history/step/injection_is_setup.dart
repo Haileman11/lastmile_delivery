@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:lastmile_mobile/src/data/datasources/remote/transaction_history_datasource.dart';
+import 'package:lastmile_mobile/src/data/datasources/local/mock_data.dart';
 import 'package:lastmile_mobile/src/data/models/transaction.dart';
 import 'package:lastmile_mobile/src/domain/repositories/transaction_history_repository.dart';
 import 'package:lastmile_mobile/src/injector.dart';
