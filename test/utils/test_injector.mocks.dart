@@ -16,7 +16,8 @@ import 'package:lastmile_mobile/src/data/datasources/remote/transaction_history_
     as _i10;
 import 'package:lastmile_mobile/src/data/models/driver.dart' as _i23;
 import 'package:lastmile_mobile/src/data/models/order.dart' as _i16;
-import 'package:lastmile_mobile/src/data/models/transaction.dart' as _i25;
+import 'package:lastmile_mobile/src/data/models/transaction.dart' as _i27;
+import 'package:lastmile_mobile/src/data/models/wallet.dart' as _i25;
 import 'package:lastmile_mobile/src/data/repositories/app_hive_repository.dart'
     as _i19;
 import 'package:lastmile_mobile/src/data/repositories/auth_repo_impl.dart'
@@ -28,6 +29,8 @@ import 'package:lastmile_mobile/src/data/repositories/image_upload_repo_impl.dar
 import 'package:lastmile_mobile/src/data/repositories/order_history_repo_impl.dart'
     as _i14;
 import 'package:lastmile_mobile/src/data/repositories/transaction_history_repository_impl.dart'
+    as _i26;
+import 'package:lastmile_mobile/src/data/repositories/wallet_repo_impl.dart'
     as _i24;
 import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/driver_location/driver_location_bloc.dart'
     as _i3;
@@ -1500,11 +1503,44 @@ class MockAuthRepoImpl extends _i1.Mock implements _i21.AuthRepoImpl {
       ) as _i12.Future<_i2.Either<_i15.Failure, String>>);
 }
 
+/// A class which mocks [WalletRepositoryImpl].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockWalletRepositoryImpl extends _i1.Mock
+    implements _i24.WalletRepositoryImpl {
+  @override
+  _i12.Future<_i2.Either<_i15.Failure, _i25.WalletModel>> getWalletInfo() =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #getWalletInfo,
+          [],
+        ),
+        returnValue:
+            _i12.Future<_i2.Either<_i15.Failure, _i25.WalletModel>>.value(
+                _FakeEither_0<_i15.Failure, _i25.WalletModel>(
+          this,
+          Invocation.method(
+            #getWalletInfo,
+            [],
+          ),
+        )),
+        returnValueForMissingStub:
+            _i12.Future<_i2.Either<_i15.Failure, _i25.WalletModel>>.value(
+                _FakeEither_0<_i15.Failure, _i25.WalletModel>(
+          this,
+          Invocation.method(
+            #getWalletInfo,
+            [],
+          ),
+        )),
+      ) as _i12.Future<_i2.Either<_i15.Failure, _i25.WalletModel>>);
+}
+
 /// A class which mocks [TransactionHistoryRepositoryImpl].
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockTransactionHistoryRepositoryImpl extends _i1.Mock
-    implements _i24.TransactionHistoryRepositoryImpl {
+    implements _i26.TransactionHistoryRepositoryImpl {
   @override
   _i10.TransactionHistoryDatasource get transactionHistoryDatasource =>
       (super.noSuchMethod(
@@ -1521,15 +1557,15 @@ class MockTransactionHistoryRepositoryImpl extends _i1.Mock
   @override
   _i12.Future<
       _i2.Either<_i15.Failure,
-          List<_i25.TransactionModel>>> getTransactionsHistory() =>
+          List<_i27.TransactionModel>>> getTransactionsHistory() =>
       (super.noSuchMethod(
         Invocation.method(
           #getTransactionsHistory,
           [],
         ),
         returnValue: _i12.Future<
-                _i2.Either<_i15.Failure, List<_i25.TransactionModel>>>.value(
-            _FakeEither_0<_i15.Failure, List<_i25.TransactionModel>>(
+                _i2.Either<_i15.Failure, List<_i27.TransactionModel>>>.value(
+            _FakeEither_0<_i15.Failure, List<_i27.TransactionModel>>(
           this,
           Invocation.method(
             #getTransactionsHistory,
@@ -1537,13 +1573,13 @@ class MockTransactionHistoryRepositoryImpl extends _i1.Mock
           ),
         )),
         returnValueForMissingStub: _i12.Future<
-                _i2.Either<_i15.Failure, List<_i25.TransactionModel>>>.value(
-            _FakeEither_0<_i15.Failure, List<_i25.TransactionModel>>(
+                _i2.Either<_i15.Failure, List<_i27.TransactionModel>>>.value(
+            _FakeEither_0<_i15.Failure, List<_i27.TransactionModel>>(
           this,
           Invocation.method(
             #getTransactionsHistory,
             [],
           ),
         )),
-      ) as _i12.Future<_i2.Either<_i15.Failure, List<_i25.TransactionModel>>>);
+      ) as _i12.Future<_i2.Either<_i15.Failure, List<_i27.TransactionModel>>>);
 }

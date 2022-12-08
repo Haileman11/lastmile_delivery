@@ -6,13 +6,13 @@ Feature: Driver views wallet details
     Then clean up
 
   Scenario Outline: Driver views wallet detail
-    Given the app is on page {'PROFILE_PAGE'}
+    Given the app is on page {'/menu-page'}
     And there exists a wallet with balance <wallet_balance>
     When I tap {'VIEW_WALLET'}
     Then I see {'WALLET_PAGE'}
     And I see <wallet_balance> text
     Examples:
       | wallet_balance |
-      | '15000'        |
+      | '15,000'        |
       | '0'            |
-      | '3000'         |
+      | '3,000'         |

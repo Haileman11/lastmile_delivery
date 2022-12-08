@@ -19,6 +19,7 @@ class WalletPageView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: const Key('WALLET_PAGE'),
       appBar: AppBar(
         elevation: 0.0,
         systemOverlayStyle: getStatusBarStyle().copyWith(

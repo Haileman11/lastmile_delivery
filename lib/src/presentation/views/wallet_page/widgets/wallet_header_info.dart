@@ -103,7 +103,7 @@ class WalletHeaderInfo extends StatelessWidget {
             ),
             const SizedBox(height: 5.0),
             Text(
-              '$balance ETB',
+              '$balance',
               style: const TextStyle(
                 fontSize: AppFontSizes.font_size_24,
                 fontWeight: FontWeight.w600,

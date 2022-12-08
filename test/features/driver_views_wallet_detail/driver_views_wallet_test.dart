@@ -20,14 +20,14 @@ void main() {
     await cleanUp(tester);
   }
   group('''Driver views wallet details''', () {
-    testWidgets('''Outline: Driver views wallet detail ('15000')''', (tester) async {
+    testWidgets('''Outline: Driver views wallet detail ('15,000')''', (tester) async {
       try {
         await bddSetUp(tester);
-        await theAppIsOnPage(tester, 'PROFILE_PAGE');
-        await thereExistsAWalletWithBalance(tester, '15000');
+        await theAppIsOnPage(tester, '/menu-page');
+        await thereExistsAWalletWithBalance(tester, '15,000');
         await iTap(tester, 'VIEW_WALLET');
         await iSee(tester, 'WALLET_PAGE');
-        await iSeeText(tester, '15000');
+        await iSeeText(tester, '15,000');
       } finally {
         await bddTearDown(tester);
       }
@@ -35,7 +35,7 @@ void main() {
     testWidgets('''Outline: Driver views wallet detail ('0')''', (tester) async {
       try {
         await bddSetUp(tester);
-        await theAppIsOnPage(tester, 'PROFILE_PAGE');
+        await theAppIsOnPage(tester, '/menu-page');
         await thereExistsAWalletWithBalance(tester, '0');
         await iTap(tester, 'VIEW_WALLET');
         await iSee(tester, 'WALLET_PAGE');
@@ -44,14 +44,14 @@ void main() {
         await bddTearDown(tester);
       }
     });
-    testWidgets('''Outline: Driver views wallet detail ('3000')''', (tester) async {
+    testWidgets('''Outline: Driver views wallet detail ('3,000')''', (tester) async {
       try {
         await bddSetUp(tester);
-        await theAppIsOnPage(tester, 'PROFILE_PAGE');
-        await thereExistsAWalletWithBalance(tester, '3000');
+        await theAppIsOnPage(tester, '/menu-page');
+        await thereExistsAWalletWithBalance(tester, '3,000');
         await iTap(tester, 'VIEW_WALLET');
         await iSee(tester, 'WALLET_PAGE');
-        await iSeeText(tester, '3000');
+        await iSeeText(tester, '3,000');
       } finally {
         await bddTearDown(tester);
       }
