@@ -166,3 +166,38 @@ List<OrderModel> mockOrders = [
     },
   }),
 ];
+
+const transactions = [
+  {
+    'id': '1',
+    'transactionType': 'earned',
+    'amount': 1000.00,
+    'from': 'Boss burger',
+    'to': 'Abebe',
+    'createdAt': '2022-12-05T11:54:42+00:00'
+  },
+  {
+    'id': '2',
+    'transactionType': 'earned',
+    'amount': 2000.00,
+    'from': 'Nunya',
+    'to': 'Business',
+    'createdAt': '2022-12-05T11:54:42+00:00'
+  },
+  {
+    'id': '3',
+    'transactionType': 'earned',
+    'amount': 2000.00,
+    'from': 'Mischievous',
+    'to': 'Deceitful',
+    'createdAt': '2022-12-05T11:54:42+00:00'
+  },
+  {
+    'id': '4',
+    'transactionType': 'earned',
+    'amount': 2000.00,
+    'from': 'Chicanerous',
+    'to': 'Deplorable',
+    'createdAt': '2022-12-05T11:54:42+00:00'
+  },
+];

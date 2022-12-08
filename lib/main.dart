@@ -37,6 +37,8 @@ import 'package:lastmile_mobile/src/presentation/views/reset_password_page/widge
 import 'package:lastmile_mobile/src/presentation/views/signing_in_page/signing_in_page.dart';
 import 'package:lastmile_mobile/src/presentation/views/splash_page/splash_page_view.dart';
 import 'package:lastmile_mobile/src/presentation/views/waiting_for_driver_page/waiting_for_driver_page.dart';
+import 'package:lastmile_mobile/src/presentation/views/wallet_page/bloc/blocs/wallet_info/wallet_info_bloc.dart';
+import 'package:lastmile_mobile/src/presentation/views/wallet_page/wallet_page_view.dart';
 
 import 'src/core/utils/scroll_behaviour.dart';
 import 'src/data/datasources/local/app_hive_service.dart';
@@ -48,6 +50,7 @@ import 'src/presentation/views/order_history/blocs/order_history/order_history_b
 import 'src/presentation/views/registration_page/bloc/cubits/image_pick_cubit.dart';
 import 'src/presentation/views/transaction_history/bloc/transaction_history_bloc.dart';
 import 'src/presentation/views/transaction_history/pages/transaction_history_page.dart';
+import 'src/presentation/views/wallet_page/bloc/cubits/date_filter/date_filter_cubit.dart';
 
 Future<void> main() async {
   WidgetsBinding binding = WidgetsFlutterBinding.ensureInitialized();
@@ -130,6 +133,18 @@ class LastMile extends StatelessWidget {
             AppRoutes.splashScreenRoute: (context) => const SplashPageView(),
             AppRoutes.menuPageRoute: (context) => const MenuPage(),
             AppRoutes.profilePageRoute: (context) => const ProfilePageView(),
+            AppRoutes.walletPageRoute: (context) => MultiBlocProvider(
+                  providers: [
+                    BlocProvider<DateFilterCubit>(
+                      create: (context) => DateFilterCubit(),
+                    ),
+                    BlocProvider<WalletInfoBloc>(
+                      create: (context) =>
+                          injector()..add(const GetWalletInfo()),
+                    ),
+                  ],
+                  child: const WalletPageView(),
+                ),
             AppRoutes.resetPasswordPageRoute: (context) =>
                 BlocProvider<ResetPasswordBloc>(
                   create: (context) => injector(),

@@ -5,18 +5,21 @@ import 'package:lastmile_mobile/src/data/datasources/remote/auth_api_service.dar
 import 'package:lastmile_mobile/src/data/datasources/remote/image_upload_api_service.dart';
 import 'package:lastmile_mobile/src/data/datasources/remote/order_history_api_service.dart';
 import 'package:lastmile_mobile/src/data/datasources/remote/transaction_history_datasource.dart';
+import 'package:lastmile_mobile/src/data/datasources/remote/wallet_api_service.dart';
 import 'package:lastmile_mobile/src/data/repositories/app_hive_repository.dart';
 import 'package:lastmile_mobile/src/data/repositories/auth_repo_impl.dart';
 import 'package:lastmile_mobile/src/data/repositories/base_location_repo_impl.dart';
 import 'package:lastmile_mobile/src/data/repositories/image_upload_repo_impl.dart';
 import 'package:lastmile_mobile/src/data/repositories/order_history_repo_impl.dart';
 import 'package:lastmile_mobile/src/data/repositories/transaction_history_repository_impl.dart';
+import 'package:lastmile_mobile/src/data/repositories/wallet_repo_impl.dart';
 import 'package:lastmile_mobile/src/domain/repositories/app_hive_repository.dart';
 import 'package:lastmile_mobile/src/domain/repositories/auth_repository.dart';
 import 'package:lastmile_mobile/src/domain/repositories/base_geolocation_repo.dart';
 import 'package:lastmile_mobile/src/domain/repositories/image_upload_repository.dart';
 import 'package:lastmile_mobile/src/domain/repositories/order_history_repo.dart';
 import 'package:lastmile_mobile/src/domain/repositories/transaction_history_repository.dart';
+import 'package:lastmile_mobile/src/domain/repositories/wallet_repository.dart';
 import 'package:lastmile_mobile/src/presentation/views/change_password_page/blocs/change_password/change_password_bloc.dart';
 import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/driver_location/driver_location_bloc.dart';
 import 'package:lastmile_mobile/src/presentation/views/home_page/blocs/driver_profile/driver_profile_bloc.dart';
@@ -27,9 +30,10 @@ import 'package:lastmile_mobile/src/presentation/views/login_page/blocs/login/lo
 import 'package:lastmile_mobile/src/presentation/views/registration_page/bloc/blocs/image_upload/image_upload_bloc.dart';
 import 'package:lastmile_mobile/src/presentation/views/registration_page/bloc/blocs/register/register_bloc.dart';
 import 'package:lastmile_mobile/src/presentation/views/registration_page/bloc/blocs/verify_phone/verify_phone_bloc.dart';
-import 'package:lastmile_mobile/src/presentation/views/transaction_history/bloc/transaction_history_bloc.dart';
 import 'package:lastmile_mobile/src/presentation/views/reset_password_page/blocs/reset_password/reset_password_bloc.dart';
 import 'package:lastmile_mobile/src/presentation/views/reset_password_page/blocs/send_reset_link/send_reset_link_bloc.dart';
+import 'package:lastmile_mobile/src/presentation/views/transaction_history/bloc/transaction_history_bloc.dart';
+import 'package:lastmile_mobile/src/presentation/views/wallet_page/bloc/blocs/wallet_info/wallet_info_bloc.dart';
 import 'package:socket_io_client/socket_io_client.dart';
 
 import 'data/datasources/local/app_hive_service.dart';
@@ -66,6 +70,7 @@ Future<void> initializeDependencies() async {
     ..registerSingleton<AuthApiService>(AuthApiServiceImpl(injector()))
     ..registerSingleton<TransactionHistoryDatasource>(
         TransactionHistoryDatasourceImpl(injector()))
+    ..registerSingleton<WalletApiService>(WalletApiServiceImpl(injector()))
 
     /// REPOSITORIES
 
@@ -77,6 +82,7 @@ Future<void> initializeDependencies() async {
     ..registerSingleton<AuthRepository>(AuthRepoImpl(injector()))
     ..registerSingleton<TransactionHistoryRepository>(
         TransactionHistoryRepositoryImpl(injector()))
+    ..registerSingleton<WalletRepository>(WalletRepositoryImpl(injector()))
 
     /// BLOCS
     ..registerFactory<TaskBloc>(() => TaskBloc(injector()))
@@ -100,5 +106,6 @@ Future<void> initializeDependencies() async {
         () => TransactionHistoryBloc(injector()))
     ..registerFactory<ChangePasswordBloc>(() => ChangePasswordBloc(injector()))
     ..registerFactory<SendResetLinkBloc>(() => SendResetLinkBloc(injector()))
-    ..registerFactory<ResetPasswordBloc>(() => ResetPasswordBloc(injector()));
+    ..registerFactory<ResetPasswordBloc>(() => ResetPasswordBloc(injector()))
+    ..registerFactory<WalletInfoBloc>(() => WalletInfoBloc(injector()));
 }
